@@ -34,7 +34,7 @@ export default new Router({
         {
           path:'userList',
           name:'userList',
-          compoennt:UserList
+          component:UserList
         }
       ]
     }

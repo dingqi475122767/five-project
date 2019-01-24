@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display:flex">
     <el-menu
       class="el-menu"
       background-color="#545c64"
