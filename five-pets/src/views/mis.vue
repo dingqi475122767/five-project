@@ -76,6 +76,17 @@
           </router-link>
         </el-menu-item-group>
       </el-submenu>
+      <el-submenu index="6">
+        <template slot="title">
+          <i class="el-icon-document"></i>
+          <span>订单管理</span>
+        </template>
+        <el-menu-item-group>
+          <router-link to="/mis/orderMessage" style="text-decoration:none;">
+            <el-menu-item index="5-1">订单列表</el-menu-item>
+          </router-link>
+        </el-menu-item-group>
+      </el-submenu>
     </el-menu>
     <router-view></router-view>
   </div>

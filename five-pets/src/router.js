@@ -73,7 +73,12 @@ export default new Router({
           path:'addService',
           name:'addService',
           component:AddService
-        }
+        },
+        {
+          path:'orderMessage',
+          name:'orderMessage',
+          component:()=>import ('./components/orderMessage/orderMessage.vue')
+        },
       ]
     }
   ]
