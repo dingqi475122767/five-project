@@ -4,7 +4,8 @@ import Login from './views/login.vue';
 import Reg from './views/register.vue';
 import Mis from './views/mis.vue';
 import UserList from './components/users/userList.vue';
-
+import AddService from './components/service/addService'
+import ServiceList from './components/service/serviceList'
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +36,16 @@ export default new Router({
           path:'userList',
           name:'userList',
           component:UserList
+        },
+        {
+          path:'serviceList',
+          name:'serviceList',
+          component:ServiceList
+        },
+        {
+          path:'addService',
+          name:'addService',
+          component:AddService
         }
       ]
     }

@@ -54,10 +54,10 @@
           <span>服务管理</span>
         </template>
         <el-menu-item-group>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/serviceList" style="text-decoration:none;">
             <el-menu-item index="4-1">服务列表</el-menu-item>
           </router-link>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/addService" style="text-decoration:none;">
             <el-menu-item index="4-2">新增服务</el-menu-item>
           </router-link>
         </el-menu-item-group>
