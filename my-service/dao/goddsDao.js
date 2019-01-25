@@ -1,1 +1,0 @@
-const {goodsModel} = require('./model/commentModel');
