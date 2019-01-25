@@ -43,7 +43,7 @@
           <router-link to="/mis/goodsList" style="text-decoration:none;">
             <el-menu-item index="3-1">商品列表</el-menu-item>
           </router-link>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/addGoods" style="text-decoration:none;">
             <el-menu-item index="3-2">新增商品</el-menu-item>
           </router-link>
         </el-menu-item-group>
