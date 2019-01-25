@@ -6,6 +6,8 @@ import Mis from './views/mis.vue';
 import UserList from './components/users/userList.vue';
 import GoodsList from './components/goods/goodsList.vue';
 import AddGoods from './components/goods/addGoods.vue'
+import AddService from './components/service/addService'
+import ServiceList from './components/service/serviceList'
 Vue.use(Router)
 
 export default new Router({
@@ -67,6 +69,11 @@ export default new Router({
           name:'addGoods',
           component:AddGoods
         },
+        {
+          path:'addService',
+          name:'addService',
+          component:AddService
+        }
       ]
     }
   ]
