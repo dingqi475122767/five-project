@@ -75,6 +75,11 @@ export default new Router({
           component:AddService
         },
         {
+          path:'serviceList',
+          name:'serviceList',
+          component:()=>import ('./components/service/serviceList.vue')
+        },
+        {
           path:'orderMessage',
           name:'orderMessage',
           component:()=>import ('./components/orderMessage/orderMessage.vue')
