@@ -1,1 +1,1 @@
-const {goodsModel} = require('./model/commentModel');
+const {goodsModel} = require('./model/goodsModel');
