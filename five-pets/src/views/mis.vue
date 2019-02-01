@@ -43,7 +43,7 @@
           <router-link to="/mis/goodsList" style="text-decoration:none;">
             <el-menu-item index="3-1">商品列表</el-menu-item>
           </router-link>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/addGoods" style="text-decoration:none;">
             <el-menu-item index="3-2">新增商品</el-menu-item>
           </router-link>
         </el-menu-item-group>
@@ -54,10 +54,10 @@
           <span>服务管理</span>
         </template>
         <el-menu-item-group>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/serviceList" style="text-decoration:none;">
             <el-menu-item index="4-1">服务列表</el-menu-item>
           </router-link>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/addService" style="text-decoration:none;">
             <el-menu-item index="4-2">新增服务</el-menu-item>
           </router-link>
         </el-menu-item-group>
@@ -73,6 +73,17 @@
           </router-link>
           <router-link to="/mis/addPets" style="text-decoration:none;">
             <el-menu-item index="5-2">新增宠物</el-menu-item>
+          </router-link>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-submenu index="6">
+        <template slot="title">
+          <i class="el-icon-document"></i>
+          <span>订单管理</span>
+        </template>
+        <el-menu-item-group>
+          <router-link to="/mis/orderMessage" style="text-decoration:none;">
+            <el-menu-item index="5-1">订单列表</el-menu-item>
           </router-link>
         </el-menu-item-group>
       </el-submenu>
