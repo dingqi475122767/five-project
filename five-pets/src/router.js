@@ -43,16 +43,6 @@ export default new Router({
           component: UserList
         },
         {
-          path: 'addShopUser',
-          name: 'addShopUser',
-          component: () => import('./components/users/addShopUser.vue')
-        },
-        {
-          path: 'apply',
-          name: 'apply',
-          component: () => import('./components/users/apply.vue')
-        },
-        {
           path: 'addPets',
           name: 'addPets',
           component: () => import('./components/pets/addPets.vue')
