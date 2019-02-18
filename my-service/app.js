@@ -30,6 +30,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//引入session服务端本地存储功能
+const session = require('express-session')
+
+//调用引入的服务端本地存储功能
+app.use(session({
+  secret: 'acv',
+  resave: true,
+  saveUninitialized: true
+}))
+
+
 //一级路由跳转标签
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
