@@ -13,8 +13,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'login',
       component: Login
@@ -30,14 +29,28 @@ export default new Router({
       component: Login
     },
     {
+      path: '/mis/:id/:type',
+      name: 'mis',
+      component: Mis,
+    },
+    {
       path: '/mis',
       name: 'mis',
       component: Mis,
-      children: [
-        {
+      children: [{
           path: 'userList',
           name: 'userList',
           component: UserList
+        },
+        {
+          path: 'addShopUser',
+          name: 'addShopUser',
+          component: () => import('./components/users/addShopUser.vue')
+        },
+        {
+          path: 'apply',
+          name: 'apply',
+          component: () => import('./components/users/apply.vue')
         },
         {
           path: 'addPets',
@@ -55,34 +68,44 @@ export default new Router({
           component: () => import('./components/pets/petDetails.vue')
         },
         {
-          path:'userList',
-          name:'userList',
-          component:UserList
+          path: 'userList',
+          name: 'userList',
+          component: UserList
         },
         {
-          path:'goodsList',
-          name:'goodsList',
-          component:GoodsList
+          path: 'goodsList',
+          name: 'goodsList',
+          component: GoodsList
         },
         {
-          path:'addGoods',
-          name:'addGoods',
-          component:AddGoods
+          path: 'addGoods',
+          name: 'addGoods',
+          component: AddGoods
         },
         {
-          path:'addService',
-          name:'addService',
-          component:AddService
+          path: 'addService',
+          name: 'addService',
+          component: AddService
         },
         {
-          path:'serviceList',
-          name:'serviceList',
-          component:()=>import ('./components/service/serviceList.vue')
+          path: 'serviceList',
+          name: 'serviceList',
+          component: () => import('./components/service/serviceList.vue')
         },
         {
-          path:'orderMessage',
-          name:'orderMessage',
-          component:()=>import ('./components/orderMessage/orderMessage.vue')
+          path: 'orderMessage',
+          name: 'orderMessage',
+          component: () => import('./components/orderMessage/orderMessage.vue')
+        },
+        {
+          path: 'addShop',
+          name: 'addShop',
+          component: () => import('./components/shop/addShop.vue')
+        },
+        {
+          path: 'shopList',
+          name: 'shopList',
+          component: () => import('./components/shop/shopList.vue')
         },
       ]
     }
