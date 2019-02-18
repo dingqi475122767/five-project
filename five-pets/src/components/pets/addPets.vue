@@ -1,15 +1,47 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-      <span>新增宠物</span>
-      <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+      <span>宠物新增</span>
     </div>
-    <div class="text item">{{'列表内容 ' }}</div>
+    <div class="text item">
+        <el-upload
+    class="avatar-uploader"
+   action="https://jsonplaceholder.typicode.com/posts/"
+    :show-file-list="false"
+    :on-success="handleAvatarSuccess"
+   :before-upload="beforeAvatarUpload">
+  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+</el-upload>
+    </div>
   </el-card>
 </template>
 
 <script>
-export default {};
+export default {
+   data() {
+      return {
+        imageUrl: ''
+      };
+    },
+  methods: {
+     handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+              },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      }
+  },
+};
 </script>
 
 <style>
@@ -31,4 +63,28 @@ export default {};
 .box-card {
   width: 480px;
 }
+
+ .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>
