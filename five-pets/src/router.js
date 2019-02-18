@@ -84,16 +84,6 @@ export default new Router({
           name:'orderMessage',
           component:()=>import ('./components/orderMessage/orderMessage.vue')
         },
-        {
-          path:'addShop',
-          name:'addShop',
-          component:()=>import ('./components/shop/addShop.vue')
-        },
-        {
-          path:'shopList',
-          name:'shopList',
-          component:()=>import ('./components/shop/shopList.vue')
-        },
       ]
     }
   ]
