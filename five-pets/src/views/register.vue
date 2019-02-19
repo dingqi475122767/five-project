@@ -13,7 +13,7 @@
         <el-input type="password" v-model="ruleForm2.checkPass"></el-input>
       </el-form-item>
     </el-form>
-    <el-button type="primary" class="regbtn" @click="confirm">注册爱宠邦账户</el-button>
+    <el-button type="primary" class="regbtn" @click="confirm('ruleForm2')">注册爱宠邦账户</el-button>
     <div style="margin: 20px;"></div>
     <div @click="black" class="return">返回登陆页面</div>
   </div>
@@ -26,38 +26,33 @@ export default {
     black() {
       this.$router.history.push("/login");
     },
-    confirm() {
-      //confirm确认注册
-      this.$alert("<p>注册成功,等待管理人员审核</p>", "提示：", {
-        dangerouslyUseHTMLString: true
-      });
-      const account = this.account; //账户
-      const regPassword = this.regPassword; //注册密码
-      const affirm = this.affirm; //确认密码
-      // this.$store.commit("/shopUsers/","account"),
-      this.account = "";
-      this.regPassword = "";
-      this.affirm = "";
-    },
-    phoneNum() {
-      //手机号正则验证
-      let phone = /^1[3,5,8,7]\d{9}$/;
-      const account = this.account; //账户
-      if (phone.test(account)) {
-        console.log("sssss");
-      } else {
-        this.$alert("<p>手机号错误</p>", "提示：", {
-          dangerouslyUseHTMLString: true
+    confirm(ruleForm2) {
+       this.$refs[ruleForm2].validate((valid) => {
+         console.log(valid)
+          if (valid) {
+            alert('submit!');
+          } else {
+            alert("注册有误，请重新填写")
+            return false;
+          }
         });
-        this.account = "";
-      }
-    },
-    regpass() {
-      //密码正则验证
-      let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
-      const regPassword = this.regPassword; //注册密码
-      if (password.test(regPassword) == "") {
-      }
+    //   const account = this.account; //账户
+    //   const regPassword = this.regPassword; //注册密码
+    //   const affirm = this.affirm; //确认密码
+    //  if(){
+    //   confirm确认注册
+    //  this.$alert("<p>注册成功,等待管理人员审核</p>", "提示：", {
+    //    dangerouslyUseHTMLString: true
+    //  });
+    //  }
+      
+      
+    //   // this.$store.commit("/shopUsers/","account"),
+
+    //   this.account = "";
+    //   this.regPassword = "";
+    //   this.affirm = "";
+      
     }
   },
   data() {
@@ -82,7 +77,7 @@ export default {
     };
     var validateAccount = (rule, value, callback) => {
       //账号的正则
-      let reAccount = /^1\d{10}$/;
+      let reAccount = /^1[3,5,7,8]\d{9}$/;
       if (reAccount.test(value)) {
         callback();
         } else {

@@ -63,6 +63,11 @@ export default new Router({
           component:()=>import('./components/users/addUser.vue')
         },
         {
+          path: 'terraceList',
+          name: 'terraceList',
+          component:()=>import('./components/users/terraceList.vue')
+        },
+        {
           path: 'auditList',
           name: 'auditList',
           component:()=>import('./components/users/auditList.vue')
