@@ -52,7 +52,6 @@ export default ({
             commit,
             dispatch
         }, payload) => {
-            console.log(payload)
             await addShopAsync(payload)
             // dispatch('addShop')
         },
@@ -60,7 +59,6 @@ export default ({
             commit,
             dispatch
         }, payload) => {
-            console.log(payload)
             const{data}=await getUsers_PT(payload)
             commit("get",data[0].username)
         },

@@ -4,11 +4,11 @@
 const qiniu = require('qiniu')
 
 // 创建上传凭证
-const accessKey = 'hWXVPBfMvf1RVReb29iQpD-9v8tHXbGJ2ZGUbMuz'
-const secretKey = 'jLBE2b5RQ3AeDzKG-79BEIR4LY9GmdGRytr9folo'
+const accessKey = 'oqxEJSvXvOGbsqzX9GEDPgypxIqva8uZOUXicVEw'
+const secretKey = '_VgQYNe8SgOMnnOFn3gPRfBbBbUX3CfSRTfOFtUy'
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
 const options = {
-  scope: 'images',
+  scope: 'liuyou',
   expires: 7200
 }
 const putPolicy = new qiniu.rs.PutPolicy(options)

@@ -21,9 +21,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
-  "shopUsers"
-);
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers("shopUsers");
 export default {
   name: "reg",
   methods: {
@@ -39,8 +37,8 @@ export default {
             password: this.ruleForm2.pass,
             state: "disable"
           });
-          alert("注册成功");
-          this.$router.history.push("/login");
+          alert("注册成功！等待管理员审核");
+          this.$router.history.push('/login')
         } else {
           alert("注册有误，请重新填写");
           return false;
@@ -50,6 +48,7 @@ export default {
   },
 
   data() {
+    //密码判断
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
@@ -60,6 +59,7 @@ export default {
         callback();
       }
     };
+    //判断密码是否一致
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
@@ -69,6 +69,7 @@ export default {
         callback();
       }
     };
+    //手机号码正则
     var validateAccount = (rule, value, callback) => {
       //账号的正则
       let reAccount = /^1[3,5,7,8]\d{9}$/;
