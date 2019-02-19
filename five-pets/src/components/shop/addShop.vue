@@ -1,26 +1,26 @@
 <template>
   <el-card class="box-card">
     <div style="width:500px">
-      <el-form label-width="80px" :model="shop">
-        <el-form-item label="门店法人 ">
-          <el-input v-model="shop.legalEntity" :value="shop.legalEntity" :disabled="true"></el-input>
+      <el-form label-width="80px" :model="shop" ref="shop" :rules="rules">
+        <el-form-item label="门店法人 " prop="legalEntity">
+          <el-input v-model="shop.legalEntity"></el-input>
         </el-form-item>
-        <el-form-item label="门店名称">
+        <el-form-item label="门店名称" prop="shopName">
           <el-input v-model="shop.shopName "></el-input>
         </el-form-item>
-        <el-form-item label="门店地址 ">
+        <el-form-item label="门店地址 " prop="address">
           <el-input v-model="shop.address"></el-input>
         </el-form-item>
-        <el-form-item label="门店电话  ">
+        <el-form-item label="门店电话  " prop="phone">
           <el-input v-model="shop.phone "></el-input>
         </el-form-item>
-        <el-form-item label="门店经纬 ">
+        <el-form-item label="门店经纬 " prop="gps">
           <el-input v-model="shop.gps"></el-input>
         </el-form-item>
-        <el-form-item label="执照号码 ">
+        <el-form-item label="执照号码 " prop="licence">
           <el-input v-model="shop.licence"></el-input>
         </el-form-item>
-        <el-form-item label="执照图片  ">
+        <el-form-item label="执照图片 ">
           <el-upload
             :action="domain"
             :http-request="upqiniu"
@@ -30,6 +30,7 @@
             :before-upload="beforeUpload"
             :on-success="handleAvatarSuccess"
             :on-error="handleError"
+            ref="upload"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -38,8 +39,8 @@
           </el-dialog>
         </el-form-item>
       </el-form>
-      <el-row>
-        <el-button type="primary" @click="addShop">新增</el-button>
+      <el-row class="center">
+        <el-button type="primary" @click="addShop('shop')">新增</el-button>
       </el-row>
     </div>
   </el-card>
@@ -58,15 +59,30 @@ export default {
       // 七牛云的上传地址，根据自己所在地区选择，我这里是华南区
       domain: "https://upload-z2.qiniup.com",
       // 这是七牛云空间的外链默认域名
-      qiniuaddr: "pm6civjct.bkt.clouddn.com"
+      qiniuaddr: "pm6civjct.bkt.clouddn.com",
+      rules: {
+        licence: [
+          { required: true, message: "内容不能为空！", trigger: "blur" }
+        ],
+        shopName: [
+          { required: true, message: "内容不能为空！", trigger: "blur" }
+        ],
+        address: [
+          { required: true, message: "内容不能为空！", trigger: "blur" }
+        ],
+        phone: [{ required: true, message: "内容不能为空！", trigger: "blur" }],
+        legalEntity: [
+          { required: true, message: "内容不能为空！", trigger: "blur" }
+        ],
+        gps: [{ required: true, message: "内容不能为空！", trigger: "blur" }]
+      }
     };
   },
   computed: {
     ...mapState(["shop"])
   },
   methods: {
-    ...mapActions(["addShopAsync", "getToken", "isLogin"]),
-    // ...mapMutations(["addShop"]),
+    ...mapActions(["addShopAsync", "isLogin"]),
     upqiniu(req) {
       console.log(req);
       const config = {
@@ -94,44 +110,29 @@ export default {
         formdata.append("key", keyname);
         // 获取到凭证之后再将文件上传到七牛云空间
         this.axios.post(this.domain, formdata, config).then(res => {
-          this.imageUrl = "http://" + this.qiniuaddr + "/" + res.data.key;
+          this.shop.licenceImg ="http://" + this.qiniuaddr + "/" + res.data.key;
           // console.log(this.imageUrl)
         });
       });
     },
     beforeUpload(file) {
+      console.log(file);
     },
-    addShop() {
-      let shopName = this.shop.shopName;
-      let address = this.shop.address;
-      let phone = this.shop.phone;
-      let legalEntity = this.shop.legalEntity;
-      let licence = this.shop.licence;
-      let licenceImg = this.imageUrl;
-      let gps = this.shop.gps;
-      let shopUserID = this.shop.shopUserID;
-      let state = false;
-      this.addShopAsync({
-        shopName,
-        address,
-        phone,
-        legalEntity,
-        licence,
-        licenceImg,
-        gps,
-        shopUserID,
-        state
+    addShop(shop) {
+      this.$refs[shop].validate(valid => {
+        if (valid) {
+          console.log(this.shop);
+          this.addShopAsync(this.shop);
+          this.$refs[shop].resetFields();
+          this.$refs.upload.clearFiles();
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
       });
-      this.shop.shopName = "";
-      this.shop.address = "";
-      this.shop.phone = "";
-      this.shop.legalEntity = "";
-      this.shop.licence = "";
-      this.imageUrl = "";
-      this.shop.gps = "";
-      this.shop.shopUserID = "";
     },
     handleRemove(file, fileList) {
+      console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -139,6 +140,7 @@ export default {
     },
     //文件上传成功时的钩子
     handleAvatarSuccess(res, file) {
+      console.log(this.imageUrl);
     },
     //文件上传失败时的钩子
     handleError(res) {
@@ -149,17 +151,14 @@ export default {
         type: "warning"
       });
     }
-  },
-  mounted() {
-    this.isLogin();
-
-    // console.log(this.shop);
-    // this.getUsers_MD({ _id });
   }
 };
 </script>
 <style scoped>
 .box-card {
   width: 100%;
+}
+.center {
+  text-align: center;
 }
 </style>
