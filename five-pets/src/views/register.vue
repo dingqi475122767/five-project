@@ -20,8 +20,8 @@
 </template>
 
 <script>
-// import { createNamespacedHelpers } from "vuex";
-// const { mapState, mapMutations, mapActions } = createNamespacedHelpers("shop");
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers("shopUsers");
 export default {
   name: "reg",
   methods: {
@@ -32,33 +32,32 @@ export default {
        this.$refs[ruleForm2].validate((valid) => {
          console.log(valid)
           if (valid) {
-
+            
             alert('submit!');
           } else {
             alert("注册有误，请重新填写")
             return false;
           }
         });
-    //   const account = this.account; //账户
-    //   const regPassword = this.regPassword; //注册密码
-    //   const affirm = this.affirm; //确认密码
-    //  if(){
-    //   confirm确认注册
-    //  this.$alert("<p>注册成功,等待管理人员审核</p>", "提示：", {
-    //    dangerouslyUseHTMLString: true
-    //  });
-    //  }
+      const account = this.account; //账户
+      const regPassword = this.regPassword; //注册密码
+      const affirm = this.affirm; //确认密码
+      //confirm确认注册
+     this.$alert("<p>注册成功,等待管理人员审核</p>", "提示：", {
+       dangerouslyUseHTMLString: true
+     });
       
       
-    //   // this.$store.commit("/shopUsers/","account"),
+      // this.$store.commit("/shopUsers/","account"),
 
-    //   this.account = "";
-    //   this.regPassword = "";
-    //   this.affirm = "";
+      this.account = "";
+      this.regPassword = "";
+      this.affirm = "";
       
     }
   },
   data() {
+    //密码判断
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
@@ -69,6 +68,7 @@ export default {
         callback();
       }
     };
+    //判断密码是否一致
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
@@ -78,6 +78,7 @@ export default {
         callback();
       }
     };
+    //手机号码正则
     var validateAccount = (rule, value, callback) => {
       //账号的正则
       let reAccount = /^1[3,5,7,8]\d{9}$/;
