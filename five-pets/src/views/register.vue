@@ -2,15 +2,15 @@
   <div class="box">
     <p>创建你的个人账户</p>
     <div style="margin: 20px;"></div>
-    <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-      <el-form-item label="账号">
-        <el-input v-model="formLabelAlign.name" placeholder="创建账户"></el-input>
+    <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px">
+      <el-form-item label="手机号" prop="account">
+        <el-input type="text" v-model="ruleForm2.account"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="formLabelAlign.region" placeholder="创建密码"></el-input>
+      <el-form-item label="密码" prop="pass">
+        <el-input type="password" v-model="ruleForm2.pass"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="formLabelAlign.region" placeholder="确认密码"></el-input>
+      <el-form-item label="确认密码" prop="checkPass">
+        <el-input type="password" v-model="ruleForm2.checkPass"></el-input>
       </el-form-item>
     </el-form>
     <el-button type="primary" class="regbtn" @click="confirm">注册爱宠邦账户</el-button>
@@ -33,12 +33,50 @@ export default {
     }
   },
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.ruleForm2.checkPass !== "") {
+          this.$refs.ruleForm2.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.ruleForm2.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+    var validateAccount = (rule, value, callback) => {
+      //账号的正则
+      let reAccount = /^1\d{10}$/;
+      if (reAccount.test(value)) {
+        callback();
+        } else {
+        callback(new Error("手机号格式不正确"));
+      }
+    };
     return {
       labelPosition: "right",
       formLabelAlign: {
         name: "",
         region: "",
         type: ""
+      },
+      ruleForm2: {
+        account: "",
+        pass: "",
+        checkPass: "",
+      },
+      rules2: {
+        account: [{ validator: validateAccount, trigger: "blur" }],
+        pass: [{ validator: validatePass, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
       }
     };
   }

@@ -1,21 +1,41 @@
 <template>
   <div>
-    <el-tabs type="card" closable @tab-click="handleClick">
-      <el-tab-pane label="用户管理" name="first" closable>用户管理</el-tab-pane>
-      <el-tab-pane label="配置管理" name="second" closable>配置管理</el-tab-pane>
-      <el-tab-pane label="角色管理" name="third" closable>角色管理</el-tab-pane>
-      <el-tab-pane label="什么" name="fourth" closable>什么</el-tab-pane>
-    </el-tabs>
+    <el-table :data="tableData" border style="width: 100%">
+      <el-table-column prop="date" label="日期" width="180"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="address" label="地址"></el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
 export default {
   name: "orderMessage",
-  methods: {
-      handleClick(tab,event){
-          console.log(tab,event)
-      }
+  data() {
+    return {
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 路"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 路"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 路"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 路"
+        }
+      ]
+    };
   }
 };
 </script>
