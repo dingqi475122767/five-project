@@ -6,7 +6,8 @@ import pets from "./module/pets"
 import shop from './module/shop'
 import services from './module/services'
 import goods from './module/goods'
-import shopUsers from './module/shopUsers';
+
+import { shopUsers, shopLogin } from './module/shopUsers';
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
   modules: {
     pets,
     services,
-    shop,goods,shopUsers
+    shop, goods, shopUsers,
+    shopLogin,
 
   }
 })

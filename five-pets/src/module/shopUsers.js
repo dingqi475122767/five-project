@@ -1,4 +1,4 @@
-import {regAsync} from '../services/shopUsers'
+import {regAsync,loginAsync} from '../services/shopUsers'
 
 export default {
   namespaced: true,
@@ -12,9 +12,14 @@ export default {
 
   },
   actions: {
+    //门店注册
     regAsync: (state,payload) => {
       // console.log(state,payload)
       regAsync(payload)
+    },
+    //门店登陆
+    loginAsync:(state,payload)=>{
+      console.log(state,payload)
     }
   }
 }

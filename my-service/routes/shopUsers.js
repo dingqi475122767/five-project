@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { reg } = require("../service/shopUsersService")
+const { reg, login } = require("../service/shopUsersService")
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -8,8 +8,12 @@ router.get('/', function (req, res, next) {
 });
 //门店注册
 router.post('/reg', async function (req, res, next) {
-  console.log(req.body)
   res.send(await reg(req.body));
+});
+
+//门店登陆
+router.post('/login', async function (req, res, next) {
+  res.send(await login(req.body));
 });
 
 module.exports = router;
