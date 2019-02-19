@@ -1,5 +1,5 @@
 <template>
-  <div class="demo-input-suffix">
+    <div class="demo-input-suffix">
     <el-input placeholder="请输入内容" v-model="input23">
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
@@ -13,8 +13,8 @@
 
 <script>
 export default {
-  name: "userList", //用户列表
-  data() {
+    name:"auditList",//平台列表
+    data() {
     return {
       tableData: [
         {
@@ -26,8 +26,9 @@ export default {
       input23: ''
     };
   }
-};
+}
 </script>
 
 <style>
+
 </style>

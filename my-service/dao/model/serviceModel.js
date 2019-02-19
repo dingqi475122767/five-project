@@ -12,9 +12,13 @@ const serviceSchema = new mongoose.Schema({
     servicePrice:Number,
     //服务时长
     serviceTiming:Number,
-    //排期
-    serviceSchedule:Number,
-    
+    //// serviceSchedule:Number,
+    //增加服务当天的日期
+    timeDay:String,
+    //增加服务的时间点
+    timePoint:String,
+    //状态值  是否删除
+    isDel:Boolean
 })
 // 通过数据结构来创建数据模型
 mongoose.model("serviceModel", serviceSchema, "service");

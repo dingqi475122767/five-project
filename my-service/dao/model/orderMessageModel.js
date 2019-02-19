@@ -11,10 +11,26 @@ const orderMessageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"goodsModule"
     },
+    //与宠物关联
+    petsID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"goodsModule"
+    },
+    //与服务关联
+    serviceID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"goodsModule"
+    },
+    //商品名
+
+    //商品数量
+    
     //订单总价
     totalPrice:Number,
     //下单时间
-    orderTime:String
+    orderTime:String,
+    //用户名
+    users:String
 })
 // 通过数据结构来创建数据模型
 mongoose.model("orderMessageModel", orderMessageSchema, "orderMessage");
