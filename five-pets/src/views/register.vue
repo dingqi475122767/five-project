@@ -37,6 +37,8 @@ export default {
             password:this.ruleForm2.pass,
             state:"disable"
           });
+          alert("注册成功！等待管理员审核");
+          this.$router.history.push('/login')
         } else {
           alert("注册有误，请重新填写");
           return false;
