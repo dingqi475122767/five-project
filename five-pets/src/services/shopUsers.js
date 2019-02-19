@@ -9,6 +9,7 @@ export function regAsync(data){
       })
 }
 
+<<<<<<< HEAD
 //门店登陆
 export function loginAsync(data){
   return request("/shopUsers/login",{  
@@ -16,4 +17,12 @@ export function loginAsync(data){
       headers: {'Content-Type': 'application/json'},  
       body:JSON.stringify(data)
     })
+=======
+export function loginAsync(data){
+    return request("/shopUsers/login",{  
+        method: 'POST',  
+        headers: {'Content-Type': 'application/json'},  
+        body:JSON.stringify(data)
+      })
+>>>>>>> aeda6bad33120f486e342bee62874e0f08626cd2
 }

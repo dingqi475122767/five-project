@@ -7,6 +7,10 @@ module.exports.addShop = async function(shop){
 module.exports.getShop = async function(shop){
     return await shopModel.find(shop);
 }
+//删除门店
+module.exports.delShop = async function(shop){
+    return await shopModel.deleteOne(shop);
+}
 //获取门店详情
 module.exports.getOne = async function(shop){
     return await shopModel.find(shop);
@@ -22,4 +26,7 @@ module.exports.getApplyShop = async function(){
 module.exports.consentApply = async function({_id,state}){
     return await shopModel.updateOne({_id}, {state})
 }
-//
+//修改门店信息
+module.exports.updateShop = async function({_id,shopName,address,phone,legalEntity,licence,licenceImg,gps,shopUserID,state}){
+    return await shopModel.updateOne({_id}, {shopName,address,phone,legalEntity,licence,licenceImg,gps,shopUserID,state})
+}

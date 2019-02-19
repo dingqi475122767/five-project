@@ -107,6 +107,11 @@ export default new Router({
           name: 'shopList',
           component: () => import('./components/shop/shopList.vue')
         },
+        {
+          path: 'updateShop',
+          name: 'updateShop',
+          component: () => import('./components/shop/updateShop.vue')
+        },
       ]
     }
   ]

@@ -32,10 +32,10 @@ export default {
     confirm(ruleForm2) {
       this.$refs[ruleForm2].validate(valid => {
         if (valid) {
-          this.$store.dispatch('shopUsers/regAsync',{
-            username:this.ruleForm2.account,
-            password:this.ruleForm2.pass,
-            state:"waiting"
+          this.$store.dispatch("shopUsers/regAsync", {
+            username: this.ruleForm2.account,
+            password: this.ruleForm2.pass,
+            state: "disable"
           });
           alert("注册成功！等待管理员审核");
           this.$router.history.push('/login')

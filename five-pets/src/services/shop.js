@@ -20,10 +20,6 @@ export function isLogin() {
 export function getShop({shopUserID}={}) {
   return request(`/shop/getShop?shopUserID=${shopUserID}`);
 }
-export function getUsers_PT({_id}={}) {
-  return request(`/users/getOne?_id=${_id}`);
-}
-
 export function getOneShop({_id} = {}){
   return request('/shop/getOne' , {  
     method: 'POST',  
@@ -41,5 +37,19 @@ export function consentApply({_id,state} = {}){
     method: 'POST',  
     headers: {'Content-Type': 'application/json'},  
       body:JSON.stringify({_id,state}),
+    })
+}
+export function updateShops({_id,shopName,address,phone,legalEntity,licence,licenceImg,gps,shopUserID,state} = {}){
+  return request('/shop/updateShop' , {  
+    method: 'POST',  
+    headers: {'Content-Type': 'application/json'},  
+      body:JSON.stringify({_id,shopName,address,phone,legalEntity,licence,licenceImg,gps,shopUserID,state}),
+    })
+}
+export function delShop({_id} = {}){
+  return request('/shop/delShop' , {  
+    method: 'POST',  
+    headers: {'Content-Type': 'application/json'},  
+      body:JSON.stringify({_id}),
     })
 }
