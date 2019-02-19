@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {addShop,getShop,getOne,getApplyShop,consentApply}  = require('../service/shopService');
+const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop}  = require('../service/shopService');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -35,5 +35,13 @@ router.get('/getApplyShop',async function(req, res, next) {
 //通过审核
 router.post('/consentApply',async function(req, res, next) {
   res.send(await consentApply(req.body));
+});
+//修改门店信息
+router.post('/updateShop',async function(req, res, next) {
+  res.send(await updateShop(req.body));
+});
+//删除门店
+router.post('/delShop',async function(req, res, next) {
+  res.send(await delShop(req.body));
 });
 module.exports = router;

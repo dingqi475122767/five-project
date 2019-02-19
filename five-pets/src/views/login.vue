@@ -11,7 +11,7 @@
       </el-form-item>
     </el-form>
     <el-button type="primary" @click="login" class="loginbtn">平台管理登陆</el-button>
-    <el-button type="primary" class="loginbtn">门店用户登陆</el-button>
+    <el-button type="primary" @click="loginShop" class="loginbtn">门店用户登陆</el-button>
     <div style="margin: 20px;"></div>
     <div>
       没有账号 ?
@@ -22,9 +22,15 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
+  "shopUsers"
+);
+
 export default {
   name: "login",
   methods: {
+    ...mapActions(["loginAsync"]),
     reg() {
       this.$router.history.push("/reg");
     },
@@ -34,6 +40,14 @@ export default {
       const loginPassword = this.loginPassword;
       this.loginName = "";
       this.loginPassword = "";
+    },
+    loginShop(){
+      const loginName = this.loginName;
+      const loginPassword = this.loginPassword;
+      this.$store.dispatch("shopUsers/loginAsync",{
+        username:loginName,
+        password:loginPassword,
+      })
     }
   },
   data() {
