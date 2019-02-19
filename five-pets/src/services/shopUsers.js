@@ -7,3 +7,11 @@ export function regAsync(data){
         body:JSON.stringify(data)
       })
 }
+
+export function loginAsync(data){
+    return request("/shopUsers/login",{  
+        method: 'POST',  
+        headers: {'Content-Type': 'application/json'},  
+        body:JSON.stringify(data)
+      })
+}
