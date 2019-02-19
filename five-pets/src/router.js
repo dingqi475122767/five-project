@@ -83,6 +83,11 @@ export default new Router({
           component: AddGoods
         },
         {
+          path:'updateGoods',
+          name:'updateGoods',
+          component:()=>import('./components/goods/updateGoods.vue')
+        },
+        {
           path: 'addService',
           name: 'addService',
           component: AddService
