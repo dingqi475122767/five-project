@@ -26,10 +26,10 @@
           <span>门店管理</span>
         </template>
         <el-menu-item-group>
-          <router-link to="/mis/userList" style="text-decoration:none;">
+          <router-link to="/mis/shopList" style="text-decoration:none;">
             <el-menu-item index="2-1">门店列表</el-menu-item>
           </router-link>
-          <router-link to="/mis/userList" style="text-decoration:none;">
+          <router-link to="/mis/addShop" style="text-decoration:none;">
             <el-menu-item index="2-2">新增门店</el-menu-item>
           </router-link>
         </el-menu-item-group>
@@ -68,10 +68,10 @@
           <span>宠物管理</span>
         </template>
         <el-menu-item-group>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/petList" style="text-decoration:none;">
             <el-menu-item index="5-1">宠物列表</el-menu-item>
           </router-link>
-          <router-link to="/mis/goodsList" style="text-decoration:none;">
+          <router-link to="/mis/addPets" style="text-decoration:none;">
             <el-menu-item index="5-2">新增宠物</el-menu-item>
           </router-link>
         </el-menu-item-group>
