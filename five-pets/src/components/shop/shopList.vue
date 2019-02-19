@@ -2,8 +2,7 @@
   <el-table
     :data="shops.filter(data => !search || data.shopName.toLowerCase().includes(search.toLowerCase()))"
     style="width: 100%"
-    :row-class-name="tableRowClassName"
-  >
+    :row-class-name="tableRowClassName">
     <el-table-column label="编号" prop="_id"></el-table-column>
     <el-table-column label="门店名称" prop="shopName"></el-table-column>
     <el-table-column label="门店地址" prop="address"></el-table-column>
