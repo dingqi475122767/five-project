@@ -25,37 +25,26 @@ const { mapState, mapMutations, mapActions } = createNamespacedHelpers("shopUser
 export default {
   name: "reg",
   methods: {
+    ...mapActions(["regAsync"]),
     black() {
       this.$router.history.push("/login");
     },
     confirm(ruleForm2) {
-       this.$refs[ruleForm2].validate((valid) => {
-         console.log(valid)
-          if (valid) {
-            
-            alert('submit!');
-          } else {
-            alert("注册有误，请重新填写")
-            return false;
-          }
-        });
-      const account = this.account; //账户
-      const regPassword = this.regPassword; //注册密码
-      const affirm = this.affirm; //确认密码
-      //confirm确认注册
-     this.$alert("<p>注册成功,等待管理人员审核</p>", "提示：", {
-       dangerouslyUseHTMLString: true
-     });
-      
-      
-      // this.$store.commit("/shopUsers/","account"),
-
-      this.account = "";
-      this.regPassword = "";
-      this.affirm = "";
-      
+      this.$refs[ruleForm2].validate(valid => {
+        if (valid) {
+          this.$store.dispatch('shopUsers/regAsync',{
+            username:this.ruleForm2.account,
+            password:this.ruleForm2.pass,
+            state:"disable"
+          });
+        } else {
+          alert("注册有误，请重新填写");
+          return false;
+        }
+      });
     }
   },
+
   data() {
     //密码判断
     var validatePass = (rule, value, callback) => {
@@ -84,7 +73,7 @@ export default {
       let reAccount = /^1[3,5,7,8]\d{9}$/;
       if (reAccount.test(value)) {
         callback();
-        } else {
+      } else {
         callback(new Error("手机号格式不正确"));
       }
     };
@@ -101,12 +90,12 @@ export default {
       ruleForm2: {
         account: "",
         pass: "",
-        checkPass: "",
+        checkPass: ""
       },
       rules2: {
         account: [{ validator: validateAccount, trigger: "blur" }],
         pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }]
       }
     };
   }
