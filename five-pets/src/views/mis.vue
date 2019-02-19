@@ -15,8 +15,11 @@
           <router-link to="/mis/userList" style="text-decoration:none;">
             <el-menu-item index="1-1">用户列表</el-menu-item>
           </router-link>
-          <router-link to="/mis/userList" style="text-decoration:none;">
-            <el-menu-item index="1-2">新增用户</el-menu-item>
+          <router-link to="/mis/auditList" style="text-decoration:none;">
+            <el-menu-item index="1-2">审核列表</el-menu-item>
+          </router-link>
+          <router-link to="/mis/addUser" style="text-decoration:none;">
+            <el-menu-item index="1-3">新增用户</el-menu-item>
           </router-link>
         </el-menu-item-group>
       </el-submenu>
