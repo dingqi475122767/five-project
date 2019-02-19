@@ -20,6 +20,8 @@
 </template>
 
 <script>
+// import { createNamespacedHelpers } from "vuex";
+// const { mapState, mapMutations, mapActions } = createNamespacedHelpers("shop");
 export default {
   name: "reg",
   methods: {
@@ -30,6 +32,7 @@ export default {
        this.$refs[ruleForm2].validate((valid) => {
          console.log(valid)
           if (valid) {
+
             alert('submit!');
           } else {
             alert("注册有误，请重新填写")
