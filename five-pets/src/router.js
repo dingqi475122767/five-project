@@ -58,9 +58,19 @@ export default new Router({
           component: () => import('./components/pets/petDetails.vue')
         },
         {
-          path: 'userList',
-          name: 'userList',
-          component: UserList
+          path: 'addUser',
+          name: 'addUser',
+          component:()=>import('./components/users/addUser.vue')
+        },
+        {
+          path: 'terraceList',
+          name: 'terraceList',
+          component:()=>import('./components/users/terraceList.vue')
+        },
+        {
+          path: 'auditList',
+          name: 'auditList',
+          component:()=>import('./components/users/auditList.vue')
         },
         {
           path: 'goodsList',

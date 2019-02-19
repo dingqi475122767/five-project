@@ -6,12 +6,12 @@ var logger = require('morgan');
 
 //引入一级路由
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users');   
 var shopRouter = require('./routes/shop');
 var shopUsersRouter = require('./routes/shopUsers');
 var petsRouter = require('./routes/pets');
 var goodsRouter = require('./routes/goods');
-var serviceRouter = require('./routes/service');
+var serviceRouter = require('./routes/service');  
 var orderMessageRouter = require('./routes/orderMessage');
 var commentRouter = require('./routes/comment');
 

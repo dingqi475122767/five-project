@@ -22,3 +22,4 @@ module.exports.getApplyShop = async function(){
 module.exports.consentApply = async function({_id,state}){
     return await shopModel.updateOne({_id}, {state})
 }
+//

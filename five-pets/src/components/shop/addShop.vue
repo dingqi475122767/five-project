@@ -100,7 +100,6 @@ export default {
       });
     },
     beforeUpload(file) {
-      console.log(file);
     },
     addShop() {
       let shopName = this.shop.shopName;
@@ -133,7 +132,6 @@ export default {
       this.shop.shopUserID = "";
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -141,7 +139,6 @@ export default {
     },
     //文件上传成功时的钩子
     handleAvatarSuccess(res, file) {
-      console.log(this.imageUrl);
     },
     //文件上传失败时的钩子
     handleError(res) {
