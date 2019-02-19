@@ -19,7 +19,9 @@ const goodsSchema = new mongoose.Schema({
     //商品图片
     goodsImg:String,
     //销量
-    sales:Number
+    sales:Number,
+    // 是否删除，修改状态值
+    isDel:Boolean
 })
 // 通过数据结构来创建数据模型
 mongoose.model("goodsModel", goodsSchema, "goods");
