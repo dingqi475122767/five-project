@@ -1,3 +1,4 @@
+import {addServiceAsync} from '../services/service'
 export default {
     namespaced: true,
     state: {
@@ -39,6 +40,9 @@ export default {
 
     },
     actions: {
-
+        addServiceAsync: async ({ commit, dispatch}, payload) => {
+            console.log('222')
+            await addServiceAsync(payload)
+        },
     }
 }
