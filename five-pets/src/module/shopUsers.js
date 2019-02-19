@@ -13,7 +13,6 @@ export default {
   },
   actions: {
     regAsync: (state,payload) => {
-      // console.log(state,payload)
       regAsync(payload)
     }
   }

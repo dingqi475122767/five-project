@@ -34,11 +34,13 @@ export default {
     confirm(ruleForm2) {
       this.$refs[ruleForm2].validate(valid => {
         if (valid) {
-          this.$store.dispatch('shopUsers/regAsync',{
-            username:this.ruleForm2.account,
-            password:this.ruleForm2.pass,
-            state:"disable"
+          this.$store.dispatch("shopUsers/regAsync", {
+            username: this.ruleForm2.account,
+            password: this.ruleForm2.pass,
+            state: "disable"
           });
+          alert("注册成功");
+          this.$router.history.push("/login");
         } else {
           alert("注册有误，请重新填写");
           return false;
