@@ -78,7 +78,6 @@ export default {
         if (valid) {
           this.update.state = false;
           this.updateShops(this.update);
-          this.$refs[update].resetFields();
           this.update.licenceImg = "";
         } else {
           console.log("error submit!!");
@@ -86,7 +85,7 @@ export default {
         }
       });
 
-      // this.$router.history.push(`/mis/shopList`);
+      this.$router.history.push(`/mis/shopList`);
     }
   }
 };
