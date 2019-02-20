@@ -53,9 +53,9 @@ export default new Router({
           component: () => import('./components/pets/petList.vue')
         },
         {
-          path: 'petDetails',
-          name: 'petDetails',
-          component: () => import('./components/pets/petDetails.vue')
+          path: 'updatePet',
+          name: 'updatePet',
+          component: () => import('./components/pets/updatePet.vue')
         },
         {
           path: 'addUser',
@@ -96,6 +96,16 @@ export default new Router({
           path: 'serviceList',
           name: 'serviceList',
           component: () => import('./components/service/serviceList.vue')
+        },
+        {
+          path: 'updateService',
+          name: 'updateService',
+          component: () => import('./components/service/updateService.vue')
+        },
+        {
+          path: "updateService/:data",
+          name: "updateService",
+          component: () => import("./components/service/updateService.vue")
         },
         {
           path: 'orderMessage',

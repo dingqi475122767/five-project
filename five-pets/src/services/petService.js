@@ -22,3 +22,11 @@ export function addPets({petsName,petsType,petsPrice,petsBirth,petsImg,shopID} =
         body:JSON.stringify({_id}),
       })
   };
+
+  export function update({_id,shopID,petsName,petsType,petsPrice,petsBirth,petsImg} = {}){
+    return request('/pets/update' , {  
+        method: 'POST',  
+        headers: {'Content-Type': 'application/json'},  
+        body:JSON.stringify({_id,shopID,petsName,petsType,petsPrice,petsBirth,petsImg}),
+      })
+  };

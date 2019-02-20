@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {addPets,getPetsByPage,removePets} = require('../service/petsService');
+const {addPets,getPetsByPage,removePets,updatePets} = require('../service/petsService');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -25,6 +25,11 @@ router.post('/removePets',async function(req, res, next) {
 router.post('/getPetsByPage',async function(req, res, next) {
   res.send(await getPetsByPage(req.body));
  });
+
+ router.post('/update',async function(req, res, next) {
+  res.send(await updatePets(req.body));
+ });
+
 
 
 module.exports = router;

@@ -19,6 +19,8 @@ module.exports.getAllByPage = async function({currentPage,eachPage,shopUserID}){
         .limit(eachPage)
 
     return {currentPage,eachPage,totalNum,totalPage,data}
+<<<<<<< HEAD
+=======
 }
 
 // 删除商品，将商品的isDel属性修改为true，表示已经删除，页面上不再显示
@@ -27,4 +29,5 @@ module.exports.delGoods = async ({_id,isDel}) => await goodsModel.updateOne({_id
 // 修改商品信息
 module.exports.updateGoods = async ({_id,goodsName,goodsType,standard,packaging,price})=>{
     return await goodsModel.updateOne({_id},{goodsName,goodsType,standard,packaging,price})
+>>>>>>> 345150c6a08b1139b46c70a96f46698bf34056a0
 }

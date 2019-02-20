@@ -4,28 +4,27 @@
       <span>宠物新增</span>
     </div>
     <div class="text item">
-      <el-form ref="form" :model="pet" label-width="80px">
-        <el-form-item label="宠物名字">
+      <el-form ref="form" :model="pet" label-width="80px"  :rules="rules">
+        <el-form-item label="宠物名字" prop="petsName">
           <el-input v-model="pet.petsName"></el-input>
         </el-form-item>
-        <el-form-item label="宠物类型">
+        <el-form-item label="宠物类型" prop="petsType">
           <el-input v-model="pet.petsType"></el-input>
         </el-form-item>
-        <el-form-item label="宠物价格">
+        <el-form-item label="宠物价格" prop="petsPrice">
           <el-input v-model="pet.petsPrice"></el-input>
         </el-form-item>
-        <el-form-item label="请选择门店">
+        <el-form-item label="请选择门店" prop="shopID">
           <el-select v-model="pet.shopID" placeholder="请选择门店" filterable size="100%" ref="shop">
             <el-option
               v-for="item in shop"
               :key="item._id"
               :label="item.shopName"
               :value="item._id"
-              
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="出生时间">
+        <el-form-item label="出生时间" prop="petsBirth">
           <el-col>
             <el-date-picker
               type="date"
@@ -55,7 +54,7 @@
           </el-dialog>
         </el-form-item>
       </el-form>
-      <el-button type="primary" class="btn" @click="addBtn">确认添加</el-button>
+      <el-button type="primary" class="btn" @click="addBtn('form')">确认添加</el-button>
     </div>
   </el-card>
 </template>
@@ -75,14 +74,29 @@ export default {
       // 七牛云的上传地址，根据自己所在地区选择，我这里是华南区
       domain: "https://upload-z2.qiniup.com",
       // 这是七牛云空间的外链默认域名
-      qiniuaddr: "pm6civjct.bkt.clouddn.com",
+      qiniuaddr:  "pm6civjct.bkt.clouddn.com",
+      rules: {
+        petsName: [
+          { required: true, message: "宠物名称不能为空", trigger: "blur" }
+        ],
+        petsType: [
+          { required: true, message: "宠物类型不能为空", trigger: "blur" }
+        ],
+        petsPrice: [
+          { required: true, message: "宠物价格不能为空", trigger: "blur" }
+        ],
+        petsBirth: [
+          { required: true, message: "请选择出生日期", trigger: "blur" }
+        ],
+        shopID: [{ required: true, message: "请选择门店", trigger: "blur" }]
+      }
     };
   },
   computed: {
-    ...mapState(["pet","shop"])
+    ...mapState(["pet", "shop"])
   },
   methods: {
-    ...mapActions(["addPetsAsync","getShopsAsync"]),
+    ...mapActions(["addPetsAsync", "getShopsAsync"]),
     upqiniu(req) {
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
@@ -131,24 +145,25 @@ export default {
       });
     },
 
-    addBtn: async function() {
-     this.pet.shopID=this.$refs.shop.value;
-      await this.addPetsAsync({
-        petsName: this.pet.petsName,
-        petsType: this.pet.petsType,
-        petsPrice: this.pet.petsPrice,
-        petsBirth: this.pet.petsBirth,
-        petsImg: this.pet.petsImg,
-        shopID:this.pet.shopID
+    addBtn: function(form) {
+      this.$refs[form].validate(valid  => {
+        if (valid) {
+          this.pet.shopID = this.$refs.shop.value;
+           this.addPetsAsync({
+            petsName: this.pet.petsName,
+            petsType: this.pet.petsType,
+            petsPrice: this.pet.petsPrice,
+            petsBirth: this.pet.petsBirth,
+            petsImg: this.pet.petsImg,
+            shopID: this.pet.shopID
+          });
+         this.$refs[form].resetFields();
+          this.$refs.upload.clearFiles();
+          this.$message("新增成功");
+        } else {
+          return false;
+        }
       });
-      this.pet.petsName = "";
-      this.pet.petsImg = "";
-      this.pet.petsType = "";
-      this.pet.petsPrice = "";
-      this.pet.petsBirth = "";
-      this.$refs.upload.clearFiles();
-      this.$message("新增成功");
-      
     }
   },
   mounted() {
