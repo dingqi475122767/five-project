@@ -1,5 +1,6 @@
 import request from '../utils/request';
 
+//门店注册
 export function regAsync(data){
     return request("/shopUsers/reg",{  
         method: 'POST',  
@@ -8,6 +9,7 @@ export function regAsync(data){
       })
 }
 
+//门店登陆
 export function loginAsync(data){
     return request("/shopUsers/login",{  
         method: 'POST',  

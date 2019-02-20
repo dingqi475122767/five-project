@@ -75,7 +75,7 @@ export default {
       // 七牛云的上传地址，根据自己所在地区选择，我这里是华南区
       domain: "https://upload-z2.qiniup.com",
       // 这是七牛云空间的外链默认域名
-      qiniuaddr: "pn41z4cyi.bkt.clouddn.com"
+      qiniuaddr: "pm6civjct.bkt.clouddn.com",
     };
   },
   computed: {
