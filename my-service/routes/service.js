@@ -20,7 +20,7 @@ router.get('/getAllByPage',async function(req,res,next){
 // 修改服务
 router.get('/updateService',async function(req,res,next){
   console.log(req.body)
-  res.send(await getAllByPage(req.query))
+  res.send(await updateService(req.query))
 })
 
 module.exports = router;  

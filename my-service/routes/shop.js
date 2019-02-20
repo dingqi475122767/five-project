@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-const qnconfig = require('../config.js')
+const qnconfig = require('../leidan.js')
 // 处理请求
 router.get('/token', (req, res, next) => {
   // console.log(qnconfig.uploadToken)

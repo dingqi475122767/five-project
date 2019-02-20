@@ -103,11 +103,6 @@ export default new Router({
           component: () => import('./components/service/updateService.vue')
         },
         {
-          path: "updateService/:data",
-          name: "updateService",
-          component: () => import("./components/service/updateService.vue")
-        },
-        {
           path: 'orderMessage',
           name: 'orderMessage',
           component: () => import('./components/orderMessage/orderMessage.vue')
