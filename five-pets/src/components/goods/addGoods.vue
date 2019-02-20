@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card" style="width:500px;margin:0 auto">
+  <el-card class="box-card" style="width:600px;margin:0 auto">
     <div slot="header" class="clearfix" style="text-align:center">
       <span>添加商品</span>
     </div>
