@@ -83,6 +83,11 @@ export default new Router({
           component: AddGoods
         },
         {
+          path:'updateGoods',
+          name:'updateGoods',
+          component:()=>import('./components/goods/updateGoods.vue')
+        },
+        {
           path: 'addService',
           name: 'addService',
           component: AddService
@@ -116,6 +121,11 @@ export default new Router({
           path: 'shopList',
           name: 'shopList',
           component: () => import('./components/shop/shopList.vue')
+        },
+        {
+          path: 'updateShop',
+          name: 'updateShop',
+          component: () => import('./components/shop/updateShop.vue')
         },
       ]
     }

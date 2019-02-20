@@ -4,8 +4,8 @@
 const qiniu = require('qiniu')
 
 // 创建上传凭证
-const accessKey = 'hWXVPBfMvf1RVReb29iQpD-9v8tHXbGJ2ZGUbMuz'
-const secretKey = 'jLBE2b5RQ3AeDzKG-79BEIR4LY9GmdGRytr9folo'
+const accessKey = 'Aq8iTqLtfEYOTFkLM9VLlW7S7fAzkVQ-YbOvry6A'
+const secretKey = '3bt6WvOLpd-dMbp-oe_veNzeGJ-5bWrQzRR3ejf0'
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
 const options = {
   scope: 'images',

@@ -1,4 +1,4 @@
-import {addShopAsync,getUsers_PT,getUsers_MD,isLogin,getShop,getOneShop,getApplyShop,consentApply} from '../services/shop'
+import {addShopAsync,getShop,getOneShop,getApplyShop,consentApply,updateShops,delShop} from '../services/shop'
 export default ({
     namespaced: true,
     state: {
@@ -11,7 +11,7 @@ export default ({
             licence: "",
             licenceImg: "",
             gps: "",
-            state:''
+            state:false
         },
         shops: [{
             shopUserID:"",
@@ -25,6 +25,7 @@ export default ({
             state:''
         }],
         one: [{
+            _id:"",
             shopUserID:"",
             shopName: "",
             address: "",
@@ -34,7 +35,19 @@ export default ({
             licenceImg: "",
             gps: "",
             state:''
-        }]
+        }],
+        update: {
+            _id:"",
+            shopUserID:"",
+            shopName: "",
+            address: "",
+            phone: "",
+            legalEntity: "",
+            licence: "",
+            licenceImg: "",
+            gps: "",
+            state:''
+        }
     },
     mutations: {
         get: (state, payload) => {
@@ -45,6 +58,12 @@ export default ({
         },
         getOneShop:(state,payload)=>{
             Object.assign({},state.one,state.one=payload)
+        },
+        updateShop:(state,payload)=>{
+            Object.assign({},state.update,state.update=payload[0])
+        },
+        updateSp:(state,payload)=>{
+            Object.assign({},state.update,state.update=payload)
         }
     },
     actions: {
@@ -52,31 +71,7 @@ export default ({
             commit,
             dispatch
         }, payload) => {
-            console.log(payload)
             await addShopAsync(payload)
-            // dispatch('addShop')
-        },
-        getUsers_PT: async ({
-            commit,
-            dispatch
-        }, payload) => {
-            console.log(payload)
-            const{data}=await getUsers_PT(payload)
-            commit("get",data[0].username)
-        },
-        getUsers_MD: async ({
-            commit,
-            dispatch
-        }, payload) => {
-            const{data}=await getUsers_MD(payload)
-            commit("get",data)
-        },
-        isLogin: async ({
-            commit,
-            dispatch
-        }, payload) => {
-            const{data}=await isLogin()
-            dispatch("getUsers_MD",data)
         },
         getShop: async ({
             commit,
@@ -91,6 +86,31 @@ export default ({
         }, payload) => {
             const{data}=await getOneShop(payload)
             commit("getOneShop",data)
+        },
+        updateShopAsync: async ({
+            commit,
+            dispatch
+        }, payload) => {
+            const{data}=await getOneShop(payload)
+            commit("updateShop",data)
+        },
+        updateShops: async ({
+            commit,
+            dispatch
+        }, payload) => {
+            await updateShops(payload)
+        },
+        delShop: async ({
+            commit,
+            dispatch
+        }, payload) => {
+            await delShop(payload)
+        },
+        updateSp: async ({
+            commit,
+            dispatch
+        }, payload) => {
+            commit("updateSp",payload)
         },
         getApplyShop: async ({
             commit,
