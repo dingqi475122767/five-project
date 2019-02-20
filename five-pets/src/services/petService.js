@@ -13,3 +13,12 @@ export function addPets({petsName,petsType,petsPrice,petsBirth,petsImg,} = {}){
         body:JSON.stringify({currentPage,eachPage}),
       })
   }
+
+  //删除
+  export function removePets({_id} = {}){
+    return request('/pets/removePets' , {  
+        method: 'POST',  
+        headers: {'Content-Type': 'application/json'},  
+        body:JSON.stringify({_id}),
+      })
+  };

@@ -1,4 +1,4 @@
-import { addPets,getPetsByPage } from "../services/petService"
+import { addPets,getPetsByPage,removePets } from "../services/petService"
 export default {
     namespaced: true,
     state: {
@@ -50,5 +50,9 @@ export default {
             commit("setEachPage",eachPage);
             dispatch("getPetsByPageAsync");
         },
+        removeTrans:async({dispatch},_id)=>{
+            await removePets({_id});
+            dispatch("getPetsByPageAsync");
+        }
     }
 }

@@ -44,11 +44,11 @@
             :before-upload="beforeUpload"
             :on-success="handleAvatarSuccess"
             :on-error="handleError"
-            :ref="upload"
+            ref="upload"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
-          <el-dialog :visible.sync="dialogVisible" >
+          <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt>
           </el-dialog>
         </el-form-item>
@@ -141,16 +141,16 @@ export default {
         type: "warning"
       });
     },
-  
+
     addBtn: async function() {
-      await this.addPetsAsync(this.pet);
-      this.pet.shopID = "";
-      this.pet.petsName = "";
-      this.pet.petsType = "";
-      this.pet.petsPrice = "";
-      this.pet.petsBirth = "";
-      this.pet.petsImg = "";
-      this.dialogImageUrl="";
+      await this.addPetsAsync({
+        petsName: this.pet.petsName,
+        petsType: this.pet.petsType,
+        petsPrice:this.pet.petsPrice,
+        petsBirth:this.pet.petsBirth,
+        petsImg:this.pet.petsImg
+      });
+      this.$refs.form.resetFields();
       this.$refs.upload.clearFiles();
       this.$message("新增成功");
     }
@@ -181,6 +181,7 @@ export default {
 }
 .box-card {
   width: 480px;
+  margin: auto;
 }
 
 .avatar-uploader .el-upload {

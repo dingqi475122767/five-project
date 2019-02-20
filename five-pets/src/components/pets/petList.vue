@@ -14,8 +14,8 @@
     <el-table-column prop="shopID" label="所属门店" ></el-table-column>
     <el-table-column fixed="right" label="操作" >
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-        <el-button type="text" size="small">编辑</el-button>
+        <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+        <el-button type="text" size="small"  @click="update(scope.row)">修改</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -42,9 +42,10 @@ export default {
     ...mapState(["petes"])
   },
   methods: {
-    ...mapActions(["getPetsByPageAsync","setEachPageTrans","setCurPageTrans"]),
+    ...mapActions(["getPetsByPageAsync","setEachPageTrans","setCurPageTrans","removeTrans"]),
+    //删除
     handleClick(row) {
-      console.log(row);
+     this.removeTrans(row._id)
     },
     handleSizeChange(val) {    //设置每页显示条数
       this.setEachPageTrans(val);
@@ -52,6 +53,10 @@ export default {
     handleCurrentChange(val) {  //设置当前页
      this.setCurPageTrans(val)
     },
+    //修改
+    update(row){
+        
+    }
   },
   mounted() {
     this.getPetsByPageAsync();
@@ -62,6 +67,6 @@ export default {
 <style>
 .block{
     width: 100%;
-    text-align: center;
+    text-align: right;
 }
 </style>

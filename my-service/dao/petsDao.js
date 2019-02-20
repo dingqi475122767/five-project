@@ -4,7 +4,10 @@ const { petsModel } = require('./model/petsModel');
 module.exports.addPets = async function (data) {
     return await petsModel.create(data);
 }
-
+//删除
+module.exports.removePets = async function ({_id}) {
+    return await petsModel.deleteOne({_id});
+}
 //分页获取
 module.exports.getPetsByPage = async function ({ shopId, currentPage, eachPage }) {
     currentPage = currentPage - 0;
