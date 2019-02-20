@@ -54,7 +54,7 @@
           </el-dialog>
         </el-form-item>
       </el-form>
-      <el-button type="primary" class="btn" @click="addBtn('form')">确认添加</el-button>
+      <el-button type="primary" class="btn" @click="addBtn('form')" :loading="loading">{{text}}</el-button>
     </div>
   </el-card>
 </template>
@@ -67,6 +67,8 @@ import { getShop } from "../../services/shop";
 export default {
   data() {
     return {
+      text:"确认添加",
+      loading:false,
       dialogImageUrl: "",
       dialogVisible: false,
       imageUrl: "",
@@ -98,6 +100,8 @@ export default {
   methods: {
     ...mapActions(["addPetsAsync", "getShopsAsync"]),
     upqiniu(req) {
+      this.loading=true;
+      this.text="图片正在上传"
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -124,6 +128,8 @@ export default {
         this.axios.post(this.domain, formdata, config).then(res => {
           this.imageUrl = "http://" + this.qiniuaddr + "/" + res.data.key;
           this.pet.petsImg = this.imageUrl;
+          this.loading=false;
+          this.text="确认添加"
         });
       });
     },
