@@ -14,13 +14,14 @@
         <el-form-item label="宠物价格">
           <el-input v-model="pet.petsPrice"></el-input>
         </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="pet.shopID" placeholder="请选择门店" filterable size="100%">
+        <el-form-item label="请选择门店">
+          <el-select v-model="pet.shopID" placeholder="请选择门店" filterable size="100%" ref="shop">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="item in shop"
+              :key="item._id"
+              :label="item.shopName"
+              :value="item._id"
+              
             ></el-option>
           </el-select>
         </el-form-item>
@@ -36,6 +37,7 @@
         </el-form-item>
         <el-form-item label="宠物图片">
           <el-upload
+            class="avatar-uploader"
             :action="domain"
             :http-request="upqiniu"
             list-type="picture-card"
@@ -49,7 +51,7 @@
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt>
+            <img width="100%" :src="dialogImageUrl" alt class="avatar">
           </el-dialog>
         </el-form-item>
       </el-form>
@@ -59,26 +61,13 @@
 </template>
 
 <script>
+import { getAuditShopById } from "../../services/shop";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers("pets");
 import { getShop } from "../../services/shop";
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "选项1",
-          label: "门店1"
-        },
-        {
-          value: "选项2",
-          label: "门店2"
-        },
-        {
-          value: "选项3",
-          label: "门店3"
-        }
-      ],
       dialogImageUrl: "",
       dialogVisible: false,
       imageUrl: "",
@@ -90,10 +79,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["pet"])
+    ...mapState(["pet","shop"])
   },
   methods: {
-    ...mapActions(["addPetsAsync"]),
+    ...mapActions(["addPetsAsync","getShopsAsync"]),
     upqiniu(req) {
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
@@ -143,19 +132,28 @@ export default {
     },
 
     addBtn: async function() {
+     this.pet.shopID=this.$refs.shop.value;
       await this.addPetsAsync({
         petsName: this.pet.petsName,
         petsType: this.pet.petsType,
-        petsPrice:this.pet.petsPrice,
-        petsBirth:this.pet.petsBirth,
-        petsImg:this.pet.petsImg
+        petsPrice: this.pet.petsPrice,
+        petsBirth: this.pet.petsBirth,
+        petsImg: this.pet.petsImg,
+        shopID:this.pet.shopID
       });
-      this.$refs.form.resetFields();
+      this.pet.petsName = "";
+      this.pet.petsImg = "";
+      this.pet.petsType = "";
+      this.pet.petsPrice = "";
+      this.pet.petsBirth = "";
       this.$refs.upload.clearFiles();
       this.$message("新增成功");
+      
     }
   },
-  mounted() {}
+  mounted() {
+    this.getShopsAsync();
+  }
 };
 </script>
 
@@ -169,7 +167,7 @@ export default {
   text-align: center;
 }
 .item > * {
-  width: 80%;
+  width: 90%;
 }
 .clearfix:before,
 .clearfix:after {

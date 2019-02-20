@@ -11,7 +11,7 @@
         <img :src="scope.row.petsImg" alt style="width: 80px;height: 60px">
       </template>
     </el-table-column>
-    <el-table-column prop="shopID" label="所属门店" ></el-table-column>
+    <el-table-column prop="shopID.shopName" label="所属门店" ></el-table-column>
     <el-table-column fixed="right" label="操作" >
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>

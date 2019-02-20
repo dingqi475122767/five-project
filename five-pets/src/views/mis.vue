@@ -1,9 +1,10 @@
 <template>
   <el-container>
-    <el-header>爱邦宠物管理系统</el-header>
+    <el-header>爱宠邦宠物管理系统</el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="200px" class="el-aside">
         <el-menu
+          :default-openeds=[1,2,3,4,5,6]
           class="el-menu"
           background-color="#545c64"
           text-color="#fff"
@@ -35,10 +36,10 @@
               <span>门店管理</span>
             </template>
             <el-menu-item-group>
-              <router-link to="/mis/userList" style="text-decoration:none;">
+              <router-link to="/mis/shopList" style="text-decoration:none;">
                 <el-menu-item index="2-1">门店列表</el-menu-item>
               </router-link>
-              <router-link to="/mis/userList" style="text-decoration:none;">
+              <router-link to="/mis/addShop" style="text-decoration:none;">
                 <el-menu-item index="2-2">新增门店</el-menu-item>
               </router-link>
             </el-menu-item-group>
@@ -92,7 +93,7 @@
             </template>
             <el-menu-item-group>
               <router-link to="/mis/orderMessage" style="text-decoration:none;">
-                <el-menu-item index="5-1">订单列表</el-menu-item>
+                <el-menu-item index="6-1">订单列表</el-menu-item>
               </router-link>
             </el-menu-item-group>
           </el-submenu>

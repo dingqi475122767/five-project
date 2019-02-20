@@ -5,7 +5,6 @@
     border 
     stripe
     style="width: 100%" 
-    height="300"
     :default-sort="{prop:'date',order:'descending'}"
     >
       <el-table-column prop="_id" label="订单号"></el-table-column>
