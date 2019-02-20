@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {addGoods,getAllByPage} = require("../service/goodsService");
+const {addGoods,getAllByPage,delGoods,updateGoods} = require("../service/goodsService");
 
 const qnconfig = require('../config.js')
 // 处理请求，上传图片
@@ -18,4 +18,13 @@ router.get('/getAllByPage',async function(req,res,next){
   res.send(await getAllByPage(req.query))
 })
 
+// 删除商品
+router.post('/delGoods',async function(req,res,next){
+  res.send(await delGoods(req.body))
+})
+
+// 修改商品信息
+router.post('/updateGoods',async function(req,res,next){
+  res.send(await updateGoods(req.body))
+})
 module.exports = router;
