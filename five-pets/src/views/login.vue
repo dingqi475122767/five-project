@@ -23,9 +23,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
-  "shopUsers"
-);
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers( "shopUsers");
 
 export default {
   name: "login",
@@ -33,22 +31,6 @@ export default {
     ...mapActions(["loginAsync"]),
     reg() {
       this.$router.history.push("/reg");
-    },
-    regLogin(shoplog) {
-      this.$refs[shoplog].validate(valid => {
-        if (valid) {
-          this.$store.dispatch("shopUsers/loginAsync", {
-            username: this.shoplog.loginName,
-            password: this.shoplog.loginPassword,
-            state: "disable"
-          });
-          this.$router.history.push("/login");
-        } else {
-          alert("信息错误，请重新填写");
-          return false;
-        }
-      });
-      this.$router.history.push("/mis");
     },
     login() {
       this.$router.history.push("/mis");
