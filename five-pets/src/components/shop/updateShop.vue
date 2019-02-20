@@ -78,14 +78,21 @@ export default {
         if (valid) {
           this.update.state = false;
           this.updateShops(this.update);
-          this.update.licenceImg = "";
+           this.$notify({
+            title: "成功",
+            message: "门店信息修改成功",
+            type: "success"
+          });
+          this.$router.history.push(`/mis/shopList`);
         } else {
-          console.log("error submit!!");
+          this.$notify.error({
+            title: "错误",
+            message: "门店信息修改失败，请确认修改项"
+          });
           return false;
         }
       });
 
-      this.$router.history.push(`/mis/shopList`);
     }
   }
 };
