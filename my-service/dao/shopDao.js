@@ -7,6 +7,10 @@ module.exports.addShop = async function(shop){
 module.exports.getShop = async function(shop){
     return await shopModel.find(shop);
 }
+
+module.exports.getAuditShopById = async function({shopUserID}){
+    return await shopModel.find({shopUserID,state:false});
+}
 //删除门店
 module.exports.delShop = async function(shop){
     return await shopModel.deleteOne(shop);

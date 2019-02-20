@@ -36,7 +36,8 @@ export default ({
         getGoodsByPageAsync:async ({commit,state})=>{
             const {data} = await getGoodsByPageAsync({
                 currentPage:state.currentPage,
-                eachPage:state.eachPage
+                eachPage:state.eachPage,
+                shopUserID:JSON.parse(localStorage.getItem('shopUsers'))[0]._id
             })
             commit('getGoodsByPage',data)
         },

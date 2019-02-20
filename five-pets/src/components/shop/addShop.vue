@@ -40,7 +40,7 @@
         </el-form-item>
       </el-form>
       <el-row class="center">
-        <el-button type="primary" @click="addShop('shop')">新增</el-button>
+        <el-button type="primary" @click="addShop('shop')" :loading="loading">{{text}}</el-button>
       </el-row>
     </div>
   </el-card>
@@ -52,6 +52,8 @@ export default {
   name: "addShop",
   data() {
     return {
+      loading: false,
+      text: "确认添加",
       dialogImageUrl: "",
       dialogVisible: false,
       imageUrl: "",
@@ -59,7 +61,8 @@ export default {
       // 七牛云的上传地址，根据自己所在地区选择，我这里是华南区
       domain: "https://upload-z2.qiniup.com",
       // 这是七牛云空间的外链默认域名
-      qiniuaddr: "pm6civjct.bkt.clouddn.com",
+      // qiniuaddr: "pm6civjct.bkt.clouddn.com",
+      qiniuaddr: "pn7u8wpal.bkt.clouddn.com",
       rules: {
         licence: [
           { required: true, message: "内容不能为空！", trigger: "blur" }
@@ -84,7 +87,9 @@ export default {
   methods: {
     ...mapActions(["addShopAsync", "isLogin"]),
     upqiniu(req) {
-      console.log(req);
+      this.loading = true;
+      this.text = "图片正在加载中";
+      // console.log(req);
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -97,37 +102,46 @@ export default {
       // 重命名要上传的文件
       const keyname =
         "images" +
-        new Date() +
+        new Date().getTime() +
         Math.floor(Math.random() * 100) +
         "." +
         filetype;
       // 从后端获取上传凭证token
       this.axios.get("/shop/token").then(res => {
-        console.log(res);
+        // console.log(res);
         const formdata = new FormData();
         formdata.append("file", req.file);
         formdata.append("token", res.data);
         formdata.append("key", keyname);
         // 获取到凭证之后再将文件上传到七牛云空间
         this.axios.post(this.domain, formdata, config).then(res => {
-          this.imageUrl="http://" + this.qiniuaddr + "/" + res.data.key;
-          console.log(this.imageUrl)
+          this.shop.licenceImg =
+            "http://" + this.qiniuaddr + "/" + res.data.key;
+          this.loading = false;
+          this.text = "确认添加";
+          // console.log(this.imageUrl)
         });
       });
     },
     beforeUpload(file) {
-      console.log(file);
+      // console.log(file);
     },
     addShop(shop) {
       this.$refs[shop].validate(valid => {
         if (valid) {
-          console.log(this.shop)
-          this.shop.licenceImg=this.imageUrl
           this.addShopAsync(this.shop);
+          this.$notify({
+            title: "成功",
+            message: "门店信息添加成功！",
+            type: "success"
+          });
           this.$refs[shop].resetFields();
           this.$refs.upload.clearFiles();
         } else {
-          console.log("error submit!!");
+          this.$notify.error({
+            title: "错误",
+            message: "添加门店信息失败，请确认添加项！"
+          });
           return false;
         }
       });
@@ -153,8 +167,8 @@ export default {
       });
     }
   },
-   mounted() {
-    this.shop.shopUserID = JSON.parse(localStorage.getItem("shopUsers"))[0]._id
+  mounted() {
+    this.shop.shopUserID = JSON.parse(localStorage.getItem("shopUsers"))[0]._id;
   }
 };
 </script>

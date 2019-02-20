@@ -92,8 +92,8 @@ export default {
         if (!Number.isInteger(value)) {
           callback(new Error("请输入数字值"));
         } else {
-          if (value < 0 && value < 120) {
-            callback(new Error("服务时长必须大于0分钟且小于120分钟"));
+          if (value < 0 || value > 120) {
+            callback(new Error("服务时长区间:0-120分钟"));
           } else {
             callback();
           }
@@ -143,7 +143,6 @@ export default {
   },
   methods: {
     ...mapActions(["addServiceAsync"]),
-    addService() {},
     addBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {

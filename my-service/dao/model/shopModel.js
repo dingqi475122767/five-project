@@ -4,7 +4,7 @@ const shopSchema = new mongoose.Schema({
     //与门店关联
     shopUserID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"shopModule"
+        ref:"shopUsersModel"
     },
     //门店名字
     shopName:String,

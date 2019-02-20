@@ -4,7 +4,7 @@ const petsSchema = new mongoose.Schema({
     //与门店关联
     shopID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"shopModule"
+        ref:"shopModel"
     },
     //宠物名
     petsName:String,

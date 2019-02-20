@@ -21,6 +21,11 @@ export function getOneShop({_id} = {}){
 export function getApplyShop() {
   return request(`/shop/getApplyShop`);
 }
+export function getAuditShopById(_id) {
+  return request(`/shop/getAuditShopById?shopUserID=${_id}`);
+}
+
+
 
 export function consentApply({_id,state} = {}){
   return request('/shop/consentApply' , {  

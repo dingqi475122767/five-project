@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop}  = require('../service/shopService');
+const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop,getAuditShopById}  = require('../service/shopService');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-const qnconfig = require('../config.js')
+const qnconfig = require('../leidan.js')
 // 处理请求
 router.get('/token', (req, res, next) => {
   // console.log(qnconfig.uploadToken)
@@ -18,6 +18,10 @@ router.get('/getShop', async function (req, res, next) {
   res.send(await getShop(req.query));
 })
 
+//获取审核通过门店
+router.get('/getAuditShopById', async function (req, res, next) {
+  res.send(await getAuditShopById(req.query));
+})
 //获取门店详情
 router.post('/getOne', async function (req, res, next) {
   res.send(await getOne(req.body));
@@ -25,7 +29,7 @@ router.post('/getOne', async function (req, res, next) {
 
 //新增门店
 router.post('/addShop',async function(req, res, next) {
-  console.log(req.body)
+  // console.log(req.body)
   res.send(await addShop(req.body));
 });
 //获取待审核门店

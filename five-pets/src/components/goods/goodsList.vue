@@ -16,19 +16,30 @@
       <el-table-column prop="opts" label="操作">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
-          <el-button @click="delGoodsAsync(scope.row._id)" type="text" size="small">删除</el-button>
+          <el-button @click="showDialog(scope.row._id)" type="text" size="small">删除</el-button>
+          <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
+            <div style="text-align:center">
+              <span>确定要删除这条商品记录吗？</span>
+            </div>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="centerDialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="delGoodsBtn(id)">确 定</el-button>
+            </span>
+          </el-dialog>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10,20, 30, 50]"
-      :page-size="eachPage"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="totalNum"
-    ></el-pagination>
+    <div style="text-align:center"> 
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10,20, 30, 50]"
+        :page-size="eachPage"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="totalNum"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -37,34 +48,51 @@ import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers("goods");
 export default {
   name: "goodsList",
+  data() {
+    return {
+      centerDialogVisible: false,
+      id: "" // 保存商品ID
+    };
+  },
   mounted() {
     this.getGoodsByPageAsync();
   },
   watch: {
-      currentPage(){
-          this.getGoodsByPageAsync()
-      },
-      eachPage(){
-          this.getGoodsByPageAsync()
-      }
+    currentPage() {
+      this.getGoodsByPageAsync();
+    },
+    eachPage() {
+      this.getGoodsByPageAsync();
+    }
   },
   computed: {
     ...mapState(["currentPage", "eachPage", "totalPage", "totalNum", "data"])
   },
   methods: {
-    ...mapActions(["getGoodsByPageAsync",'delGoodsAsync']),
-    ...mapMutations(['setCurPage','setEachPage','setGoodsInfo']),
+    ...mapActions(["getGoodsByPageAsync", "delGoodsAsync"]),
+    ...mapMutations(["setCurPage", "setEachPage", "setGoodsInfo"]),
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      this.setEachPage(val), 
-      this.setCurPage(1);
+      this.setEachPage(val), this.setCurPage(1);
     },
-    handleCurrentChange(val){
-        this.setCurPage(val)
+    handleCurrentChange(val) {
+      this.setCurPage(val);
     },
-    handleClick(val){
-        this.setGoodsInfo(val);
-        this.$router.push('/mis/updateGoods');
+    handleClick(val) {
+      this.setGoodsInfo(val);
+      this.$router.push("/mis/updateGoods");
+    },
+    showDialog(val) {
+      this.centerDialogVisible = true;
+      this.id = val;
+    },
+    delGoodsBtn(val) {
+      this.delGoodsAsync(val);
+      this.centerDialogVisible = false;
+      this.$notify({
+        title: "成功",
+        message: "商品信息删除成功",
+        type: "success"
+      });
     }
   }
 };

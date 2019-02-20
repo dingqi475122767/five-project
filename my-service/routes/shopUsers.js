@@ -17,7 +17,6 @@ router.post('/login', async function (req, res, next) {
   if(isLogin){
     req.session.users = req.body
   }
-
   res.send(isLogin);
 });
 //门店用户是否登录

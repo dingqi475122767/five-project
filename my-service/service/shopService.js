@@ -1,4 +1,4 @@
-const { addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop} = require('../dao/shopDao');
+const { addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop,getAuditShopById} = require('../dao/shopDao');
 //新增
 module.exports.addShop = async function (shop) {
     return await addShop(shop);
@@ -6,6 +6,10 @@ module.exports.addShop = async function (shop) {
 //获取所有门店
 module.exports.getShop = async function (shop) {
     return await getShop(shop);
+}
+
+module.exports.getAuditShopById = async function (shop) {
+    return await getAuditShopById(shop);
 }
 //获取门店详情
 module.exports.getOne = async function (shop) {
