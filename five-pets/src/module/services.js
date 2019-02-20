@@ -6,7 +6,8 @@ export default {
         eachPage: 5, //每页显示条数
         totalNum: 0, //总数据
         totalPage: 0, //总页数
-        data: []
+        data: [],
+        updateInfo:{}// 用于储存要修改的服务对象的信息
         // //单个服务  增加一个服务名称时需要用到
         // service: [{
         //     shopID: '',
@@ -50,6 +51,14 @@ export default {
         },
         setEachPage:(state,eachPage)=>{
             state.eachPage = eachPage
+        },
+          // 将服务信息保存到sessionStorage中
+        setServiceInfo:(state,service)=>{
+            sessionStorage.serviceInfo = JSON.stringify(service)
+        },
+        // 从sessionStorage中获取服务信息
+        getServiceInfo:(state)=>{
+            state.updateInfo = JSON.parse(sessionStorage.serviceInfo)
         }
 
     },
