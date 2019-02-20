@@ -51,15 +51,14 @@ export default {
     };
   },
   mounted() {
-    this.data.shopUserID = JSON.parse(localStorage.getItem('shopUsers'))[0]._id;
-    this.getGoodsByPageAsync(this.data.shopUserID);
+    this.getGoodsByPageAsync();
   },
   watch: {
     currentPage() {
-      this.getGoodsByPageAsync(this.data.shopUserID);
+      this.getGoodsByPageAsync();
     },
     eachPage() {
-      this.getGoodsByPageAsync(this.data.shopUserID);
+      this.getGoodsByPageAsync();
     }
   },
   computed: {
