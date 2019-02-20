@@ -84,7 +84,7 @@ export default {
   methods: {
     ...mapActions(["addShopAsync", "isLogin"]),
     upqiniu(req) {
-      console.log(req);
+      // console.log(req);
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -103,31 +103,37 @@ export default {
         filetype;
       // 从后端获取上传凭证token
       this.axios.get("/shop/token").then(res => {
-        console.log(res);
+        // console.log(res);
         const formdata = new FormData();
         formdata.append("file", req.file);
         formdata.append("token", res.data);
         formdata.append("key", keyname);
         // 获取到凭证之后再将文件上传到七牛云空间
         this.axios.post(this.domain, formdata, config).then(res => {
-          this.imageUrl="http://" + this.qiniuaddr + "/" + res.data.key;
-          console.log(this.imageUrl)
+          this.shop.licenceImg="http://" + this.qiniuaddr + "/" + res.data.key;
+          // console.log(this.imageUrl)
         });
       });
     },
     beforeUpload(file) {
-      console.log(file);
+      // console.log(file);
     },
     addShop(shop) {
       this.$refs[shop].validate(valid => {
         if (valid) {
-          console.log(this.shop)
-          this.shop.licenceImg=this.imageUrl
           this.addShopAsync(this.shop);
+           this.$notify({
+            title: "成功",
+            message: "门店信息添加成功！",
+            type: "success"
+          });
           this.$refs[shop].resetFields();
           this.$refs.upload.clearFiles();
         } else {
-          console.log("error submit!!");
+          this.$notify.error({
+            title: "错误",
+            message: "添加门店信息失败，请确认添加项！"
+          });
           return false;
         }
       });
