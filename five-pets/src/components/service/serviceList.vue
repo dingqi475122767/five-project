@@ -51,12 +51,13 @@ export default {
   },
   methods: {
     ...mapActions(["getServiceByPageAsync","updateServiceAsync"]),
-    ...mapMutations(["setCurPage", "setEachPage"]),
+      ...mapMutations(["setCurPage", "setEachPage", "setServiceInfo"]),
      updateService(data) {
        console.log(data);
-      this.$router.history.push("./updateService");
+       this.setServiceInfo(data);
+       this.$router.push("/mis/updateService");
+      // this.$router.history.push("./updateService");
     },
-
     // 每页显示条数改变时
     handleSizeChange(val) {
       this.setEachPage(val), this.setCurPage(1);

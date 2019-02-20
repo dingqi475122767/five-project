@@ -4,21 +4,21 @@
       <span>修改服务</span>
     </div>
     <el-form
-      :model="service"
+      :model="updateInfo"
       status-icon
       :rules="rules2"
-      ref="service"
+      ref="updateInfo"
       label-width="100px"
       class="demo-ruleForm"
     >
       <el-form-item label="服务名称" prop="serviceName">
-        <el-input v-model="service.serviceName" :value="$route.params.serviceName"></el-input>
+        <el-input v-model="updateInfo.serviceName" ></el-input>
       </el-form-item>
       <el-form-item label="服务价格" prop="servicePrice">
-        <el-input v-model.number="service.servicePrice" :value="$route.params.servicePrice"></el-input>
+        <el-input v-model.number="updateInfo.servicePrice"></el-input>
       </el-form-item>
       <el-form-item label="服务时长" prop="serviceTiming">
-        <el-input v-model.number="service.serviceTiming" :value="$route.params.serviceTiming"></el-input>
+        <el-input v-model.number="updateInfo.serviceTiming"></el-input>
       </el-form-item>
       <el-form-item label="排期">
         <el-col :span="11">
@@ -26,8 +26,7 @@
             class="time"
             type="date"
             placeholder="选择日期"
-            v-model="service.timeDay"
-            :value="$route.params.timeDay"
+            v-model="updateInfo.timeDay"
             style="width: 100%;"
           ></el-date-picker>
         </el-col>
@@ -37,15 +36,14 @@
             class="time"
             type="fixed-time"
             placeholder="选择时间"
-            v-model="service.timePoint"
-            :value="$route.params.timePoint"
+            v-model="updateInfo.timePoint"
             style="width: 100%;"
           ></el-time-picker>
         </el-col>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="updateBtn('service')">确认</el-button>
-        <el-button @click="cancel('service')">取消</el-button>
+        <el-button type="primary" @click="updateBtn('updateInfo')">确认</el-button>
+        <el-button @click="cancel('updateInfo')">取消</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -122,46 +120,50 @@ export default {
       timePoint: ""
     };
   },
+   mounted() {
+    this.getServiceInfo;
+  },
   computed: {
-    // ...mapState(["seivices"])
+    ...mapMutations(["getServiceInfo"]),
+    ...mapState(["updateInfo"])
   },
   methods: {
     ...mapActions(["updateServiceAsync"]),
-    // updateBtn(formName) {
-    //   this.$refs[formName].validate(valid => {
-    //     if (valid) {
-    //       alert("submit!");
-    //       let shopID = this.service.shopID;
-    //       let serviceName = this.service.serviceName;
-    //       let servicePrice = this.service.servicePrice;
-    //       let serviceTiming = this.service.serviceTiming;
-    //       let timeDay = this.service.timeDay;
-    //       let timePoint = this.service.timePoint;
-    //       let isDel = false;
-    //       this.updateServiceAsync({
-    //         shopID,
-    //         serviceName,
-    //         servicePrice,
-    //         serviceTiming,
-    //         timeDay,
-    //         timePoint,
-    //         isDel
-    //       }),
-    //         console.log(
-    //           shopID,
-    //           serviceName,
-    //           servicePrice,
-    //           serviceTiming,
-    //           timeDay,
-    //           timePoint,
-    //           isDel
-    //         );
-    //     } else {
-    //       console.log("error submit!!");   
-    //       return false;
-    //     }
-    //   });
-    // },
+    updateBtn(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert("submit!");
+          let shopID = this.updateInfo.shopID;
+          let serviceName = this.updateInfo.serviceName;
+          let servicePrice = this.updateInfo.servicePrice;
+          let serviceTiming = this.updateInfo.serviceTiming;
+          let timeDay = this.updateInfo.timeDay;
+          let timePoint = this.updateInfo.timePoint;
+          let isDel = false;
+          this.updateServiceAsync({
+            shopID,
+            serviceName,
+            servicePrice,
+            serviceTiming,
+            timeDay,
+            timePoint,
+            isDel
+          }),
+            console.log(
+              shopID,
+              serviceName,
+              servicePrice,
+              serviceTiming,
+              timeDay,
+              timePoint,
+              isDel
+            );
+        } else {
+          console.log("error submit!!");   
+          return false;
+        }
+      });
+    },
     cancel(formName) {
       this.$refs[formName].resetFields();
     }
