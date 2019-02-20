@@ -1,4 +1,5 @@
-import { addPets,getPetsByPage } from "../services/petService"
+import { addPets,getPetsByPage,removePets } from "../services/petService";
+import {getAuditShopById} from "../services/shop"
 export default {
     namespaced: true,
     state: {
@@ -16,11 +17,15 @@ export default {
             petsPrice: "",  //宠物价额
             petsBirth: "",  //出生日期
             petsImg: "",    //宠物图片
-        }
+        },
+        shop:[]
     },
     mutations: {
         getPets: (state, {data}) => {
           state.petes =data
+        },
+        getShop:(state,payload)=>{
+            state.shop = payload.data
         },
         setCurPage:(state,payload)=>{
             state.petes.currentPage = payload
@@ -30,15 +35,21 @@ export default {
         },
     },
     actions: {
-        addPetsAsync: async ({ commit }, { petsName, petsType, petsPrice, petsBirth, petsImg }) => {
+        addPetsAsync: async ({ commit }, { petsName, petsType, petsPrice, petsBirth, petsImg,shopID }) => {
             await addPets({
-                petsName, petsType, petsPrice, petsBirth, petsImg
+                petsName, petsType, petsPrice, petsBirth, petsImg,shopID
             })
         },
         getPetsByPageAsync:async ({commit,state})=>{
+            let shop = await getAuditShopById( JSON.parse(localStorage.getItem("shopUsers"))[0]._id);
+            let shopID =[];
+            for(let item of shop.data){
+                shopID.push(item._id)
+            }
             let data = await getPetsByPage({
                 currentPage:state.petes.currentPage,
                 eachPage:state.petes.eachPage,
+                shopID
             });
             commit("getPets",data)
         },
@@ -50,5 +61,13 @@ export default {
             commit("setEachPage",eachPage);
             dispatch("getPetsByPageAsync");
         },
+        removeTrans:async({dispatch},_id)=>{
+            await removePets({_id});
+            dispatch("getPetsByPageAsync");
+        },
+        getShopsAsync:async ({commit})=>{
+            let data = await getAuditShopById( JSON.parse(localStorage.getItem("shopUsers"))[0]._id);
+            commit("getShop",data)
+        }
     }
 }

@@ -24,6 +24,15 @@
         <el-button type="text" size="mini" @click="handleEdit(scope.$index, scope.row) ">查看</el-button>
         <el-button type="text" size="mini" @click="handleUpdate(scope.$index, scope.row) ">修改</el-button>
         <el-button type="text" size="mini" @click="handleDel(scope.$index, scope.row) ">删除</el-button>
+        <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
+          <div style="text-align:center">
+            <span>确定要删除门店信息吗？</span>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="centerDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="delBtn">确 定</el-button>
+          </span>
+        </el-dialog>
         <el-dialog title="门店详情" :visible.sync="dialogTableVisible" align="left" width="90%">
           <el-table :data="one" :row-class-name="tableRowClassName2">
             <el-table-column label="编号" prop="_id"></el-table-column>
@@ -54,7 +63,9 @@ export default {
   data() {
     return {
       dialogTableVisible: false,
-      search: ""
+      centerDialogVisible: false,
+      search: "",
+      _id: ""
     };
   },
   computed: {
@@ -68,10 +79,20 @@ export default {
       this.dialogTableVisible = true;
     },
     handleDel(index, row) {
-      let _id = row._id;
-      this.delShop({ _id });
+      this.centerDialogVisible = true;
+      this._id = row._id;
+    },
+    delBtn() {
+      let _id = this._id
+      this.delShop({_id});
       let shopUserID = JSON.parse(localStorage.getItem("shopUsers"))[0]._id;
-    this.getShop({ shopUserID });
+      this.getShop({ shopUserID });
+      this.centerDialogVisible = false;
+      this.$notify({
+        title: "成功",
+        message: "门店信息删除成功",
+        type: "success"
+      });
     },
     handleUpdate(index, row) {
       this.updateSp(row);

@@ -24,30 +24,37 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
-  "shopUsers"
+  "shopUsers",
+  "users"
 );
 
 export default {
   name: "login",
   methods: {
-    ...mapActions(["loginAsync"]),
+    ...mapActions(["loginAsync", "logAsync"]),
     reg() {
       this.$router.history.push("/reg");
     },
     login() {
-      this.$router.history.push("/mis");
+      // this.$router.history.push("/mis");
       const loginName = this.loginName;
       const loginPassword = this.loginPassword;
+      console.log(loginName, loginPassword);
+      this.$store.dispatch("users/logAsync", {
+        //第一个参数是type（传递的路径），第二个参数是用户输入的值
+        username: loginName,
+        password: loginPassword
+      });
       this.loginName = "";
       this.loginPassword = "";
     },
-    loginShop(){
+    loginShop() {
       const loginName = this.loginName;
       const loginPassword = this.loginPassword;
-      this.$store.dispatch("shopUsers/loginAsync",{
-        username:loginName,
-        password:loginPassword,
-      })
+      this.$store.dispatch("shopUsers/loginAsync", {
+        username: loginName,
+        password: loginPassword
+      });
     }
   },
   data() {
