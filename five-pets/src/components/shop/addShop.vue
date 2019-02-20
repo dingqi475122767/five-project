@@ -110,8 +110,8 @@ export default {
         formdata.append("key", keyname);
         // 获取到凭证之后再将文件上传到七牛云空间
         this.axios.post(this.domain, formdata, config).then(res => {
-          this.shop.licenceImg ="http://" + this.qiniuaddr + "/" + res.data.key;
-          // console.log(this.imageUrl)
+          this.imageUrl="http://" + this.qiniuaddr + "/" + res.data.key;
+          console.log(this.imageUrl)
         });
       });
     },
@@ -121,7 +121,8 @@ export default {
     addShop(shop) {
       this.$refs[shop].validate(valid => {
         if (valid) {
-          console.log(this.shop);
+          console.log(this.shop)
+          this.shop.licenceImg=this.imageUrl
           this.addShopAsync(this.shop);
           this.$refs[shop].resetFields();
           this.$refs.upload.clearFiles();
@@ -151,6 +152,9 @@ export default {
         type: "warning"
       });
     }
+  },
+   mounted() {
+    this.shop.shopUserID = JSON.parse(localStorage.getItem("shopUsers"))[0]._id
   }
 };
 </script>
