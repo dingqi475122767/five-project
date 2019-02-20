@@ -63,6 +63,7 @@ export default {
   data() {
     return {
       goods: {
+        shopUserID: "",
         goodsName: "",
         goodsType: "",
         standard: "",
@@ -139,7 +140,7 @@ export default {
       this.$message({
         message: res,
         type: "warning"
-      });
+      })
     },
 
     ...mapActions(["addGoodsAsync"]),
@@ -147,14 +148,12 @@ export default {
       this.$refs[goods].validate(valid => {
         if (valid) {
           this.addGoodsAsync(this.goods);
-          // this.$router.push("/mis/goodsList");
+          this.$router.push("/mis/goodsList");
           this.$notify({
             title: "成功",
             message: "商品信息添加成功！",
             type: "success"
-          });
-          this.$refs[goods].resetFields();
-          this.$refs.goodsImg.clearFiles();
+          })
         } else {
           this.$notify.error({
             title: "错误",
@@ -168,7 +167,10 @@ export default {
       this.$refs.goods.resetFields();
       this.$refs.goodsImg.clearFiles();
     }
-  }
+  },
+  mounted() {
+    this.goods.shopUserID = JSON.parse(localStorage.getItem('shopUsers'))[0]._id;
+  },
 };
 </script>
 
@@ -189,7 +191,6 @@ export default {
 .clearfix:after {
   clear: both;
 }
-
 .box-card {
   width: 480px;
 }

@@ -1,16 +1,16 @@
 import request from '../utils/request'
 
 // 分页查询商品数据
-export function getGoodsByPageAsync({currentPage=1,eachPage=5}){
-    return request(`/goods/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}`);
+export function getGoodsByPageAsync({currentPage=1,eachPage=5,shopUserID}){
+    return request(`/goods/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}&shopUserID=${shopUserID}`);
 }
 
 // 添加商品
-export function addGoods({goodsName,goodsType,standard,packaging,price,goodsImg,sales,isDel}){
+export function addGoods({shopUserID,goodsName,goodsType,standard,packaging,price,goodsImg,sales,isDel}){
     return request('/goods/addGoods',{
         method:'post',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({goodsName,goodsType,standard,packaging,price,goodsImg,sales,isDel})
+        body:JSON.stringify({shopUserID,goodsName,goodsType,standard,packaging,price,goodsImg,sales,isDel})
     })
 }
 

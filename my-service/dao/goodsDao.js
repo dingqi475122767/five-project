@@ -6,13 +6,15 @@ module.exports.addGoods = async function(goods){
 }
 
 // 分页查询所有商品，只显示isDel属性值为false的商品
-module.exports.getAllByPage = async function({currentPage,eachPage}){
+module.exports.getAllByPage = async function({currentPage,eachPage,shopUserID}){
     currentPage = currentPage - 0;
     eachPage = eachPage - 0;
-    let totalNum = await goodsModel.find({isDel:false}).countDocuments();//查询总条数
+    let totalNum = await goodsModel
+        .find({isDel:false,shopUserID})
+        .countDocuments();//查询总条数
     let totalPage = Math.ceil(totalNum/eachPage);//获取总页数
     let data = await goodsModel
-        .find({isDel:false})
+        .find({isDel:false,shopUserID})
         .skip((currentPage - 1) * eachPage)
         .limit(eachPage)
 
