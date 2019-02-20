@@ -4,7 +4,7 @@
     <el-container>
       <el-aside width="200px" class="el-aside">
         <el-menu
-          default-openeds="[1,2,3,4,5,6]"
+          :default-openeds=[1,2,3,4,5,6]
           class="el-menu"
           background-color="#545c64"
           text-color="#fff"
