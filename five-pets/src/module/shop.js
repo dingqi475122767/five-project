@@ -1,4 +1,4 @@
-import {addShopAsync,getUsers_MD,isLogin,getShop,getOneShop,getApplyShop,consentApply,updateShops,delShop} from '../services/shop'
+import {addShopAsync,getShop,getOneShop,getApplyShop,consentApply,updateShops,delShop} from '../services/shop'
 export default ({
     namespaced: true,
     state: {
@@ -71,23 +71,7 @@ export default ({
             commit,
             dispatch
         }, payload) => {
-            console.log(payload)
             await addShopAsync(payload)
-            // dispatch('addShop')
-        },
-        getUsers_MD: async ({
-            commit,
-            dispatch
-        }, payload) => {
-            const{data}=await getUsers_MD(payload)
-            commit("get",data)
-        },
-        isLogin: async ({
-            commit,
-            dispatch
-        }, payload) => {
-            const{data}=await isLogin()
-            dispatch("getUsers_MD",data)
         },
         getShop: async ({
             commit,
