@@ -26,6 +26,4 @@ module.exports.getAllByPage = async function({currentPage,eachPage}){
         .limit(eachPage)
 
     return {currentPage,eachPage,totalNum,totalPage,data}
-        
-
 }
