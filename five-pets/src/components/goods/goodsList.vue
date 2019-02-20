@@ -18,7 +18,9 @@
           <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
           <el-button @click="showDialog(scope.row._id)" type="text" size="small">删除</el-button>
           <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
-            <div style="text-align:center"><span>确定要删除这条商品记录吗？</span></div>
+            <div style="text-align:center">
+              <span>确定要删除这条商品记录吗？</span>
+            </div>
             <span slot="footer" class="dialog-footer">
               <el-button @click="centerDialogVisible = false">取 消</el-button>
               <el-button type="primary" @click="delGoodsBtn(id)">确 定</el-button>
@@ -27,15 +29,17 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10,20, 30, 50]"
-      :page-size="eachPage"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="totalNum"
-    ></el-pagination>
+    <div style="text-align:center"> 
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10,20, 30, 50]"
+        :page-size="eachPage"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="totalNum"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 

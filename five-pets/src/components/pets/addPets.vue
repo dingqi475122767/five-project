@@ -14,7 +14,7 @@
         <el-form-item label="宠物价格" prop="petsPrice">
           <el-input v-model="pet.petsPrice"></el-input>
         </el-form-item>
-        <el-form-item label="请选择门店" prop="shopID">
+        <el-form-item label="选择门店" prop="shopID">
           <el-select v-model="pet.shopID" placeholder="请选择门店" filterable size="100%" ref="shop">
             <el-option
               v-for="item in shop"
