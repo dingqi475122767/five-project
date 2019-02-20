@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     ...mapActions(["getPetsByPageAsync","setEachPageTrans","setCurPageTrans","removeTrans"]),
+    ...mapMutations(["setPet"]),
     //删除
     handleClick(row) {
      this.removeTrans(row._id)
@@ -55,7 +56,8 @@ export default {
     },
     //修改
     update(row){
-        
+      sessionStorage.petInfo = JSON.stringify(row)
+         this.$router.push("/mis/updatePet");
     }
   },
   mounted() {
