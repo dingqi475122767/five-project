@@ -1,4 +1,4 @@
-import { addPets,getPetsByPage,removePets } from "../services/petService";
+import { addPets,getPetsByPage,removePets,update } from "../services/petService";
 import {getAuditShopById} from "../services/shop"
 export default {
     namespaced: true,
@@ -11,6 +11,7 @@ export default {
             totalPage: 0   //总页数
         },
         pet: {
+            _id:"",
             shopID: "",
             petsName: "",  //宠物名字
             petsType: "",  //宠物类型
@@ -26,6 +27,9 @@ export default {
         },
         getShop:(state,payload)=>{
             state.shop = payload.data
+        },
+        setPet:(state,payload)=>{
+           state.pet = payload;
         },
         setCurPage:(state,payload)=>{
             state.petes.currentPage = payload
@@ -68,6 +72,17 @@ export default {
         getShopsAsync:async ({commit})=>{
             let data = await getAuditShopById( JSON.parse(localStorage.getItem("shopUsers"))[0]._id);
             commit("getShop",data)
+        },
+        updateAsync:async ({commit,state})=>{
+            await update({
+                _id:state.pet._id,
+                shopID: state.pet.shopID,
+                petsName: state.pet.petsName,  
+                petsType: state.pet.petsType,  
+                petsPrice: state.pet.petsPrice, 
+                petsBirth: state.pet.petsBirth,  
+                petsImg: state.pet.petsImg,  
+            })
         }
     }
 }
