@@ -37,7 +37,7 @@ export default ({
             const {data} = await getGoodsByPageAsync({
                 currentPage:state.currentPage,
                 eachPage:state.eachPage,
-                shopUserID:state.data.shopUserID
+                shopUserID:JSON.parse(localStorage.getItem('shopUsers'))[0]._id
             })
             commit('getGoodsByPage',data)
         },
