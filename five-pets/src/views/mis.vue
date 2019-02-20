@@ -4,7 +4,6 @@
     <el-container>
       <el-aside width="200px" class="el-aside">
         <el-menu
-          :default-openeds="indexArr"
           class="el-menu"
           background-color="#545c64"
           text-color="#fff"

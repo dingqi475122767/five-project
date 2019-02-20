@@ -36,7 +36,8 @@ export default ({
         getGoodsByPageAsync:async ({commit,state})=>{
             const {data} = await getGoodsByPageAsync({
                 currentPage:state.currentPage,
-                eachPage:state.eachPage
+                eachPage:state.eachPage,
+                shopUserID:state.data.shopUserID
             })
             commit('getGoodsByPage',data)
         },

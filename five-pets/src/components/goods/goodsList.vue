@@ -47,18 +47,19 @@ export default {
   data() {
     return {
       centerDialogVisible: false,
-      id: ""
+      id: "" // 保存商品ID
     };
   },
   mounted() {
-    this.getGoodsByPageAsync();
+    this.data.shopUserID = JSON.parse(localStorage.getItem('shopUsers'))[0]._id;
+    this.getGoodsByPageAsync(this.data.shopUserID);
   },
   watch: {
     currentPage() {
-      this.getGoodsByPageAsync();
+      this.getGoodsByPageAsync(this.data.shopUserID);
     },
     eachPage() {
-      this.getGoodsByPageAsync();
+      this.getGoodsByPageAsync(this.data.shopUserID);
     }
   },
   computed: {
