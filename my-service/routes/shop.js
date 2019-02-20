@@ -25,7 +25,7 @@ router.post('/getOne', async function (req, res, next) {
 
 //新增门店
 router.post('/addShop',async function(req, res, next) {
-  console.log(req.body)
+  // console.log(req.body)
   res.send(await addShop(req.body));
 });
 //获取待审核门店
