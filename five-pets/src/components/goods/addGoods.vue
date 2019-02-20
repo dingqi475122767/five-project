@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card" style="width:500px;margin:0 auto">
     <div slot="header" class="clearfix" style="text-align:center">
       <span>添加商品</span>
     </div>
@@ -45,9 +45,9 @@
           </el-dialog>
         </el-form-item>
 
-        <el-form-item style="text-align:center">
+        <el-form-item style="width:350px;margin:0 auto">
           <el-button type="primary" @click="handleAddGoods('goods')">确认添加</el-button>
-          <el-button type="primary">重置</el-button>
+          <el-button type="primary" @click="resetBtn">重新输入</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -106,7 +106,7 @@ export default {
       // 重命名要上传的文件
       const keyname =
         "images" +
-        new Date().getTime()+
+        new Date().getTime() +
         Math.floor(Math.random() * 100) +
         "." +
         filetype;
@@ -147,14 +147,26 @@ export default {
       this.$refs[goods].validate(valid => {
         if (valid) {
           this.addGoodsAsync(this.goods);
-          alert("添加成功");
           // this.$router.push("/mis/goodsList");
+          this.$notify({
+            title: "成功",
+            message: "商品信息添加成功！",
+            type: "success"
+          });
           this.$refs[goods].resetFields();
           this.$refs.goodsImg.clearFiles();
         } else {
+          this.$notify.error({
+            title: "错误",
+            message: "添加商品信息失败，请确认添加项！"
+          });
           return false;
         }
       });
+    },
+    resetBtn() {
+      this.$refs.goods.resetFields();
+      this.$refs.goodsImg.clearFiles();
     }
   }
 };
