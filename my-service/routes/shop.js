@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop,getAuditShopById}  = require('../service/shopService');
+const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop,getAuditShopById,getAllShop}  = require('../service/shopService');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -47,5 +47,10 @@ router.post('/updateShop',async function(req, res, next) {
 //删除门店
 router.post('/delShop',async function(req, res, next) {
   res.send(await delShop(req.body));
+});
+
+//订单项：通过用户ID获取店铺信息
+router.post('/getShopByUsers',async function(req, res, next) {
+  res.send(await getAllShop(req.body));
 });
 module.exports = router;
