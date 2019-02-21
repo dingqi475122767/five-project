@@ -32,3 +32,12 @@ export function isUsersAsync(data) {
 export function getUsersByPageAsync({currentPage=1,eachPage=5}){
   return request(`/users/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}`);
 }
+
+//修改用户信息
+export function updateUsersAsync({_id,username,password} = {}){
+  return request('/users/updateUsers' , {  
+      method: 'POST',  
+      headers: {'Content-Type': 'application/json'},  
+      body:JSON.stringify({_id,username,password}),
+    })
+}

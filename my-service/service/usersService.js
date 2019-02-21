@@ -1,4 +1,4 @@
-const { login, addUsers, isUsers,getAllByPage } = require("../dao/usersDao");
+const { login, addUsers, isUsers, getAllByPage, updateUsers } = require("../dao/usersDao");
 
 //平台登陆
 module.exports.login = async function (data) {
@@ -31,6 +31,10 @@ module.exports.isUsers = async function (data) {
 }
 
 // 分页查询所有服务
-module.exports.getAllByPage = async function(service){
+module.exports.getAllByPage = async function (service) {
     return await getAllByPage(service)
 }
+
+
+// 修改用户信息
+module.exports.updateUsers = async data => await updateUsers(data);

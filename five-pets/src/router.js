@@ -53,6 +53,11 @@ export default new Router({
           component: () => import('./components/users/updateShopUsers.vue')
         },
         {
+          path: 'updateUsers',
+          name: 'updateUsers',
+          component: () => import('./components/users/updateUsers.vue')
+        },
+        {
           path: 'petList',
           name: 'petList',
           component: () => import('./components/pets/petList.vue')

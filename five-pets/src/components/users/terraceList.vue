@@ -7,7 +7,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="updateUsers(scope.row)" type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -47,6 +47,12 @@ export default {
     ...mapMutations(["setCurPage", "setEachPage", "setUsersInfo"]),
     handleClick(row) {
       console.log(row);
+    },
+    //修改
+    updateUsers(val) {
+      // console.log(val)
+      this.setUsersInfo(val);
+      this.$router.push("/mis/updateUsers");
     },
     // 每页显示条数改变时
     handleSizeChange(val) {

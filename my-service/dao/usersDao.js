@@ -27,3 +27,10 @@ module.exports.getAllByPage = async function({currentPage,eachPage}){
         .limit(eachPage)
     return {currentPage,eachPage,totalNum,totalPage,data}
 }
+
+
+
+// 修改用户信息
+module.exports.updateUsers = async ({_id,username,password})=>{
+    return await usersModel.updateOne({_id},{username,password});
+}

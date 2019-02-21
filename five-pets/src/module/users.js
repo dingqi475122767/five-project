@@ -1,4 +1,4 @@
-import { logAsync, addUsersAsync, isUsersAsync,getUsersByPageAsync } from "../services/users";
+import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync } from "../services/users";
 import router from '../router';
 
 export default {
@@ -13,6 +13,7 @@ export default {
         totalNum: 0, //总数据
         totalPage: 0, //总页数
         data: [],
+        updateInfo:{}
     },
     mutations: {
         set(state, payload) {
@@ -68,6 +69,13 @@ export default {
                 eachPage: state.eachPage
             })
             commit('getUsersByPage', data)
+        },
+
+        //修改用户信息
+        updateUsersAsync: async ({ dispatch }, payload) => {
+            console.log(payload);
+            await updateUsersAsync(payload);
+            dispatch("getUsersByPageAsync");
         },
     }
 }

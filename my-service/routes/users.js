@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { login, addUsers, isUsers,getAllByPage } = require("../service/usersService");
+const { login, addUsers, isUsers, getAllByPage, updateUsers } = require("../service/usersService");
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -30,8 +30,13 @@ router.post('/isUsers', async function (req, res, next) {
 });
 
 // 分页查询服务
-router.get('/getAllByPage',async function(req,res,next){
+router.get('/getAllByPage', async function (req, res, next) {
   res.send(await getAllByPage(req.query))
 });
+
+//修改用户信息
+router.post('/updateUsers', async function (req, res, next) {
+  res.send(await updateUsers(req.body))
+})
 
 module.exports = router;
