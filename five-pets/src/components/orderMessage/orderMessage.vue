@@ -48,8 +48,8 @@
           class="el-pagination"
         ></el-pagination>
       </div>
-      <el-button style="display:none" @click="add">新增</el-button>
-      <div class="cardContain">
+      <!-- 新增订单 -->
+      <div class="addOrderContain">
         <el-card class="box-card">
           <el-form label-position="right" label-width="80px">
             <el-form-item label="商品名">
@@ -136,13 +136,9 @@ export default {
     handleCurrentChange(val) {
       this.$store.commit("orderMessage/setCurrentPage", val);
     },
-    add() {
-      const cardContain = document.querySelector(".cardContain");
-      cardContain.style.display = "block";
-    },
     cancel() {
-      const cardContain = document.querySelector(".cardContain");
-      cardContain.style.display = "none";
+      const addOrderContain = document.querySelector(".addOrderContain");
+      addOrderContain.style.display = "none";
       this.form.name = "";
       this.form.time = "";
       this.form.address = "";
@@ -203,7 +199,7 @@ export default {
 .buttonContain {
   margin-left: 100px;
 }
-.cardContain {
+.addOrderContain {
   display: none;
 }
 .pagination-contain {
