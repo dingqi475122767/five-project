@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { login, addUsers, isUsers } = require("../service/usersService");
+const { login, addUsers, isUsers,getAllByPage } = require("../service/usersService");
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -27,6 +27,11 @@ router.post('/addUsers', async function (req, res, next) {
 router.post('/isUsers', async function (req, res, next) {
   // console.log(req.body)
   res.send(await isUsers(req.body));
+});
+
+// 分页查询服务
+router.get('/getAllByPage',async function(req,res,next){
+  res.send(await getAllByPage(req.query))
 });
 
 module.exports = router;

@@ -27,3 +27,8 @@ export function isUsersAsync(data) {
     body: JSON.stringify(data),
   })
 }
+
+//查询翻页信息
+export function getUsersByPageAsync({currentPage=1,eachPage=5}){
+  return request(`/users/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}`);
+}

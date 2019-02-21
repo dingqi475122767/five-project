@@ -1,4 +1,4 @@
-import { logAsync, addUsersAsync, isUsersAsync } from "../services/users";
+import { logAsync, addUsersAsync, isUsersAsync,getUsersByPageAsync } from "../services/users";
 import router from '../router';
 
 export default {
@@ -7,7 +7,12 @@ export default {
         username: "",
         password: "",
         state: "",
-        cd: false
+        cd: false,
+        currentPage: 1, //当前页
+        eachPage: 5, //每页显示条数
+        totalNum: 0, //总数据
+        totalPage: 0, //总页数
+        data: [],
     },
     mutations: {
         set(state, payload) {
@@ -15,6 +20,24 @@ export default {
         },
         setIsRepet(state, payload) {
             state.cd = payload
+        },
+        //获取用户分页信息保存到state里面
+        getUsersByPage: (state, payload) => {
+            Object.assign(state, payload)
+        },
+        setCurPage: (state, currentPage) => {
+            state.currentPage = currentPage
+        },
+        setEachPage: (state, eachPage) => {
+            state.eachPage = eachPage
+        },
+        // 将服务信息保存到sessionStorage中
+        setUsersInfo: (state, users) => {
+            sessionStorage.usersInfo = JSON.stringify(users)
+        },
+        // 从sessionStorage中获取服务信息
+        getUsersInfo: (state) => {
+            state.updateInfo = JSON.parse(sessionStorage.usersInfo)
         }
     },
     actions: {
@@ -33,9 +56,18 @@ export default {
             await addUsersAsync(payload)
         },
         //验证是否平台账户是否重复
-        isUsersAsync: async ({state,commit}, payload) => {
-            let data = await isUsersAsync(payload);  
-            commit("setIsRepet",data.data)//commit是一个方法
-        }
+        isUsersAsync: async ({ state, commit }, payload) => {
+            let data = await isUsersAsync(payload);
+            commit("setIsRepet", data.data)//commit是一个方法
+        },
+
+        //查询翻页信息
+        getUsersByPageAsync: async ({ commit, state }) => {
+            const { data } = await getUsersByPageAsync({
+                currentPage: state.currentPage,
+                eachPage: state.eachPage
+            })
+            commit('getUsersByPage', data)
+        },
     }
 }

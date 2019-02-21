@@ -93,7 +93,7 @@ export default {
       });
     },
     cancelUpdate(){
-      this.$router.push("/mis/goodsList");
+      this.$router.push("/mis/shopUsersList");
     }
   },
   computed: {

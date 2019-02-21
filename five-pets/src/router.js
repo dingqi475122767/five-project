@@ -48,6 +48,11 @@ export default new Router({
           component: () => import('./components/pets/addPets.vue')
         },
         {
+          path: 'updateShopUsers',
+          name: 'updateShopUsers',
+          component: () => import('./components/users/updateShopUsers.vue')
+        },
+        {
           path: 'petList',
           name: 'petList',
           component: () => import('./components/pets/petList.vue')
