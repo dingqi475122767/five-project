@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const {addService,getAllByPage,updateService}  = require('../service/serviceService');
+const {addService,getAllByPage,updateService,removeService}  = require('../service/serviceService');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -18,9 +18,13 @@ router.get('/getAllByPage',async function(req,res,next){
   res.send(await getAllByPage(req.query))
 });
 // 修改服务
-router.get('/updateService',async function(req,res,next){
-  console.log(req.body)
-  res.send(await updateService(req.query))
+router.post('/updateService',async function(req,res,next){
+  res.send(await updateService(req.body))
 })
 
+// //删除服务
+router.post('/removeService',async function(req,res,next){
+  console.log(req.body);
+  res.send(await removeService(req.body))
+})
 module.exports = router;  

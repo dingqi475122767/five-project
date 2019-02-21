@@ -11,6 +11,9 @@
       label-width="100px"
       class="demo-ruleForm"
     >
+     <el-form-item label="编号" prop="_id">
+          <el-input v-model="updateInfo._id" :disabled="true"></el-input>
+        </el-form-item>
       <el-form-item label="服务名称" prop="serviceName">
         <el-input v-model="updateInfo.serviceName" ></el-input>
       </el-form-item>
@@ -133,6 +136,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           alert("submit!");
+          let _id=this.updateInfo._id;
           let shopID = this.updateInfo.shopID;
           let serviceName = this.updateInfo.serviceName;
           let servicePrice = this.updateInfo.servicePrice;
@@ -141,6 +145,7 @@ export default {
           let timePoint = this.updateInfo.timePoint;
           let isDel = false;
           this.updateServiceAsync({
+            _id,
             shopID,
             serviceName,
             servicePrice,
@@ -150,6 +155,7 @@ export default {
             isDel
           }),
             console.log(
+              _id,
               shopID,
               serviceName,
               servicePrice,
@@ -198,7 +204,7 @@ export default {
 
 .box-card {
   width: 400px;
-  height: 400px;
+  height: 450px;
 }
 .time {
   font-size: 11px;

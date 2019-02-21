@@ -12,11 +12,11 @@ export function addServiceAsync({shopID,serviceName,servicePrice,serviceTiming,t
     return request(`/service/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}`);
 }
 
-export function updateService({shopID,serviceName,servicePrice,serviceTiming,timeDay,timePoint,isDel} = {}){
+export function updateService({_id,shopID,serviceName,servicePrice,serviceTiming,timeDay,timePoint,isDel} = {}){
   return request('/service/updateService' , {  
       method: 'POST',  
       headers: {'Content-Type': 'application/json'},  
-      body:JSON.stringify({shopID,serviceName,servicePrice,serviceTiming,timeDay,timePoint,isDel}),
+      body:JSON.stringify({_id,shopID,serviceName,servicePrice,serviceTiming,timeDay,timePoint,isDel}),
     })
 }
 

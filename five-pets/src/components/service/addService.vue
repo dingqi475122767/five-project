@@ -146,7 +146,7 @@ export default {
     addBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          alert("新增成功");
           let shopID = this.service.shopID;
           let serviceName = this.service.serviceName;
           let servicePrice = this.service.servicePrice;
