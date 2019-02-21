@@ -24,8 +24,11 @@ import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers("shopUsers");
 export default {
   name: "reg",
+  computed: {
+    ...mapState(["cd"])
+  },
   methods: {
-    ...mapActions(["regAsync"]),
+    ...mapActions(["regAsync","isShopUsersAsync"]),
     black() {
       this.$router.history.push("/login");
     },
@@ -44,7 +47,8 @@ export default {
           return false;
         }
       });
-    }
+    },
+    
   },
 
   data() {
@@ -74,7 +78,17 @@ export default {
       //账号的正则
       let reAccount = /^1[3,5,7,8]\d{9}$/;
       if (reAccount.test(value)) {
+        this.$store.dispatch("shopUsers/isShopUsersAsync", {
+          username: this.ruleForm2.account
+      });
+      // console.log(this.cd)
+      if (this.cd) {
+        // console.log(this.cd)
+        callback(new Error("账号已存在"));
+      } else {
         callback();
+        // console.log("成功")
+      }
       } else {
         callback(new Error("手机号格式不正确"));
       }

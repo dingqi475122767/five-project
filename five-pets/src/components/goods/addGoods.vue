@@ -46,7 +46,7 @@
         </el-form-item>
 
         <el-form-item style="width:350px;margin:0 auto">
-          <el-button type="primary" @click="handleAddGoods('goods')">确认添加</el-button>
+          <el-button type="primary" @click="handleAddGoods('goods')" :loading="loading">{{text}}</el-button>
           <el-button type="primary" @click="resetBtn">重新输入</el-button>
         </el-form-item>
       </el-form>
@@ -73,6 +73,8 @@ export default {
         sales: 0,
         isDel: false
       },
+      loading: false,
+      text: "确认添加",
       rules: {
         goodsName: [{ required: true, message: "商品名称不能为空" }],
         goodsType: [{ required: true, message: "商品类型不能为空" }],
@@ -95,6 +97,8 @@ export default {
   methods: {
     upqiniu(req) {
       console.log(req);
+      this.loading = true;
+      this.text = "图片上传中";
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -121,7 +125,8 @@ export default {
         // 获取到凭证之后再将文件上传到七牛云空间
         this.axios.post(this.domain, formdata, config).then(res => {
           this.goods.goodsImg = "http://" + this.qiniuaddr + "/" + res.data.key;
-          // console.log(this.imageUrl)
+          this.loading = false;
+          this.text = "确认添加";
         });
       });
     },
@@ -140,7 +145,7 @@ export default {
       this.$message({
         message: res,
         type: "warning"
-      })
+      });
     },
 
     ...mapActions(["addGoodsAsync"]),
@@ -153,7 +158,7 @@ export default {
             title: "成功",
             message: "商品信息添加成功！",
             type: "success"
-          })
+          });
         } else {
           this.$notify.error({
             title: "错误",
@@ -169,8 +174,10 @@ export default {
     }
   },
   mounted() {
-    this.goods.shopUserID = JSON.parse(localStorage.getItem('shopUsers'))[0]._id;
-  },
+    this.goods.shopUserID = JSON.parse(
+      localStorage.getItem("shopUsers")
+    )[0]._id;
+  }
 };
 </script>
 
