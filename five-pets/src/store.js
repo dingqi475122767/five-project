@@ -8,6 +8,7 @@ import services from './module/services'
 import goods from './module/goods'
 
 import shopUsers from './module/shopUsers';
+import orderMessage from "./module/orderMessage";
 import users from './module/users';
 
 Vue.use(Vuex)
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     shop,
     goods,
     shopUsers,
+    orderMessage,
     users
   }
 })

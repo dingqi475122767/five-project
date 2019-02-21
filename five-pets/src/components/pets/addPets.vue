@@ -4,27 +4,27 @@
       <span>宠物新增</span>
     </div>
     <div class="text item">
-      <el-form ref="form" :model="pet" label-width="80px">
-        <el-form-item label="宠物名字">
+      <el-form ref="form" :model="pet" label-width="80px"  :rules="rules">
+        <el-form-item label="宠物名字" prop="petsName">
           <el-input v-model="pet.petsName"></el-input>
         </el-form-item>
-        <el-form-item label="宠物类型">
+        <el-form-item label="宠物类型" prop="petsType">
           <el-input v-model="pet.petsType"></el-input>
         </el-form-item>
-        <el-form-item label="宠物价格">
+        <el-form-item label="宠物价格" prop="petsPrice">
           <el-input v-model="pet.petsPrice"></el-input>
         </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="pet.shopID" placeholder="请选择门店" filterable size="100%">
+        <el-form-item label="选择门店" prop="shopID">
+          <el-select v-model="pet.shopID" placeholder="请选择门店" filterable size="100%" ref="shop">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="item in shop"
+              :key="item._id"
+              :label="item.shopName"
+              :value="item._id"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="出生时间">
+        <el-form-item label="出生时间" prop="petsBirth">
           <el-col>
             <el-date-picker
               type="date"
@@ -36,6 +36,7 @@
         </el-form-item>
         <el-form-item label="宠物图片">
           <el-upload
+            class="avatar-uploader"
             :action="domain"
             :http-request="upqiniu"
             list-type="picture-card"
@@ -44,41 +45,30 @@
             :before-upload="beforeUpload"
             :on-success="handleAvatarSuccess"
             :on-error="handleError"
-            :ref="upload"
+            ref="upload"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
-          <el-dialog :visible.sync="dialogVisible" >
-            <img width="100%" :src="dialogImageUrl" alt>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt class="avatar">
           </el-dialog>
         </el-form-item>
       </el-form>
-      <el-button type="primary" class="btn" @click="addBtn">确认添加</el-button>
+      <el-button type="primary" class="btn" @click="addBtn('form')" :loading="loading">{{text}}</el-button>
     </div>
   </el-card>
 </template>
 
 <script>
+import { getAuditShopById } from "../../services/shop";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers("pets");
 import { getShop } from "../../services/shop";
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "选项1",
-          label: "门店1"
-        },
-        {
-          value: "选项2",
-          label: "门店2"
-        },
-        {
-          value: "选项3",
-          label: "门店3"
-        }
-      ],
+      text:"确认添加",
+      loading:false,
       dialogImageUrl: "",
       dialogVisible: false,
       imageUrl: "",
@@ -86,15 +76,32 @@ export default {
       // 七牛云的上传地址，根据自己所在地区选择，我这里是华南区
       domain: "https://upload-z2.qiniup.com",
       // 这是七牛云空间的外链默认域名
-      qiniuaddr: "pn41z4cyi.bkt.clouddn.com"
+      qiniuaddr:  "pm6civjct.bkt.clouddn.com",
+      rules: {
+        petsName: [
+          { required: true, message: "宠物名称不能为空", trigger: "blur" }
+        ],
+        petsType: [
+          { required: true, message: "宠物类型不能为空", trigger: "blur" }
+        ],
+        petsPrice: [
+          { required: true, message: "宠物价格不能为空", trigger: "blur" }
+        ],
+        petsBirth: [
+          { required: true, message: "请选择出生日期", trigger: "blur" }
+        ],
+        shopID: [{ required: true, message: "请选择门店", trigger: "blur" }]
+      }
     };
   },
   computed: {
-    ...mapState(["pet"])
+    ...mapState(["pet", "shop"])
   },
   methods: {
-    ...mapActions(["addPetsAsync"]),
+    ...mapActions(["addPetsAsync", "getShopsAsync"]),
     upqiniu(req) {
+      this.loading=true;
+      this.text="图片正在上传"
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -121,6 +128,8 @@ export default {
         this.axios.post(this.domain, formdata, config).then(res => {
           this.imageUrl = "http://" + this.qiniuaddr + "/" + res.data.key;
           this.pet.petsImg = this.imageUrl;
+          this.loading=false;
+          this.text="确认添加"
         });
       });
     },
@@ -141,21 +150,31 @@ export default {
         type: "warning"
       });
     },
-  
-    addBtn: async function() {
-      await this.addPetsAsync(this.pet);
-      this.pet.shopID = "";
-      this.pet.petsName = "";
-      this.pet.petsType = "";
-      this.pet.petsPrice = "";
-      this.pet.petsBirth = "";
-      this.pet.petsImg = "";
-      this.dialogImageUrl="";
-      this.$refs.upload.clearFiles();
-      this.$message("新增成功");
+
+    addBtn: function(form) {
+      this.$refs[form].validate(valid  => {
+        if (valid) {
+          this.pet.shopID = this.$refs.shop.value;
+           this.addPetsAsync({
+            petsName: this.pet.petsName,
+            petsType: this.pet.petsType,
+            petsPrice: this.pet.petsPrice,
+            petsBirth: this.pet.petsBirth,
+            petsImg: this.pet.petsImg,
+            shopID: this.pet.shopID
+          });
+         this.$refs[form].resetFields();
+          this.$refs.upload.clearFiles();
+          this.$message("新增成功");
+        } else {
+          return false;
+        }
+      });
     }
   },
-  mounted() {}
+  mounted() {
+    this.getShopsAsync();
+  }
 };
 </script>
 
@@ -169,7 +188,7 @@ export default {
   text-align: center;
 }
 .item > * {
-  width: 80%;
+  width: 90%;
 }
 .clearfix:before,
 .clearfix:after {
@@ -181,6 +200,7 @@ export default {
 }
 .box-card {
   width: 480px;
+  margin: auto;
 }
 
 .avatar-uploader .el-upload {

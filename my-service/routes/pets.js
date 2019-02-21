@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {addPets,getPetsByPage} = require('../service/petsService');
+const {addPets,getPetsByPage,removePets,updatePets} = require('../service/petsService');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -17,10 +17,19 @@ router.get('/token', (req, res, next) => {
 router.post('/addPets',async function(req, res, next) {
  res.send(await addPets(req.body))
 });
+//删除
+router.post('/removePets',async function(req, res, next) {
+  res.send(await removePets(req.body))
+ });
 //分页获取
 router.post('/getPetsByPage',async function(req, res, next) {
   res.send(await getPetsByPage(req.body));
  });
+
+ router.post('/update',async function(req, res, next) {
+  res.send(await updatePets(req.body));
+ });
+
 
 
 module.exports = router;

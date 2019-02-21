@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop}  = require('../service/shopService');
+const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop,getAuditShopById}  = require('../service/shopService');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -18,6 +18,10 @@ router.get('/getShop', async function (req, res, next) {
   res.send(await getShop(req.query));
 })
 
+//获取审核通过门店
+router.get('/getAuditShopById', async function (req, res, next) {
+  res.send(await getAuditShopById(req.query));
+})
 //获取门店详情
 router.post('/getOne', async function (req, res, next) {
   res.send(await getOne(req.body));

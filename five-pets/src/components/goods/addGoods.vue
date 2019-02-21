@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card" style="width:500px;margin:0 auto">
+  <el-card class="box-card" style="width:600px;margin:0 auto">
     <div slot="header" class="clearfix" style="text-align:center">
       <span>添加商品</span>
     </div>
@@ -46,7 +46,7 @@
         </el-form-item>
 
         <el-form-item style="width:350px;margin:0 auto">
-          <el-button type="primary" @click="handleAddGoods('goods')">确认添加</el-button>
+          <el-button type="primary" @click="handleAddGoods('goods')" :loading="loading">{{text}}</el-button>
           <el-button type="primary" @click="resetBtn">重新输入</el-button>
         </el-form-item>
       </el-form>
@@ -63,6 +63,7 @@ export default {
   data() {
     return {
       goods: {
+        shopUserID: "",
         goodsName: "",
         goodsType: "",
         standard: "",
@@ -72,6 +73,8 @@ export default {
         sales: 0,
         isDel: false
       },
+      loading: false,
+      text: "确认添加",
       rules: {
         goodsName: [{ required: true, message: "商品名称不能为空" }],
         goodsType: [{ required: true, message: "商品类型不能为空" }],
@@ -94,6 +97,8 @@ export default {
   methods: {
     upqiniu(req) {
       console.log(req);
+      this.loading = true;
+      this.text = "图片上传中";
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -120,7 +125,8 @@ export default {
         // 获取到凭证之后再将文件上传到七牛云空间
         this.axios.post(this.domain, formdata, config).then(res => {
           this.goods.goodsImg = "http://" + this.qiniuaddr + "/" + res.data.key;
-          // console.log(this.imageUrl)
+          this.loading = false;
+          this.text = "确认添加";
         });
       });
     },
@@ -147,14 +153,12 @@ export default {
       this.$refs[goods].validate(valid => {
         if (valid) {
           this.addGoodsAsync(this.goods);
-          // this.$router.push("/mis/goodsList");
+          this.$router.push("/mis/goodsList");
           this.$notify({
             title: "成功",
             message: "商品信息添加成功！",
             type: "success"
           });
-          this.$refs[goods].resetFields();
-          this.$refs.goodsImg.clearFiles();
         } else {
           this.$notify.error({
             title: "错误",
@@ -168,6 +172,11 @@ export default {
       this.$refs.goods.resetFields();
       this.$refs.goodsImg.clearFiles();
     }
+  },
+  mounted() {
+    this.goods.shopUserID = JSON.parse(
+      localStorage.getItem("shopUsers")
+    )[0]._id;
   }
 };
 </script>
@@ -189,7 +198,6 @@ export default {
 .clearfix:after {
   clear: both;
 }
-
 .box-card {
   width: 480px;
 }
