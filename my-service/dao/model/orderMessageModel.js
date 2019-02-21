@@ -4,29 +4,33 @@ const orderMessageSchema = new mongoose.Schema({
     //与门店关联
     shopID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"shopModule"
+        ref:"shopModel"
     },
     //与商品关联
     goodsID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"goodsModule"
+        ref:"goodsModel"
     },
     //与宠物关联
     petsID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"goodsModule"
+        ref:"petsModel"
     },
     //与服务关联
     serviceID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"goodsModule"
+        ref:"serviceModel"
     },
-    //商品名
-
     //商品数量
     
+    //商品名
+    name:String,
+    //门店名
+    shopName:String,
+    //收货地址
+    address:String,
     //订单总价
-    totalPrice:Number,
+    totalPrice:String,
     //下单时间
     orderTime:String,
     //用户名
