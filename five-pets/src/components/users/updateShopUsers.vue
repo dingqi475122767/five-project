@@ -15,10 +15,10 @@
         <el-form-item label="用户编号">
           <el-input v-model="updateInfo._id" disabled></el-input>
         </el-form-item>
-        <el-form-item label="用户账户" prop="shopUserName">
+        <el-form-item label="用户账户" prop="username">
           <el-input v-model="updateInfo.username"></el-input>
         </el-form-item>
-        <el-form-item label="用户密码" prop="shopUsersPassword">
+        <el-form-item label="用户密码" prop="password">
           <el-input v-model="updateInfo.password"></el-input>
         </el-form-item>
 
