@@ -8,7 +8,7 @@
       status-icon
       :rules="rules2"
       ref="service"
-      label-width="100px"
+      label-width="100px" 
       class="demo-ruleForm"
     >
       <el-form-item label="服务名称" prop="serviceName">
@@ -21,7 +21,7 @@
         <el-input v-model.number="service.serviceTiming"></el-input>
       </el-form-item>
       <el-form-item label="选择门店" prop="shopID">
-          <el-select v-model="service.shopID" placeholder="请选择门店" filterable size="100%" ref="shop">
+          <el-select v-model="service.shopID" placeholder="请选择门店" filterable size="100%" ref="shop" style="width:260px">
             <el-option
               v-for="item in shop"
               :key="item._id"
@@ -30,7 +30,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-      <el-form-item label="排期">
+      <el-form-item label="排 期">
         <el-col :span="11">
           <el-date-picker
             class="time"
@@ -107,16 +107,25 @@ export default {
         }
       }, 1000);
     };
+    var validateServiceShop = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error("未选择门店"));
+      } else {
+        callback();
+      }
+    };
     return {
       service: {
         serviceName: "",
         servicePrice: "",
-        serviceTiming: ""
+        serviceTiming: "",
+        shopID:""
       },
       rules2: {
         serviceName: [{ validator: validateServiceName, trigger: "blur" }],
         servicePrice: [{ validator: validateServicePrice, trigger: "blur" }],
-        serviceTiming: [{ validator: checkServiceTiming, trigger: "blur" }]
+        serviceTiming: [{ validator: checkServiceTiming, trigger: "blur" }],
+        shopID:[{ validator: validateServiceShop, trigger: "blur" }],
       },
       timeDay: "",
       timePoint: ""
@@ -130,7 +139,6 @@ export default {
     addBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("新增成功");
           this.service.shopID = this.$refs.shop.value;
           let shopID = this.service.shopID;
           let serviceName = this.service.serviceName;
@@ -148,23 +156,17 @@ export default {
             timePoint,
             isDel
           }),
-            console.log(
-              shopID,
-              serviceName,
-              servicePrice,
-              serviceTiming,
-              timeDay,
-              timePoint,
-              isDel
-            );
-          this.service.shopID = "";
-          this.service.serviceName = "";
-          this.service.servicePrice = "";
-          this.service.serviceTiming = "";
-          this.service.timeDay = "";
-          this.service.timePoint = "";
+          this.$router.push("/mis/serviceList");
+           this.$notify({
+            title: "成功",
+            message: "商品信息添加成功！",
+            type: "success"
+          });
         } else {
-          console.log("上传错误");   
+          this.$notify.error({
+            title: "错误",
+            message: "添加服务信息失败，请确认添加项！"
+          });
           return false;
         }
       });

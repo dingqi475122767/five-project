@@ -1,4 +1,4 @@
-import { logAsync, addUsersAsync, isUsersAsync,getUsersByPageAsync } from "../services/users";
+import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync } from "../services/users";
 import router from '../router';
 
 export default {
@@ -13,6 +13,7 @@ export default {
         totalNum: 0, //总数据
         totalPage: 0, //总页数
         data: [],
+        updateInfo: {}
     },
     mutations: {
         set(state, payload) {
@@ -46,6 +47,8 @@ export default {
             // console.log(payload)
             const login = await logAsync(payload);
             if (login.data) {
+                const data = JSON.stringify(login.data)
+                localStorage.shopUsers = data
                 router.push('/mis')
             } else {
                 alert("账户或密码错误")
@@ -68,6 +71,13 @@ export default {
                 eachPage: state.eachPage
             })
             commit('getUsersByPage', data)
+        },
+
+        //修改用户信息
+        updateUsersAsync: async ({ dispatch }, payload) => {
+            console.log(payload);
+            await updateUsersAsync(payload);
+            dispatch("getUsersByPageAsync");
         },
     }
 }
