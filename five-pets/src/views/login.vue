@@ -43,7 +43,8 @@ export default {
       this.$store.dispatch("users/logAsync", {
         //第一个参数是type（传递的路径），第二个参数是用户输入的值
         username: loginName,
-        password: loginPassword
+        password: loginPassword,
+        state:"admin"
       });
       this.loginName = "";
       this.loginPassword = "";
@@ -53,7 +54,8 @@ export default {
       const loginPassword = this.loginPassword;
       this.$store.dispatch("shopUsers/loginAsync", {
         username: loginName,
-        password: loginPassword
+        password: loginPassword,
+        state:"usable"
       });
     }
   },

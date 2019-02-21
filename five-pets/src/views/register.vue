@@ -38,7 +38,7 @@ export default {
           this.$store.dispatch("shopUsers/regAsync", {
             username: this.ruleForm2.account,
             password: this.ruleForm2.pass,
-            state: "disable"
+            state: "waiting"
           });
           alert("注册成功！等待管理员审核");
           this.$router.history.push('/login')

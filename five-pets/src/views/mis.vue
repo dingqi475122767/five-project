@@ -110,7 +110,7 @@
         text-color="#fff"
         active-text-color="#ffd04b"
       >
-        <el-submenu index="1">
+        <el-submenu index="1" id="user" :disabled="disabledUsers">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span>用户管理</span>
@@ -130,7 +130,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="2">
+        <el-submenu index="2" id="shop" :disabled="disabledOther">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>门店管理</span>
@@ -144,7 +144,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="3">
+        <el-submenu index="3" id="goods" :disabled="disabledOther">
           <template slot="title">
             <i class="el-icon-goods"></i>
             <span>商品管理</span>
@@ -158,7 +158,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="4">
+        <el-submenu index="4" id="service" :disabled="disabledOther">
           <template slot="title">
             <i class="el-icon-setting"></i>
             <span>服务管理</span>
@@ -172,7 +172,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="5">
+        <el-submenu index="5" id="pets" :disabled="disabledOther">
           <template slot="title">
             <i class="el-icon-picture"></i>
             <span>宠物管理</span>
@@ -186,7 +186,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="6">
+        <el-submenu index="6" id="orderMessage" :disabled="disabledOther">
           <template slot="title">
             <i class="el-icon-document"></i>
             <span>订单管理</span>
@@ -209,9 +209,7 @@
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <el-dropdown-item>退出登陆</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <span>欢迎使用，{{userName}}</span>
@@ -230,12 +228,20 @@ export default {
   name: "mis",
   data() {
     return {
-      userName:""
-    }
+      userName: "",
+      disabledUsers: false,
+      disabledOther: false,
+    };
   },
   mounted() {
-    this.userName = JSON.parse(localStorage.getItem('shopUsers'))[0].username
-  },
+    this.userName = JSON.parse(localStorage.shopUsers)[0].username;
+    this.users = JSON.parse(localStorage.shopUsers)[0];
+    if (this.users.state === "admin") {
+      this.disabledOther=true
+    } else {
+      document.getElementById("users").className += " is-disabled";
+    }
+  }
 };
 </script>
 
@@ -257,7 +263,6 @@ export default {
   color: #333;
   height: 100vh;
   background-color: #565c63 !important;
-
 }
 </style>
 
