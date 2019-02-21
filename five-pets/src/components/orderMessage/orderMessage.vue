@@ -29,7 +29,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalData"
     ></el-pagination>
-    <el-button @click="add">新增</el-button>
+    <el-button style="display:none" @click="add">新增</el-button>
     <div class="cardContain">
       <el-card class="box-card">
         <el-form label-position="right" label-width="80px">
