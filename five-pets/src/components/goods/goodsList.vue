@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%">
-    <el-table :data="data" height="500" border stripe>
+    <el-table :data="data" max-height="500" border stripe>
       <el-table-column label="商品编号" prop="_id" width="230"></el-table-column>
       <el-table-column label="商品名称" prop="goodsName"></el-table-column>
       <el-table-column label="商品类型" prop="goodsType"></el-table-column>
@@ -29,7 +29,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div style="text-align:center"> 
+    <div style="text-align:center;margin-top:20px"> 
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"

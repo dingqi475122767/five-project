@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const { reg , login } = require("../service/shopUsersService")
+
+const { reg, login, isShopUsers } = require("../service/shopUsersService")
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -14,18 +15,26 @@ router.post('/reg', async function (req, res, next) {
 router.post('/login', async function (req, res, next) {
   const isLogin = await login(req.body)
   //将登录的账号保存到服务端储存
-  if(isLogin){
+  if (isLogin) {
     req.session.users = req.body
   }
   res.send(isLogin);
 });
 //门店用户是否登录
-router.get('/isLogin',async function(req,res,next){
+router.get('/isLogin', async function (req, res, next) {
   let user = req.session.users;
-  if(user){
+  if (user) {
     res.send(user);
-  }else{
+  } else {
     res.send(false);
   }
 })
+
+//验证门店用户是否重复
+router.post('/isShopUsers', async function (req, res, next) {
+  // console.log(req.body)
+  res.send(await isShopUsers(req.body));
+});
+
+
 module.exports = router;
