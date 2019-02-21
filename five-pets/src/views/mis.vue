@@ -257,7 +257,7 @@ export default {
   color: #333;
   height: 100vh;
   background-color: #565c63 !important;
-  margin-right: 5px;
+
 }
 </style>
 
