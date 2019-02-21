@@ -3,10 +3,10 @@
     <el-table :data="service.data" height="600" border stripe>
       <el-table-column label="服务编号" prop="_id" width="230"></el-table-column>
       <el-table-column label="服务名称" prop="serviceName"></el-table-column>
-      <el-table-column label="服务价格" prop="servicePrice"></el-table-column>
-      <el-table-column label="服务时长" prop="serviceTiming"></el-table-column>
-      <el-table-column label="增加时间" prop="timeDay"></el-table-column>
-      <el-table-column label="时间段" prop="timePoint"></el-table-column>
+      <el-table-column label="单价(元)" prop="servicePrice"></el-table-column>
+      <el-table-column label="时长(分钟)" prop="serviceTiming"></el-table-column>
+      <el-table-column label="增加时间" prop="timePoint"></el-table-column>
+      <el-table-column label="时间段" prop="timeDay"></el-table-column>
       <el-table-column label="所属门店" prop="shopID.shopName"></el-table-column>
       <el-table-column prop="opts" label="操作">
         <template slot-scope="scope">
