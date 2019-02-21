@@ -1,9 +1,9 @@
-import {addShopAsync,getShop,getOneShop,getApplyShop,consentApply,updateShops,delShop} from '../services/shop'
+import { addShopAsync, getShop, getOneShop, getApplyShop, consentApply, updateShops, delShop } from '../services/shop'
 export default ({
     namespaced: true,
     state: {
         shop: {
-            shopUserID:"",
+            shopUserID: "",
             shopName: "",
             address: "",
             phone: "",
@@ -11,10 +11,10 @@ export default ({
             licence: "",
             licenceImg: "",
             gps: "",
-            state:false
+            state: false
         },
         shops: [{
-            shopUserID:"",
+            shopUserID: "",
             shopName: "",
             address: "",
             phone: "",
@@ -22,11 +22,11 @@ export default ({
             licence: "",
             licenceImg: "",
             gps: "",
-            state:''
+            state: ''
         }],
         one: [{
-            _id:"",
-            shopUserID:"",
+            _id: "",
+            shopUserID: "",
             shopName: "",
             address: "",
             phone: "",
@@ -34,11 +34,11 @@ export default ({
             licence: "",
             licenceImg: "",
             gps: "",
-            state:''
+            state: ''
         }],
         update: {
-            _id:"",
-            shopUserID:"",
+            _id: "",
+            shopUserID: "",
             shopName: "",
             address: "",
             phone: "",
@@ -46,24 +46,24 @@ export default ({
             licence: "",
             licenceImg: "",
             gps: "",
-            state:''
+            state: ''
         }
     },
     mutations: {
         get: (state, payload) => {
-            Object.assign({},state.shop, state.shop.legalEntity=payload[0].username,state.shop.shopUserID=payload[0]._id)
+            Object.assign({}, state.shop, state.shop.legalEntity = payload[0].username, state.shop.shopUserID = payload[0]._id)
         },
-        getShops:(state,payload)=>{
-            Object.assign({},state.shops,state.shops=payload)
+        getShops: (state, payload) => {
+            Object.assign({}, state.shops, state.shops = payload)
         },
-        getOneShop:(state,payload)=>{
-            Object.assign({},state.one,state.one=payload)
+        getOneShop: (state, payload) => {
+            Object.assign({}, state.one, state.one = payload)
         },
-        updateShop:(state,payload)=>{
-            Object.assign({},state.update,state.update=payload[0])
+        updateShop: (state, payload) => {
+            Object.assign({}, state.update, state.update = payload[0])
         },
-        updateSp:(state,payload)=>{
-            Object.assign({},state.update,state.update=payload)
+        updateSp: (state, payload) => {
+            Object.assign({}, state.update, state.update = payload)
         }
     },
     actions: {
@@ -77,22 +77,22 @@ export default ({
             commit,
             dispatch
         }, payload) => {
-            const{data}=await getShop(payload)
-            commit("getShops",data)
+            const { data } = await getShop(payload)
+            commit("getShops", data)
         },
         getOneShop: async ({
             commit,
             dispatch
         }, payload) => {
-            const{data}=await getOneShop(payload)
-            commit("getOneShop",data)
+            const { data } = await getOneShop(payload)
+            commit("getOneShop", data)
         },
         updateShopAsync: async ({
             commit,
             dispatch
         }, payload) => {
-            const{data}=await getOneShop(payload)
-            commit("updateShop",data)
+            const { data } = await getOneShop(payload)
+            commit("updateShop", data)
         },
         updateShops: async ({
             commit,
@@ -110,14 +110,14 @@ export default ({
             commit,
             dispatch
         }, payload) => {
-            commit("updateSp",payload)
+            commit("updateSp", payload)
         },
         getApplyShop: async ({
             commit,
             dispatch
         }, payload) => {
-            const{data}=await getApplyShop(payload)
-            commit("getShops",data)
+            const { data } = await getApplyShop(payload)
+            commit("getShops", data)
         },
         consentApply: async ({
             commit,
