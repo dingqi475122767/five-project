@@ -131,6 +131,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           alert("新增成功");
+          this.service.shopID = this.$refs.shop.value;
           let shopID = this.service.shopID;
           let serviceName = this.service.serviceName;
           let servicePrice = this.service.servicePrice;

@@ -14,8 +14,8 @@ router.post('/addService',async function(req, res, next) {
 });
 
 // 分页查询服务
-router.get('/getAllByPage',async function(req,res,next){
-  res.send(await getAllByPage(req.query))
+router.post('/getAllByPage',async function(req,res,next){
+  res.send(await getAllByPage(req.body))
 });
 // 修改服务
 router.post('/updateService',async function(req,res,next){

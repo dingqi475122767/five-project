@@ -8,8 +8,15 @@ export function addServiceAsync({shopID,serviceName,servicePrice,serviceTiming,t
       })
   }
 
-  export function getServiceByPageAsync({currentPage=1,eachPage=5,shopID}){
-    return request(`/service/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}&shopID=${shopID}`);
+//   export function getServiceByPageAsync({currentPage=1,eachPage=5,shopID}){
+//     return request(`/service/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}&shopID=${shopID}`);
+// }
+export function getServiceByPageAsync({currentPage,eachPage,shopID} = {}){
+  return request('/service/getAllByPage' , {  
+      method: 'POST',  
+      headers: {'Content-Type': 'application/json'},  
+      body:JSON.stringify({currentPage,eachPage,shopID}),
+    })
 }
 
 
