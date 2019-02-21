@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%">
-    <el-table :data="data" height="600" border stripe>
+    <el-table :data="service.data" height="600" border stripe>
       <el-table-column label="服务编号" prop="_id" width="230"></el-table-column>
       <el-table-column label="服务名称" prop="serviceName"></el-table-column>
       <el-table-column label="服务价格" prop="servicePrice"></el-table-column>
@@ -15,7 +15,7 @@
             <div style="text-align:center"><span>确定要删除这条商品记录吗？</span></div>
             <span slot="footer" class="dialog-footer">
               <el-button @click="centerDialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="certainRemoveBtn(_id)">确 定</el-button>
+              <el-button type="primary" @click="certainRemoveBtn(id)">确 定</el-button>
             </span>
           </el-dialog>
         </template>
@@ -24,11 +24,11 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage"
+      :current-page="service.currentPage"
       :page-sizes="[5,10, 15, 20]"
-      :page-size="eachPage"
+      :page-size="service.eachPage"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="totalNum"
+      :total="service.totalNum"
     ></el-pagination>
   </div>
 </template>
@@ -50,6 +50,7 @@ export default {
   },
   mounted() {
     this.getServiceByPageAsync();
+    console.log(this.service,1)
   },
   watch: {
     currentPage() {
@@ -60,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["currentPage", "eachPage", "totalPage", "totalNum", "data"])
+    ...mapState(["service"])
   },
   methods: {
     ...mapActions(["getServiceByPageAsync","updateServiceAsync","removeServiceAsync"]),
@@ -91,7 +92,7 @@ export default {
         message: "服务信息删除成功",
         type: "success"
       });
-    }
+    },
   }
 };
 </script>

@@ -8,9 +8,11 @@ export function addServiceAsync({shopID,serviceName,servicePrice,serviceTiming,t
       })
   }
 
-  export function getServiceByPageAsync({currentPage=1,eachPage=5}){
-    return request(`/service/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}`);
+  export function getServiceByPageAsync({currentPage=1,eachPage=5,shopID}){
+    return request(`/service/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}&shopID=${shopID}`);
 }
+
+
 
 export function updateService({_id,shopID,serviceName,servicePrice,serviceTiming,timeDay,timePoint,isDel} = {}){
   return request('/service/updateService' , {  

@@ -20,9 +20,16 @@
       <el-form-item label="服务时长" prop="serviceTiming">
         <el-input v-model.number="service.serviceTiming"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="排期" prop="serviceSchedule">
-        <el-input v-model.number="service.serviceSchedule"></el-input>
-      </el-form-item>-->
+      <el-form-item label="选择门店" prop="shopID">
+          <el-select v-model="service.shopID" placeholder="请选择门店" filterable size="100%" ref="shop">
+            <el-option
+              v-for="item in shop"
+              :key="item._id"
+              :label="item.shopName"
+              :value="item._id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
       <el-form-item label="排期">
         <el-col :span="11">
           <el-date-picker
@@ -57,7 +64,7 @@ import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
   "services"
 );
-
+import { getAuditShopById,getShop } from "../../services/shop";
 export default {
   name: "addService",
   data() {
@@ -100,49 +107,26 @@ export default {
         }
       }, 1000);
     };
-    //serviceSchedule排期还没写
-    //  var validateServiceSchedule = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error('排期'));
-    //   }
-    //   setTimeout(() => {
-    //     if (!Number.isInteger(value)) {
-    //       callback(new Error('请输入数字值'));
-    //     } else {
-    //       if (value < 0&&value<120) {
-    //         callback(new Error('服务时长必须大于0分钟且小于120分钟'));
-    //       } else {
-    //         callback();
-    //       }
-    //     }
-    //   }, 1000);
-    // };
     return {
       service: {
         serviceName: "",
         servicePrice: "",
         serviceTiming: ""
-        //// serviceSchedule: "",
-        // timeDay: '',
-        // timePoint: '',
       },
       rules2: {
         serviceName: [{ validator: validateServiceName, trigger: "blur" }],
         servicePrice: [{ validator: validateServicePrice, trigger: "blur" }],
         serviceTiming: [{ validator: checkServiceTiming, trigger: "blur" }]
-        //// serviceSchedule: [{ validator: validateServiceSchedule, trigger: "blur" }],
-        // timeDay: [{ validator: validateTimeDay, trigger: "blur" }],
-        // timePoint: [{ validator: validateTimePoint, trigger: "blur" }],
       },
       timeDay: "",
       timePoint: ""
     };
   },
   computed: {
-    ...mapState(["seivices"])
+    ...mapState(["seivices","shop"])
   },
   methods: {
-    ...mapActions(["addServiceAsync"]),
+    ...mapActions(["addServiceAsync","getShopsAsync"]),
     addBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -179,7 +163,7 @@ export default {
           this.service.timeDay = "";
           this.service.timePoint = "";
         } else {
-          console.log("error submit!!");   
+          console.log("上传错误");   
           return false;
         }
       });
@@ -187,6 +171,9 @@ export default {
     cancel(formName) {
       this.$refs[formName].resetFields();
     }
+  },
+   mounted() {
+    this.getShopsAsync();
   }
 };
 </script>
@@ -217,7 +204,7 @@ export default {
 
 .box-card {
   width: 400px;
-  height: 400px;
+  height: 450px;
 }
 .time {
   font-size: 11px;

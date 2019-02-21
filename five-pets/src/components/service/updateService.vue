@@ -107,17 +107,11 @@ export default {
         serviceName: "",
         servicePrice: "",
         serviceTiming: ""
-        //// serviceSchedule: "",
-        // timeDay: '',
-        // timePoint: '',
       },
       rules2: {
         serviceName: [{ validator: validateServiceName, trigger: "blur" }],
         servicePrice: [{ validator: validateServicePrice, trigger: "blur" }],
         serviceTiming: [{ validator: checkServiceTiming, trigger: "blur" }]
-        //// serviceSchedule: [{ validator: validateServiceSchedule, trigger: "blur" }],
-        // timeDay: [{ validator: validateTimeDay, trigger: "blur" }],
-        // timePoint: [{ validator: validateTimePoint, trigger: "blur" }],
       },
       timeDay: "",
       timePoint: ""
