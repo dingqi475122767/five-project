@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -7,7 +7,13 @@ export default {
     username: "",
     password: "",
     state: "",
-    cd: false
+    cd: false,
+    currentPage: 1, //当前页
+    eachPage: 5, //每页显示条数
+    totalNum: 0, //总数据
+    totalPage: 0, //总页数
+    data: [],
+    updateInfo:{}
   },
   mutations: {
     set(state, payload) {
@@ -15,6 +21,24 @@ export default {
     },
     setIsRepet(state, payload) {
       state.cd = payload
+    },
+    //获取用户分页信息保存到state里面
+    getUsersByPage: (state, payload) => {
+      Object.assign(state, payload)
+    },
+    setCurPage: (state, currentPage) => {
+      state.currentPage = currentPage
+    },
+    setEachPage: (state, eachPage) => {
+      state.eachPage = eachPage
+    },
+    // 将服务信息保存到sessionStorage中
+    setShopUsersInfo: (state, shopUsers) => {
+      sessionStorage.shopUsersInfo = JSON.stringify(shopUsers)
+    },
+    // 从sessionStorage中获取服务信息
+    getShopUsersInfo: (state) => {
+      state.updateInfo = JSON.parse(sessionStorage.shopUsersInfo)
     }
   },
   actions: {
@@ -38,7 +62,23 @@ export default {
     isShopUsersAsync: async ({ state, commit }, payload) => {
       let data = await isShopUsersAsync(payload);
       commit("setIsRepet", data.data)//commit是一个方法
-    }
+    },
+
+    //查询翻页信息
+    getUsersByPageAsync: async ({ commit, state }) => {
+      const { data } = await getUsersByPageAsync({
+        currentPage: state.currentPage,
+        eachPage: state.eachPage
+      })
+      commit('getUsersByPage', data)
+    },
+
+    //修改用户信息
+    updateShopUsersAsync: async ({ dispatch }, payload) => {
+      console.log(payload);
+      await updateShopUsersAsync(payload);
+      dispatch("getUsersByPageAsync");
+    },
   }
 }
 

@@ -1,4 +1,4 @@
-const { reg, login,isShopUsers } = require("../dao/shopUsersDao");
+const { reg, login, isShopUsers, getAllByPage, updateShopUsers } = require("../dao/shopUsersDao");
 
 //门店用户注册
 module.exports.reg = async function (data) {
@@ -8,9 +8,9 @@ module.exports.reg = async function (data) {
 //门店用户登录
 module.exports.login = async function (data) {
     const state = await login(data);
-    if(state.length!==0){
+    if (state.length !== 0) {
         return state;
-    }else{
+    } else {
         return false;
     }
 }
@@ -25,3 +25,12 @@ module.exports.isShopUsers = async function (data) {
         return false
     }
 }
+
+
+// 分页查询所有服务
+module.exports.getAllByPage = async function (service) {
+    return await getAllByPage(service)
+}
+
+// 修改用户信息
+module.exports.updateShopUsers = async data => await updateShopUsers(data);
