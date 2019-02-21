@@ -1,36 +1,39 @@
-const {shopModel} = require('./model/shopModel');
+const { shopModel } = require('./model/shopModel');
 //新增
-module.exports.addShop = async function(shop){
+module.exports.addShop = async function (shop) {
     return await shopModel.create(shop);
 }
 //获取所有门店
-module.exports.getShop = async function(shop){
+module.exports.getShop = async function (shop) {
     return await shopModel.find(shop);
 }
 
-module.exports.getAuditShopById = async function({shopUserID}){
-    return await shopModel.find({shopUserID,state:false});
+module.exports.getAuditShopById = async function ({ shopUserID }) {
+    return await shopModel.find({ shopUserID, state: false });
 }
 //删除门店
-module.exports.delShop = async function(shop){
+module.exports.delShop = async function (shop) {
     return await shopModel.deleteOne(shop);
 }
 //获取门店详情
-module.exports.getOne = async function(shop){
+module.exports.getOne = async function (shop) {
     return await shopModel.find(shop);
 }
 //获取待审核门店
-module.exports.getApplyShop = async function(){
+module.exports.getApplyShop = async function () {
     let data = await shopModel.find().or([{
         state: false
     }])
     return data
 }
 //通过审核
-module.exports.consentApply = async function({_id,state}){
-    return await shopModel.updateOne({_id}, {state})
+module.exports.consentApply = async function ({ _id, state }) {
+    return await shopModel.updateOne({ _id }, { state })
 }
 //修改门店信息
-module.exports.updateShop = async function({_id,shopName,address,phone,legalEntity,licence,licenceImg,gps,shopUserID,state}){
-    return await shopModel.updateOne({_id}, {shopName,address,phone,legalEntity,licence,licenceImg,gps,shopUserID,state})
+module.exports.updateShop = async function ({ _id, shopName, address, phone, legalEntity, licence, licenceImg, gps, shopUserID, state }) {
+    return await shopModel.updateOne({ _id }, { shopName, address, phone, legalEntity, licence, licenceImg, gps, shopUserID, state })
 }
+
+//订单项：获取门店信息
+module.exports.getAllShop = async ({_id}) => await shopModel.find({shopUserID:_id})
