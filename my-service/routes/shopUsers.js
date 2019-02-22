@@ -20,15 +20,6 @@ router.post('/login', async function (req, res, next) {
   }
   res.send(isLogin);
 });
-//门店用户是否登录
-router.get('/isLogin', async function (req, res, next) {
-  let user = req.session.users;
-  if (user) {
-    res.send(user);
-  } else {
-    res.send(false);
-  }
-})
 
 //验证门店用户是否重复
 router.post('/isShopUsers', async function (req, res, next) {
@@ -57,4 +48,19 @@ router.get('/getAuditByPage', async function (req, res, next) {
   res.send(await getAuditByPage(req.query))
 });
 
+//是否登录
+router.get('/isLogin', async function (req, res, next) {
+  let user = req.session.users;
+  if (user) {
+    res.send(user);
+  } else {
+    res.send(false);
+  }
+})
+
+//退出登录
+router.get("/exit", async function (req,res,next) {
+  req.session.users = '';
+  res.send(true)
+})
 module.exports = router;

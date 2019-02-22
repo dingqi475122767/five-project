@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, exitAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -14,7 +14,7 @@ export default {
     totalPage: 0, //总页数
     data: [],
     updateInfo: {},//要修改的账号数据
-    isLogin: false,//登录状态
+    isShopLogin: false,//登录状态
     audit: {
       currentPage: 1, //当前页
       eachPage: 5, //每页显示条数
@@ -50,7 +50,7 @@ export default {
     },
     //请求得到的登录状态
     setIsLogin(state, payload) {
-      state.isLogin = payload
+      state.isShopLogin = payload
     },
 
     //获取待审核用户
@@ -107,7 +107,6 @@ export default {
     //查看登录状态
     isLogin: async ({ commit }) => {
       const state = await isLoginAsync()
-      console.log(state)
     },
     // commit("setIsLogin")
     //审核用户信息
@@ -121,7 +120,8 @@ export default {
       const { currentPage, eachPage } = state.audit
       const { data } = await getAuditByPage({ currentPage, eachPage })
       commit("getAuditByPage", data)
-    }
+    },
+
   }
 }
 

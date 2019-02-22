@@ -247,19 +247,19 @@ export default {
       }
     }
   },
-  mounted:async function() {
+  mounted: async function() {
     this.userName = JSON.parse(localStorage.shopUsers)[0].username;
     this.users = JSON.parse(localStorage.shopUsers)[0];
     if (this.users.state === "admin") {
       this.disabledOther = true;
-     await this.$store.dispatch("users/isLogin");
+      await this.$store.dispatch("users/isLogin");
       if (!this.isLogin) {
         alert("请先登录");
         this.$router.history.push("/login");
       }
     } else {
       this.disabledUsers = true;
-      this.$store.dispatch("shopUsers/isLogin");
+      await this.$store.dispatch("users/isShopLogin");
       if (!this.isLogin) {
         alert("请先登录");
         this.$router.history.push("/login");
