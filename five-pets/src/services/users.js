@@ -47,6 +47,11 @@ export function isLoginAsync(){
   return request("/users/isLogin");
 }
 
+//验证门店用户是否登录
+export function isShopLoginAsync(){
+  return request("/shopUsers/isLogin");
+}
+
 //退出登录
 export function exitAsync(){
   return request("/users/exit");
