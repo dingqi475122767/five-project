@@ -8,7 +8,7 @@
       status-icon
       :rules="rules2"
       ref="service"
-      label-width="100px" 
+      label-width="100px"
       class="demo-ruleForm"
     >
       <el-form-item label="服务名称" prop="serviceName">
@@ -21,38 +21,44 @@
         <el-input v-model.number="service.serviceTiming"></el-input>
       </el-form-item>
       <el-form-item label="选择门店" prop="shopID">
-          <el-select v-model="service.shopID" placeholder="请选择门店" filterable size="100%" ref="shop" style="width:260px">
-            <el-option
-              v-for="item in shop"
-              :key="item._id"
-              :label="item.shopName"
-              :value="item._id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-      <el-form-item label="排 期">
-        <el-col :span="11">
+        <el-select
+          v-model="service.shopID"
+          placeholder="请选择门店"
+          filterable
+          size="100%"
+          ref="shop"
+          style="width:260px"
+        >
+          <el-option v-for="item in shop" :key="item._id" :label="item.shopName" :value="item._id"></el-option>
+        </el-select>
+      </el-form-item>
+      <div class="time-container">
+        <div class="block">
+          <span class="demonstration" style="font-size:14px">排期</span>
           <el-date-picker
-            class="time"
+            style="margin-left:10px;width:118px;font-size:11px"
+            v-model="service.timeDay"
             type="date"
             placeholder="选择日期"
-            v-model="service.timeDay"
-            style="width: 100%;"
+            :picker-options="pickerOptions0"
           ></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker
-            class="time"
-            type="fixed-time"
-            placeholder="选择时间"
+        </div>
+        <div class="block">
+          <span class="demonstration" style="font-size:14px">时间</span>
+          <el-time-select
+            style="margin-left:10px;width:115px;font-size:11px"
             v-model="service.timePoint"
-            style="width: 100%;"
-          ></el-time-picker>
-        </el-col>
-      </el-form-item>
+            :picker-options="{
+               start: '08:30',
+               step: '00:15',
+               end: '18:30',
+            }"
+            placeholder="选择时间"
+          ></el-time-select>
+        </div>
+      </div>
       <el-form-item>
-        <el-button type="primary" @click="addBtn('service')">增加</el-button>
+        <el-button type="primary" @click="addBtn('service')">确认</el-button>
         <el-button @click="cancel('service')">取消</el-button>
       </el-form-item>
     </el-form>
@@ -64,7 +70,7 @@ import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
   "services"
 );
-import { getAuditShopById,getShop } from "../../services/shop";
+import { getAuditShopById, getShop } from "../../services/shop";
 export default {
   name: "addService",
   data() {
@@ -119,23 +125,28 @@ export default {
         serviceName: "",
         servicePrice: "",
         serviceTiming: "",
-        shopID:""
+        shopID: ""
       },
       rules2: {
         serviceName: [{ validator: validateServiceName, trigger: "blur" }],
         servicePrice: [{ validator: validateServicePrice, trigger: "blur" }],
         serviceTiming: [{ validator: checkServiceTiming, trigger: "blur" }],
-        shopID:[{ validator: validateServiceShop, trigger: "blur" }],
+        shopID: [{ validator: validateServiceShop, trigger: "blur" }]
       },
       timeDay: "",
-      timePoint: ""
+      timePoint: "",
+      pickerOptions0: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7;
+        }
+      }
     };
   },
   computed: {
-    ...mapState(["seivices","shop"])
+    ...mapState(["seivices", "shop"])
   },
   methods: {
-    ...mapActions(["addServiceAsync","getShopsAsync"]),
+    ...mapActions(["addServiceAsync", "getShopsAsync"]),
     addBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -156,8 +167,8 @@ export default {
             timePoint,
             isDel
           }),
-          this.$router.push("/mis/serviceList");
-           this.$notify({
+            this.$router.push("/mis/serviceList");
+          this.$notify({
             title: "成功",
             message: "商品信息添加成功！",
             type: "success"
@@ -175,7 +186,7 @@ export default {
       this.$refs[formName].resetFields();
     }
   },
-   mounted() {
+  mounted() {
     this.getShopsAsync();
   }
 };
@@ -211,5 +222,11 @@ export default {
 }
 .time {
   font-size: 11px;
+}
+.block {
+  margin-bottom: 20px;
+}
+.time-container {
+  display: flex;
 }
 </style>
