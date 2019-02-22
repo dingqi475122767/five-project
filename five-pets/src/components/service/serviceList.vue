@@ -68,7 +68,6 @@ export default {
     ...mapActions(["getServiceByPageAsync","updateServiceAsync","removeServiceAsync"]),
       ...mapMutations(["setCurPage", "setEachPage", "setServiceInfo"]),
      updateService(data) {
-       console.log(data);
        this.setServiceInfo(data);
        this.$router.push("/mis/updateService");
       // this.$router.history.push("./updateService");
