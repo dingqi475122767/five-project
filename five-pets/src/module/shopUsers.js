@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, auditShopUsersAsync,getAuditByPage } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -13,7 +13,14 @@ export default {
     totalNum: 0, //总数据
     totalPage: 0, //总页数
     data: [],
-    updateInfo:{}
+    updateInfo: {},//储存用户信息
+    audit: {
+      currentPage: 1, //当前页
+      eachPage: 5, //每页显示条数
+      totalNum: 0, //总数据
+      totalPage: 0, //总页数
+      data: [],
+    }
   },
   mutations: {
     set(state, payload) {
@@ -32,13 +39,25 @@ export default {
     setEachPage: (state, eachPage) => {
       state.eachPage = eachPage
     },
-    // 将服务信息保存到sessionStorage中
+    // 将用户信息保存到sessionStorage中
     setShopUsersInfo: (state, shopUsers) => {
       sessionStorage.shopUsersInfo = JSON.stringify(shopUsers)
     },
-    // 从sessionStorage中获取服务信息
+    // 从sessionStorage中获取用户信息
     getShopUsersInfo: (state) => {
       state.updateInfo = JSON.parse(sessionStorage.shopUsersInfo)
+    },
+    //获取待审核用户
+    getAuditByPage: (state, payload) => {
+      Object.assign(state.audit, payload)
+    },
+    //设置待审核用户的当前页
+    setAuditCurPage(state,payload){
+      state.audit.currentPage = payload
+    },
+    //设置待审核用户的每页显示条数
+    setAuditEachPage(state,payload){
+      state.audit.eachPage = payload
     }
   },
   actions: {
@@ -79,6 +98,19 @@ export default {
       await updateShopUsersAsync(payload);
       dispatch("getUsersByPageAsync");
     },
+
+    //审核用户信息
+    auditShopUsersAsync: async ({ dispatch }, payload) => {
+      await auditShopUsersAsync(payload);
+      dispatch("getAuditByPageAsync");
+    },
+
+    //获取待审核用户
+    getAuditByPageAsync: async ({ commit, state }) => {
+      const { currentPage, eachPage } = state.audit
+      const {data} = await getAuditByPage({currentPage,eachPage})
+      commit("getAuditByPage",data)
+    }
   }
 }
 

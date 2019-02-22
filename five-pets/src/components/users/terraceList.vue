@@ -11,7 +11,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+    <!-- <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
@@ -19,7 +19,7 @@
       :page-size="eachPage"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalNum"
-    ></el-pagination>
+    ></el-pagination> -->
   </div>
 </template>
 
@@ -56,11 +56,11 @@ export default {
     },
     // 每页显示条数改变时
     handleSizeChange(val) {
-      this.setEachPage(val), this.setCurPage(1);
+      // this.setEachPage(val), this.setCurPage(1);
     },
     //当前页改变时
     handleCurrentChange(val) {
-      this.setCurPage(val);
+      // this.setCurPage(val);
     }
   },
   computed: {
