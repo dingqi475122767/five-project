@@ -10,10 +10,12 @@ router.get('/', function (req, res, next) {
 
 //平台登陆
 router.post('/login', async function (req, res, next) {
-  let option = await login(req.body)
-  console.log(option)
-  res.send(option);
-
+  const isLogin = await login(req.body)
+  //将登录的账号保存到服务端储存
+  if (isLogin) {
+    req.session.users = req.body
+  }
+  res.send(isLogin);
 });
 
 //新增平台管理
@@ -37,6 +39,22 @@ router.get('/getAllByPage', async function (req, res, next) {
 //修改用户信息
 router.post('/updateUsers', async function (req, res, next) {
   res.send(await updateUsers(req.body))
+})
+
+//是否登录
+router.get('/isLogin', async function (req, res, next) {
+  let user = req.session.users;
+  if (user) {
+    res.send(user);
+  } else {
+    res.send(false);
+  }
+})
+
+//退出登录
+router.get("/exit", async function (req,res,next) {
+  req.session.users = '';
+  res.send(true)
 })
 
 module.exports = router;

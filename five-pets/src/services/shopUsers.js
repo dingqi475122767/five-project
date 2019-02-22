@@ -40,3 +40,7 @@ export function updateShopUsersAsync({_id,username,password} = {}){
       body:JSON.stringify({_id,username,password}),
     })
 }
+
+export function isLoginAsync(){
+  return request('/shopUsers/isLogin')
+}

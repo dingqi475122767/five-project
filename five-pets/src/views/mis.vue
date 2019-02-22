@@ -206,10 +206,10 @@
           <h1 style="font-size:35px">爱宠帮宠物管理系统</h1>
         </div>
         <div style="text-align: right; font-size: 12px">
-          <el-dropdown>
+          <el-dropdown @command="exit">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>退出登陆</el-dropdown-item>
+              <el-dropdown-item>退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <span>欢迎使用，{{userName}}</span>
@@ -224,22 +224,51 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapState } = createNamespacedHelpers("users");
+
 export default {
   name: "mis",
   data() {
     return {
       userName: "",
       disabledUsers: false,
-      disabledOther: false,
+      disabledOther: false
     };
   },
-  mounted() {
+  watch: {
+    isLogin() {
+      if (!this.isLogin) {
+        alert("请先登录");
+        this.$router.history.push("/login");
+      }
+    }
+  },
+  mounted:async function() {
     this.userName = JSON.parse(localStorage.shopUsers)[0].username;
     this.users = JSON.parse(localStorage.shopUsers)[0];
     if (this.users.state === "admin") {
-      this.disabledOther=true
+      this.disabledOther = true;
+     await this.$store.dispatch("users/isLogin");
+      if (!this.isLogin) {
+        alert("请先登录");
+        this.$router.history.push("/login");
+      }
     } else {
-      document.getElementById("users").className += " is-disabled";
+      this.disabledUsers = true;
+      this.$store.dispatch("shopUsers/isLogin");
+      if (!this.isLogin) {
+        alert("请先登录");
+        this.$router.history.push("/login");
+      }
+    }
+  },
+  computed: {
+    ...mapState(["isLogin"])
+  },
+  methods: {
+    exit() {
+      this.$store.dispatch("users/exit");
     }
   }
 };

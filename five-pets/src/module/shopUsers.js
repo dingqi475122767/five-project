@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -13,7 +13,8 @@ export default {
     totalNum: 0, //总数据
     totalPage: 0, //总页数
     data: [],
-    updateInfo:{}
+    updateInfo: {},//要修改的账号数据
+    isLogin:false,//登录状态
   },
   mutations: {
     set(state, payload) {
@@ -39,6 +40,10 @@ export default {
     // 从sessionStorage中获取服务信息
     getShopUsersInfo: (state) => {
       state.updateInfo = JSON.parse(sessionStorage.shopUsersInfo)
+    },
+    //请求得到的登录状态
+    setIsLogin(state,payload){
+      state.isLogin = payload
     }
   },
   actions: {
@@ -75,10 +80,16 @@ export default {
 
     //修改用户信息
     updateShopUsersAsync: async ({ dispatch }, payload) => {
-      console.log(payload);
       await updateShopUsersAsync(payload);
       dispatch("getUsersByPageAsync");
     },
+
+    //查看登录状态
+    isLogin: async ({commit}) => {
+      const state = await isLoginAsync()
+      console.log(state)
+      // commit("setIsLogin")
+    }
   }
 }
 
