@@ -56,3 +56,12 @@ export function isShopLoginAsync(){
 export function exitAsync(){
   return request("/users/exit");
 }
+
+//删除门店用户
+export function removeUsers(_id) {
+  return request("/users/removeUsers", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ _id })
+  });
+}

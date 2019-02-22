@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { login, addUsers, isUsers, getAllByPage, updateUsers } = require("../service/usersService");
+const { login, addUsers, isUsers, getAllByPage, updateUsers, removeUsers } = require("../service/usersService");
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -52,9 +52,14 @@ router.get('/isLogin', async function (req, res, next) {
 })
 
 //退出登录
-router.get("/exit", async function (req,res,next) {
+router.get("/exit", async function (req, res, next) {
   req.session.users = '';
   res.send(true)
+})
+
+// //删除服务
+router.post('/removeUsers', async function (req, res, next) {
+  res.send(await removeUsers(req.body))
 })
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, exitAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, removeShopUsers, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -141,6 +141,10 @@ export default {
       const { data } = await getAuditByPage({ currentPage, eachPage })
       commit("getAuditByPage", data)
     },
-
+    //删除门店用户
+    removeShopUsersAsync: async ({ commit,dispatch },payload) => {
+      await removeShopUsers(payload);
+      dispatch("getUsersByPageAsync");
+    },
   }
 }

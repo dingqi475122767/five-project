@@ -64,3 +64,12 @@ export function isLoginAsync(){
 export function exitAsync(){
   return request("/shopUsers/exit");
 }
+
+//删除门店用户
+export function removeShopUsers(_id) {
+  return request("/shopUsers/removeShopUsers", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ _id })
+  });
+}

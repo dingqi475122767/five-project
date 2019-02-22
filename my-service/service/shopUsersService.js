@@ -1,4 +1,4 @@
-const { reg, login, isShopUsers, getAllByPage, updateShopUsers, auditShopUsers,getAuditByPage } = require("../dao/shopUsersDao");
+const { reg, login, isShopUsers, getAllByPage, updateShopUsers, auditShopUsers, getAuditByPage, removeShopUsers } = require("../dao/shopUsersDao");
 
 //门店用户注册
 module.exports.reg = async function (data) {
@@ -40,3 +40,8 @@ module.exports.auditShopUsers = async data => await auditShopUsers(data);
 
 //获取待审核用户
 module.exports.getAuditByPage = async data => await getAuditByPage(data);
+
+// 删除服务
+module.exports.removeShopUsers = async function (data) {
+    return await removeShopUsers(data);
+}

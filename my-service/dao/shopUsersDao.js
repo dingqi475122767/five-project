@@ -53,3 +53,9 @@ module.exports.getAuditByPage = async ({currentPage,eachPage})=>{
         .limit(eachPage)
     return {currentPage,eachPage,totalNum,totalPage,data}
 }
+
+
+//删除门店用户信息
+module.exports.removeShopUsers = async function(data){
+    return await shopUsersModel.remove(data)
+}

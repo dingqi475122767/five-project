@@ -1,4 +1,4 @@
-import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync,isShopLoginAsync, isLoginAsync ,exitAsync} from "../services/users";
+import { removeUsers, logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync, isShopLoginAsync, isLoginAsync, exitAsync } from "../services/users";
 import router from '../router';
 
 export default {
@@ -86,24 +86,34 @@ export default {
         //查看登录状态
         isLogin: async ({ commit }) => {
             const { data } = await isLoginAsync();
-            if(data.username){
-                commit("setIsLogin",true)
-            }else{
-                commit("setIsLogin",false)
+            if (data.username) {
+                commit("setIsLogin", true)
+            } else {
+                commit("setIsLogin", false)
             }
         },
 
         //查单门店用户登录状态
-        isShopLogin:async ({commit})=>{
+        isShopLogin: async ({ commit }) => {
             const { data } = await isShopLoginAsync();
-            if(data.username){
-                commit("setIsLogin",true)
-            }else{
-                commit("setIsLogin",false)
+            if (data.username) {
+                commit("setIsLogin", true)
+            } else {
+                commit("setIsLogin", false)
             }
         },
 
         //退出登录状态
+        exit: async ({ commit }) => {
+            const { data } = await exitAsync()
+            commit("setIsLogin", false)
+        },
+
+        //删除平台用户
+        removeUsersAsync: async ({ commit, dispatch }, payload) => {
+            await removeUsers(payload);
+            dispatch("getUsersByPageAsync");
+        },
         exit:async ({commit},payload)=>{
             await exitAsync()
             commit("setIsLogin",false)
