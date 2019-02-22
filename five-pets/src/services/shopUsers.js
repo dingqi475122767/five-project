@@ -54,3 +54,13 @@ export function auditShopUsersAsync(data) {
 export function getAuditByPage({ currentPage = 1, eachPage = 5 } = {}) {
   return request(`/shopUsers/getAuditByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
 }
+
+//验证是否登录
+export function isLoginAsync(){
+  return request("/shopUsers/isLogin");
+}
+
+//退出登录
+export function exitAsync(){
+  return request("/shopUsers/exit");
+}

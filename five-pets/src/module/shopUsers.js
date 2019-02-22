@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, auditShopUsersAsync,getAuditByPage } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -13,8 +13,9 @@ export default {
     totalNum: 0, //总数据
     totalPage: 0, //总页数
     data: [],
-    updateInfo: {},//储存用户信息
-    audit: {//待审核用户
+    updateInfo: {},//要修改的账号数据
+    isLogin: false,//登录状态
+    audit: {
       currentPage: 1, //当前页
       eachPage: 5, //每页显示条数
       totalNum: 0, //总数据
@@ -50,16 +51,21 @@ export default {
     getShopUsersInfo: (state) => {
       state.updateInfo = JSON.parse(sessionStorage.shopUsersInfo)
     },
+    //请求得到的登录状态
+    setIsLogin(state, payload) {
+      state.isLogin = payload
+    },
+
     //获取待审核用户
     getAuditByPage: (state, payload) => {
       Object.assign(state.audit, payload)
     },
     //设置待审核用户的当前页
-    setAuditCurPage(state,payload){
+    setAuditCurPage(state, payload) {
       state.audit.currentPage = payload
     },
     //设置待审核用户的每页显示条数
-    setAuditEachPage(state,payload){
+    setAuditEachPage(state, payload) {
       state.audit.eachPage = payload
     }
   },
@@ -97,11 +103,16 @@ export default {
 
     //修改用户信息
     updateShopUsersAsync: async ({ dispatch }, payload) => {
-      console.log(payload);
       await updateShopUsersAsync(payload);
       dispatch("getUsersByPageAsync");
     },
 
+    //查看登录状态
+    isLogin: async ({ commit }) => {
+      const state = await isLoginAsync()
+      console.log(state)
+    },
+    // commit("setIsLogin")
     //审核用户信息
     auditShopUsersAsync: async ({ dispatch }, payload) => {
       await auditShopUsersAsync(payload);
@@ -111,8 +122,8 @@ export default {
     //获取待审核用户
     getAuditByPageAsync: async ({ commit, state }) => {
       const { currentPage, eachPage } = state.audit
-      const {data} = await getAuditByPage({currentPage,eachPage})
-      commit("getAuditByPage",data)
+      const { data } = await getAuditByPage({ currentPage, eachPage })
+      commit("getAuditByPage", data)
     }
   }
 }
