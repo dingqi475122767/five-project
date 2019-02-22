@@ -13,7 +13,7 @@ export default {
         totalNum: 0, //总数据
         totalPage: 0, //总页数
         data: [],
-        updateInfo:{}
+        updateInfo: {}
     },
     mutations: {
         set(state, payload) {
@@ -47,6 +47,8 @@ export default {
             // console.log(payload)
             const login = await logAsync(payload);
             if (login.data) {
+                const data = JSON.stringify(login.data)
+                localStorage.shopUsers = data
                 router.push('/mis')
             } else {
                 alert("账户或密码错误")
