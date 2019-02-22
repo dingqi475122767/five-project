@@ -86,7 +86,6 @@ export default {
         //查看登录状态
         isLogin: async ({ commit }) => {
             const { data } = await isLoginAsync();
-            console.log(123)
             if(data.username){
                 commit("setIsLogin",true)
             }else{

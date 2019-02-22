@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="audit.data" border style="width: 100%">
+    <el-table :data="data" border style="width: 100%">
       <el-table-column fixed prop="_id" label="用户编号"></el-table-column>
       <el-table-column prop="username" label="用户账号"></el-table-column>
       <el-table-column prop="password" label="用户密码"></el-table-column>
@@ -32,6 +32,14 @@ const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
 
 export default {
   name: "auditList",
+  data() {
+    return {
+      _id: "",
+      username: "",
+      password: "",
+      state: ""
+    };
+  },
   mounted() {
     // this.getUsersByPageAsync();
     this.getAuditByPageAsync();
