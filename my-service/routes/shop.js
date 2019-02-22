@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const {addShop,getShop,getOne,getApplyShop,consentApply,updateShop,delShop,getAuditShopById,getAllShop}  = require('../service/shopService');
+const { addShop, getShop, getOne, getApplyShop, consentApply, updateShop, delShop, getAuditShopById, getAuditByPage, getAllShop, auditShop } = require('../service/shopService');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
@@ -28,29 +28,40 @@ router.post('/getOne', async function (req, res, next) {
 })
 
 //新增门店
-router.post('/addShop',async function(req, res, next) {
+router.post('/addShop', async function (req, res, next) {
   // console.log(req.body)
   res.send(await addShop(req.body));
 });
 //获取待审核门店
-router.get('/getApplyShop',async function(req, res, next) {
+router.get('/getApplyShop', async function (req, res, next) {
   res.send(await getApplyShop());
 });
 //通过审核
-router.post('/consentApply',async function(req, res, next) {
+router.post('/consentApply', async function (req, res, next) {
   res.send(await consentApply(req.body));
 });
 //修改门店信息
-router.post('/updateShop',async function(req, res, next) {
+router.post('/updateShop', async function (req, res, next) {
   res.send(await updateShop(req.body));
 });
 //删除门店
-router.post('/delShop',async function(req, res, next) {
+router.post('/delShop', async function (req, res, next) {
   res.send(await delShop(req.body));
 });
 
 //订单项：通过用户ID获取店铺信息
-router.post('/getShopByUsers',async function(req, res, next) {
+router.post('/getShopByUsers', async function (req, res, next) {
   res.send(await getAllShop(req.body));
 });
+
+//审核门店信息
+router.post('/auditShop', async function (req, res, next) {
+  res.send(await auditShop(req.body))
+})
+
+//获取待审核用户
+router.get('/getAuditByPage', async function (req, res, next) {
+  res.send(await getAuditByPage(req.query))
+});
+
 module.exports = router;

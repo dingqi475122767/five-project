@@ -14,7 +14,7 @@
         <el-input v-model="ruleForm.username" @blur="isRepet"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input type="password" v-model="ruleForm.password" ></el-input>
+        <el-input type="password" v-model="ruleForm.password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">新增</el-button>
@@ -56,11 +56,18 @@ export default {
             password: this.ruleForm.password,
             state: "admin"
           });
-          alert("新增成功！");
+          this.$notify({
+            title: "成功",
+            message: "数据添加成功！",
+            type: "success"
+          });
           this.ruleForm.username = "";
           this.ruleForm.password = "";
         } else {
-          alert("新增失败！！");
+          this.$notify.error({
+            title: "错误",
+            message: "数据添加失败，请检查！"
+          });
           return false;
         }
       });
@@ -73,11 +80,12 @@ export default {
       });
       console.log(this.cd, 22);
       if (this.cd) {
-        alert("账号已存在，请重新输入");
-        this.ruleForm.username="";
-      } else {
-        // console.log("成功")
-      }
+        this.$notify.error({
+          title: '错误',
+          message: '账号已存在，请重新输入'
+        });
+        this.ruleForm.username = "";
+      } 
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

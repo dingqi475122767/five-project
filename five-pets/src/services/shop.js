@@ -48,3 +48,17 @@ export function delShop({_id} = {}){
       body:JSON.stringify({_id}),
     })
 }
+
+//审核门店是否通过
+export function auditShopAsync(data) {
+  return request('/shop/auditShop', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+}
+
+//获取待审核门店用户
+export function getAuditByPage({ currentPage = 1, eachPage = 5 } = {}) {
+  return request(`/shop/getAuditByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+}

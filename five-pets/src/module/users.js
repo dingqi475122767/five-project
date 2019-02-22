@@ -1,4 +1,4 @@
-import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync, isLoginAsync ,exitAsync} from "../services/users";
+import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync,isShopLoginAsync, isLoginAsync ,exitAsync} from "../services/users";
 import router from '../router';
 
 export default {
@@ -14,7 +14,7 @@ export default {
         totalPage: 0, //总页数
         data: [],
         updateInfo: {},
-        isLogin: false//登录状态
+        isLogin: false,//登录状态
     },
     mutations: {
         set(state, payload) {
@@ -48,14 +48,14 @@ export default {
     actions: {
         //登陆平台
         logAsync: async ({ commit, state }, payload) => {
-            // console.log(payload)
+            const {cb} = payload;//回调函数
             const login = await logAsync(payload);
             if (login.data) {
                 const data = JSON.stringify(login.data)
                 localStorage.shopUsers = data
                 router.push('/mis')
             } else {
-                alert("账户或密码错误")
+                cb()
             }
         },
         //新增平台用户
@@ -93,10 +93,21 @@ export default {
             }
         },
 
+        //查单门店用户登录状态
+        isShopLogin:async ({commit})=>{
+            const { data } = await isShopLoginAsync();
+            if(data.username){
+                commit("setIsLogin",true)
+            }else{
+                commit("setIsLogin",false)
+            }
+        },
+
         //退出登录状态
-        exit:async ({commit})=>{
-            const {data} = await exitAsync()
+        exit:async ({commit},payload)=>{
+            await exitAsync()
             commit("setIsLogin",false)
+            payload.cb()//回调函数
         }
     }
 }

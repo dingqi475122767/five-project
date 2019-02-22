@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, exitAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -14,7 +14,7 @@ export default {
     totalPage: 0, //总页数
     data: [],
     updateInfo: {},//要修改的账号数据
-    isLogin: false,//登录状态
+    isShopLogin: false,//登录状态
     audit: {
       currentPage: 1, //当前页
       eachPage: 5, //每页显示条数
@@ -22,9 +22,6 @@ export default {
       totalPage: 0, //总页数
       data: [],
     },
-    auditShop:{
-
-    }
   },
   mutations: {
     set(state, payload) {
@@ -53,7 +50,7 @@ export default {
     },
     //请求得到的登录状态
     setIsLogin(state, payload) {
-      state.isLogin = payload
+      state.isShopLogin = payload
     },
     //获取待审核用户
     getAuditByPage: (state, payload) => {
@@ -74,17 +71,23 @@ export default {
       await regAsync(payload)
     },
     //门店登陆
+<<<<<<< HEAD
     loginAsync: async ({
       commit,
       state
     }, payload) => { //payload是拿到用户的输入
+=======
+    loginAsync: async ({ commit, state }, payload) => {//payload是拿到用户的输入
+      console.log(payload)
+      const { cb } = payload;
+>>>>>>> 4edb6404b7ba7672fbdc25b56d07f11eee26b45c
       const isLogin = await loginAsync(payload);
       if (isLogin.data) {
         const value = JSON.stringify(isLogin.data)
         localStorage.setItem("shopUsers", value)
         router.push('/mis')
       } else {
-        alert("账号密码不对")
+        cb()//回调函数
       }
     },
 
@@ -122,7 +125,6 @@ export default {
     //查看登录状态
     isLogin: async ({ commit }) => {
       const state = await isLoginAsync()
-      console.log(state)
     },
     // commit("setIsLogin")
     //审核用户信息
@@ -138,6 +140,7 @@ export default {
       const { currentPage, eachPage } = state.audit
       const { data } = await getAuditByPage({ currentPage, eachPage })
       commit("getAuditByPage", data)
-    }
+    },
+
   }
 }

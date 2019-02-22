@@ -37,3 +37,22 @@ module.exports.updateShop = async function ({ _id, shopName, address, phone, leg
 
 //订单项：获取门店信息
 module.exports.getAllShop = async ({_id}) => await shopModel.find({shopUserID:_id})
+
+// 审核用户信息
+module.exports.auditShop = async ({_id,state})=>{
+    return await shopModel.updateOne({_id},{state});
+}
+
+
+//获取待审核用户
+module.exports.getAuditByPage = async ({currentPage,eachPage})=>{
+    currentPage = currentPage - 0;
+    eachPage = eachPage - 0;
+    let totalNum = await shopModel.find({state:false}).countDocuments();//查询总条数
+    let totalPage = Math.ceil(totalNum/eachPage);//获取总页数
+    let data = await shopModel
+        .find({state:false})
+        .skip((currentPage - 1) * eachPage)
+        .limit(eachPage)
+    return {currentPage,eachPage,totalNum,totalPage,data}
+}
