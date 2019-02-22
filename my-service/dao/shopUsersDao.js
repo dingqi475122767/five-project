@@ -31,8 +31,8 @@ module.exports.getAllByPage = async function({currentPage,eachPage}){
 
 
 // 修改用户信息
-module.exports.updateShopUsers = async ({_id,username,password})=>{
-    return await shopUsersModel.updateOne({_id},{username,password});
+module.exports.updateShopUsers = async ({_id,username,password,state})=>{
+    return await shopUsersModel.updateOne({_id},{username,password,state});
 }
 
 

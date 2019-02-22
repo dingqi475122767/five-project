@@ -64,14 +64,14 @@ export default {
           this.updateUsersAsync(this.updateInfo);
           this.$notify({
             title: "成功",
-            message: "商品信息修改成功",
+            message: "平台管理员信息修改成功",
             type: "success"
           });
           this.$router.push("/mis/terraceList");
         } else {
           this.$notify.error({
             title: "错误",
-            message: "商品信息修改失败，请确认修改项"
+            message: "平台管理员信息修改失败，请确认修改项"
           });
           return false;
         }

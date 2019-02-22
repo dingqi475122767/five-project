@@ -33,12 +33,12 @@ export function getUsersByPageAsync({ currentPage = 1, eachPage = 5 }) {
 }
 
 //修改用户信息
-export function updateShopUsersAsync({_id,username,password} = {}){
-  return request('/shopUsers/updateShopUsers' , {  
-      method: 'POST',  
-      headers: {'Content-Type': 'application/json'},  
-      body:JSON.stringify({_id,username,password}),
-    })
+export function updateShopUsersAsync({ _id, username, password,state } = {}) {
+  return request('/shopUsers/updateShopUsers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ _id, username, password ,state}),
+  })
 }
 
 //审核门店用户是否通过

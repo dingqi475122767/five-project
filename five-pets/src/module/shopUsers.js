@@ -21,6 +21,9 @@ export default {
       totalNum: 0, //总数据
       totalPage: 0, //总页数
       data: [],
+    },
+    auditShop:{
+
     }
   },
   mutations: {
