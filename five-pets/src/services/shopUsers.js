@@ -41,10 +41,6 @@ export function updateShopUsersAsync({_id,username,password} = {}){
     })
 }
 
-export function isLoginAsync(){
-  return request('/shopUsers/isLogin')
-}
-
 //审核门店用户是否通过
 export function auditShopUsersAsync(data) {
   return request('/shopUsers/auditShopUsers', {
@@ -57,4 +53,14 @@ export function auditShopUsersAsync(data) {
 //获取待审核门店用户
 export function getAuditByPage({ currentPage = 1, eachPage = 5 } = {}) {
   return request(`/shopUsers/getAuditByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+}
+
+//验证是否登录
+export function isLoginAsync(){
+  return request("/shopUsers/isLogin");
+}
+
+//退出登录
+export function exitAsync(){
+  return request("/shopUsers/exit");
 }
