@@ -71,16 +71,9 @@ export default {
       await regAsync(payload)
     },
     //门店登陆
-<<<<<<< HEAD
-    loginAsync: async ({
-      commit,
-      state
-    }, payload) => { //payload是拿到用户的输入
-=======
     loginAsync: async ({ commit, state }, payload) => {//payload是拿到用户的输入
       console.log(payload)
       const { cb } = payload;
->>>>>>> 4edb6404b7ba7672fbdc25b56d07f11eee26b45c
       const isLogin = await loginAsync(payload);
       if (isLogin.data) {
         const value = JSON.stringify(isLogin.data)
