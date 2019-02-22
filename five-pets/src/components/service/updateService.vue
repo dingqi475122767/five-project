@@ -23,30 +23,34 @@
       <el-form-item label="服务时长" prop="serviceTiming">
         <el-input v-model.number="updateInfo.serviceTiming"></el-input>
       </el-form-item>
-      <el-form-item label="排期">
-        <el-col :span="11">
+        <div class="time-container">
+        <div class="block">
+          <span class="demonstration" style="font-size:14px">排期</span>
           <el-date-picker
-            class="time"
+            style="margin-left:10px;width:118px;font-size:11px"
+            v-model="updateInfo.timeDay"
             type="date"
             placeholder="选择日期"
-            v-model="updateInfo.timeDay"
-            style="width: 100%;"
+            :picker-options="pickerOptions0"
           ></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker
-            class="time"
-            type="fixed-time"
-            placeholder="选择时间"
+        </div>
+        <div class="block">
+          <span class="demonstration" style="font-size:14px">时间</span>
+          <el-time-select
+            style="margin-left:10px;width:115px;font-size:11px"
             v-model="updateInfo.timePoint"
-            style="width: 100%;"
-          ></el-time-picker>
-        </el-col>
-      </el-form-item>
+            :picker-options="{
+               start: '08:30',
+               step: '00:15',
+               end: '18:30',
+            }"
+            placeholder="选择时间"
+          ></el-time-select>
+        </div>
+      </div>
       <el-form-item>
         <el-button type="primary" @click="updateBtn('updateInfo')">确认</el-button>
-        <el-button @click="cancel('updateInfo')">取消</el-button>
+        <el-button @click="cancel">取消</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -114,7 +118,12 @@ export default {
         serviceTiming: [{ validator: checkServiceTiming, trigger: "blur" }]
       },
       timeDay: "",
-      timePoint: ""
+      timePoint: "",
+      pickerOptions0: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7;
+        }
+      }
     };
   },
    mounted() {
@@ -129,7 +138,6 @@ export default {
     updateBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
           let _id=this.updateInfo._id;
           let shopID = this.updateInfo.shopID;
           let serviceName = this.updateInfo.serviceName;
@@ -147,25 +155,24 @@ export default {
             timeDay,
             timePoint,
             isDel
-          }),
-            console.log(
-              _id,
-              shopID,
-              serviceName,
-              servicePrice,
-              serviceTiming,
-              timeDay,
-              timePoint,
-              isDel
-            );
+          })
+           this.$notify({
+            title: "成功",
+            message: "服务信息修改成功",
+            type: "success"
+          });
+          this.$router.history.push(`/mis/serviceList`);
         } else {
-          console.log("error submit!!");   
+          this.$notify.error({
+            title: "错误",
+            message: "服务信息修改失败，请确认修改项"
+          });
           return false;
         }
       });
     },
-    cancel(formName) {
-      this.$refs[formName].resetFields();
+    cancel() {
+      this.$router.history.push(`/mis/serviceList`);
     }
   }
 };
@@ -202,5 +209,9 @@ export default {
 }
 .time {
   font-size: 11px;
+}
+.time-container {
+  display: flex;
+  margin-bottom: 20px;
 }
 </style>

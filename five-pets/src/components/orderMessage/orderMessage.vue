@@ -80,6 +80,19 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item>
+              <el-upload
+                class="upload-demo"
+                :action="uploadUrl"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :file-list="fileList2"
+                list-type="picture"
+              >
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
+            </el-form-item>
           </el-form>
           <div class="buttonContain">
             <el-button type="primary" @click="addOrderMessage">新增订单</el-button>
@@ -172,11 +185,17 @@ export default {
       shopCard.style.display = "none";
       table.style.display = "block";
     },
-    back(){
+    back() {
       const shopCard = document.querySelector(".shop-card");
       const table = document.querySelector(".list-contain");
       shopCard.style.display = "block";
       table.style.display = "none";
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
     }
   },
   data() {
@@ -189,18 +208,30 @@ export default {
         totalPrice: "",
         shop: "",
         goodsType: ""
-      }
+      },
+      fileList2: [
+        {
+          name: "food.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        },
+        {
+          name: "food2.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        }
+      ]
     };
   }
 };
 </script>
 
 <style scoped>
-.buttonContain {
-  margin-left: 100px;
-}
 .addOrderContain {
   display: none;
+}
+.buttonContain {
+  margin-left: 100px;
 }
 .pagination-contain {
   position: relative;
@@ -220,7 +251,7 @@ export default {
 .shopBtn {
   margin-top: 20px;
 }
-.selectShop{
+.selectShop {
   position: absolute;
   left: 0;
   top: 0;
