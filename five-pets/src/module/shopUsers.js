@@ -14,12 +14,15 @@ export default {
     totalPage: 0, //总页数
     data: [],
     updateInfo: {},//储存用户信息
-    audit: {
+    audit: {//待审核用户
       currentPage: 1, //当前页
       eachPage: 5, //每页显示条数
       totalNum: 0, //总数据
       totalPage: 0, //总页数
       data: [],
+    },
+    auditShop:{
+
     }
   },
   mutations: {
