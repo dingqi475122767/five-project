@@ -208,7 +208,7 @@
         <div style="width:85%;text-align:center;">
           <h1 style="font-size:35px">爱宠帮宠物管理系统</h1>
         </div>
-        <div style="text-align: right; font-size: 12px">
+        <div style="text-align: right; font-size: 12px;width:300px">
           <el-dropdown @command="exit">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">

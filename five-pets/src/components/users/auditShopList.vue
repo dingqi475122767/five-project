@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-table :data="data" border style="width: 100%">
-      <el-table-column fixed prop="_id" label="用户编号"></el-table-column>
-      <el-table-column prop="username" label="用户账号"></el-table-column>
-      <el-table-column prop="password" label="用户密码"></el-table-column>
-      <el-table-column prop="state" label="状态"></el-table-column>
+    <el-table :data="auditShop.data" border style="width: 100%">
+      <el-table-column fixed prop="_id" label="门店编号"></el-table-column>
+      <el-table-column prop="shopName" label="门店名字"></el-table-column>
+      <el-table-column prop="legalEntity" label="门店法人"></el-table-column>
+      <el-table-column prop="phone" label="门店电话"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">通过</el-button>
@@ -15,43 +15,41 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="audit.currentPage"
+      :current-page="auditShop.currentPage"
       :page-sizes="[5,10, 15, 20]"
-      :page-size="audit.eachPage"
+      :page-size="auditShop.eachPage"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="audit.totalNum"
+      :total="auditShop.totalNum"
     ></el-pagination>
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
-  "shopUsers"
-);
+import { createNamespacedHelpers } from "vuex"; //vue的状态机
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers("shop");
 
 export default {
-  name: "auditList",
+  name: "auditShopList",
   data() {
     return {
       _id: "",
-      username: "",
-      password: "",
+      shopName: "",
+      legalEntity: "",
       state: ""
     };
   },
   mounted() {
     // this.getUsersByPageAsync();
-    this.getAuditByPageAsync();
+    this.getAuditShopByPageAsync();
   },
   methods: {
     ...mapMutations(["setAuditCurPage", "setAuditEachPage"]),
-    ...mapActions(["auditShopUsersAsync", "getAuditByPageAsync"]),
+    ...mapActions(["auditShopAsync", "getAuditShopByPageAsync"]),
     handleClick(row) {
       const { _id } = row;
-      this.$store.dispatch("shopUsers/auditShopUsersAsync", {
+      this.$store.dispatch("shop/auditShopAsync", {
         _id,
-        state: "usable"
+        state: true
       });
     },
     // 每页显示条数改变时
@@ -67,7 +65,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["audit"])
+    ...mapState(["auditShop"])
   }
 };
 </script>

@@ -22,9 +22,6 @@ export default {
       totalPage: 0, //总页数
       data: [],
     },
-    auditShop:{
-
-    }
   },
   mutations: {
     set(state, payload) {
