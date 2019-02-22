@@ -1,4 +1,4 @@
-import { addShopAsync, getShop, getOneShop, getApplyShop, consentApply, updateShops, delShop } from '../services/shop'
+import { addShopAsync, getShop, getOneShop, getApplyShop, consentApply, updateShops, delShop, auditShopAsync, getAuditByPage } from '../services/shop'
 export default ({
     namespaced: true,
     state: {
@@ -47,7 +47,14 @@ export default ({
             licenceImg: "",
             gps: "",
             state: ''
-        }
+        },
+        auditShop: {
+            currentPage: 1, //当前页
+            eachPage: 5, //每页显示条数
+            totalNum: 0, //总数据
+            totalPage: 0, //总页数
+            data: [],
+        },
     },
     mutations: {
         get: (state, payload) => {
@@ -64,6 +71,18 @@ export default ({
         },
         updateSp: (state, payload) => {
             Object.assign({}, state.update, state.update = payload)
+        },
+        //获取待审核用户
+        getAuditByPage: (state, payload) => {
+            Object.assign(state.auditShop, payload)
+        },
+        //设置待审核用户的当前页
+        setAuditCurPage(state, payload) {
+            state.auditShop.currentPage = payload
+        },
+        //设置待审核用户的每页显示条数
+        setAuditEachPage(state, payload) {
+            state.auditShop.eachPage = payload
         }
     },
     actions: {
@@ -126,5 +145,16 @@ export default ({
             await consentApply(payload)
             dispatch("getApplyShop")
         },
+        //审核用户信息
+        auditShopAsync: async ({ dispatch }, payload) => {
+            await auditShopAsync(payload);
+            dispatch("getAuditShopByPageAsync");
+        },
+        //获取待审核用户
+        getAuditShopByPageAsync: async ({ commit, state }) => {
+            const { currentPage, eachPage } = state.auditShop
+            const { data } = await getAuditByPage({ currentPage, eachPage })
+            commit("getAuditByPage", data)
+        }
     }
 })

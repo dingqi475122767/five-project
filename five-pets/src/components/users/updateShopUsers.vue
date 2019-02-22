@@ -68,7 +68,7 @@ export default {
           label: "可用"
         },
         {
-          value: "wating",
+          value: "waiting",
           label: "审核"
         },
       ],
