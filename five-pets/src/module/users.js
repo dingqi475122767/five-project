@@ -1,4 +1,4 @@
-import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync, isLoginAsync ,exitAsync} from "../services/users";
+import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync,isShopLoginAsync, isLoginAsync ,exitAsync} from "../services/users";
 import router from '../router';
 
 export default {
@@ -14,7 +14,7 @@ export default {
         totalPage: 0, //总页数
         data: [],
         updateInfo: {},
-        isLogin: false//登录状态
+        isLogin: false,//登录状态
     },
     mutations: {
         set(state, payload) {
@@ -86,6 +86,16 @@ export default {
         //查看登录状态
         isLogin: async ({ commit }) => {
             const { data } = await isLoginAsync();
+            if(data.username){
+                commit("setIsLogin",true)
+            }else{
+                commit("setIsLogin",false)
+            }
+        },
+
+        //查单门店用户登录状态
+        isShopLogin:async ({commit})=>{
+            const { data } = await isShopLoginAsync();
             if(data.username){
                 commit("setIsLogin",true)
             }else{
