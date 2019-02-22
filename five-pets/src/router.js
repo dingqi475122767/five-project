@@ -29,11 +29,6 @@ export default new Router({
       component: Login
     },
     {
-      path: '/mis/:id/:type',
-      name: 'mis',
-      component: Mis,
-    },
-    {
       path: '/mis',
       name: 'mis',
       component: Mis,

@@ -73,13 +73,15 @@ export default {
     },
     //门店登陆
     loginAsync: async ({ commit, state }, payload) => {//payload是拿到用户的输入
+      console.log(payload)
+      const { cb } = payload;
       const isLogin = await loginAsync(payload);
       if (isLogin.data) {
         const value = JSON.stringify(isLogin.data)
         localStorage.setItem("shopUsers", value)
         router.push('/mis')
       } else {
-        alert("账号密码不对")
+        cb()//回调函数
       }
     },
 

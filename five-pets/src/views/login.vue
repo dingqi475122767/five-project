@@ -24,7 +24,6 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
-  "shopUsers",
   "users"
 );
 
@@ -43,7 +42,12 @@ export default {
         //第一个参数是type（传递的路径），第二个参数是用户输入的值
         username: loginName,
         password: loginPassword,
-        state:"admin"
+        state: "admin",
+        cb: () => {
+          this.$alert('账号可能不对哦，或者你想登录的是门店用户？', '提示', {
+          confirmButtonText: '确定',
+        });
+        }
       });
       this.loginName = "";
       this.loginPassword = "";
@@ -54,7 +58,12 @@ export default {
       this.$store.dispatch("shopUsers/loginAsync", {
         username: loginName,
         password: loginPassword,
-        state:"usable"
+        state: "usable",
+        cb:()=>{
+          this.$alert('账号可能不对哦，或者你想登录是管理者？', '提示', {
+          confirmButtonText: '确定',
+        });
+        }
       });
     }
   },
@@ -67,7 +76,7 @@ export default {
         type: ""
       },
       loginName: "",
-      loginPassword: ""
+      loginPassword: "",
     };
   }
 };

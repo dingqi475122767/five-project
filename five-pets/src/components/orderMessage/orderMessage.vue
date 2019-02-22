@@ -83,7 +83,7 @@
             <el-form-item>
               <el-upload
                 class="upload-demo"
-                :action="uploadUrl"
+                action="a"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :file-list="fileList2"
