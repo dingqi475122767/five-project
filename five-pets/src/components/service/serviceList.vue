@@ -7,7 +7,7 @@
       <el-table-column label="时长(分钟)" prop="serviceTiming"></el-table-column>
       <el-table-column label="排期" prop="timeDay"></el-table-column>
       <el-table-column label="开始时间" prop="timePoint"></el-table-column>
-      <el-table-column prop="petsImg" label="宠物照片">
+      <el-table-column label="服务照片" prop="serviceImg">
         <template slot-scope="scope">
           <img :src="scope.row.serviceImg" alt style="width: 80px;height: 60px">
         </template>
@@ -57,16 +57,6 @@ export default {
   mounted() {
     this.getServiceByPageAsync();
   },
-  // watch: {
-  //   currentPage() {
-  //     console.log("currentPage")
-  //     this.getServiceByPageAsync();
-  //   },
-  //   eachPage() {
-  //     console.log("eachPage")
-  //     this.getServiceByPageAsync();
-  //   }
-  // },
   computed: {
     ...mapState(["service"])
   },
@@ -87,10 +77,12 @@ export default {
     handleCurrentChange(val) {
        this.setCurPageTrans(val);
     },
+    //删除时的提示框
     ifRemoveTips(val) {
       this.centerDialogVisible = true;
       this.id = val;
     },
+    //确认删除
     certainRemoveBtn(val) {
       this.removeServiceAsync(val);
       this.centerDialogVisible = false;

@@ -27,15 +27,15 @@
           filterable
           size="100%"
           ref="shop"
-          style="width:260px"
         >
           <el-option v-for="item in shop" :key="item._id" :label="item.shopName" :value="item._id"></el-option>
         </el-select>
+      </el-form-item>
         <div class="time-container">
           <div class="block">
             <span class="demonstration" style="font-size:14px">排期</span>
             <el-date-picker
-              style="margin-left:10px;width:118px;font-size:11px"
+              style="margin-left:18px;width:131px;font-size:14px"
               v-model="service.timeDay"
               type="date"
               placeholder="选择日期"
@@ -45,7 +45,7 @@
           <div class="block">
             <span class="demonstration" style="font-size:14px">时间</span>
             <el-time-select
-              style="margin-left:10px;width:115px;font-size:11px"
+              style="margin-left:18px;width:133px;font-size:14px"
               v-model="service.timePoint"
               :picker-options="{
                start: '08:30',
@@ -56,7 +56,6 @@
             ></el-time-select>
           </div>
         </div>
-      </el-form-item>
       <el-form-item label="服务图片">
         <el-upload
           class="avatar-uploader"
@@ -306,12 +305,9 @@ export default {
 .time {
   font-size: 11px;
 }
-.block {
-  margin-bottom: 20px;
-}
 .time-container {
   display: flex;
-  justify-content: space-between;
-  margin-top: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>
