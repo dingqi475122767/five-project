@@ -32,25 +32,6 @@
           <el-option v-for="item in shop" :key="item._id" :label="item.shopName" :value="item._id"></el-option>
         </el-select>
       </el-form-item>
-       <el-form-item label="宠物图片">
-          <el-upload
-            class="avatar-uploader"
-            :action="domain"
-            :http-request="upqiniu"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            :before-upload="beforeUpload"
-            :on-success="handleAvatarSuccess"
-            :on-error="handleError"
-            ref="upload"
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt class="avatar">
-          </el-dialog>
-        </el-form-item>
       <div class="time-container">
         <div class="block">
           <span class="demonstration" style="font-size:14px">排期</span>
@@ -158,17 +139,7 @@ export default {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7;
         }
-      },
-       text:"确认添加",
-      loading:false,
-      dialogImageUrl: "",
-      dialogVisible: false,
-      imageUrl: "",
-      token: {},
-      // 七牛云的上传地址，根据自己所在地区选择，我这里是华南区
-      domain: "https://upload-z2.qiniup.com",
-      // 这是七牛云空间的外链默认域名
-      qiniuaddr:  "pm6civjct.bkt.clouddn.com",
+      }
     };
   },
   computed: {
@@ -246,8 +217,8 @@ export default {
 }
 
 .box-card {
-  width: 420px;
-  height: 620px;
+  width: 400px;
+  height: 450px;
 }
 .time {
   font-size: 11px;
@@ -257,28 +228,5 @@ export default {
 }
 .time-container {
   display: flex;
-}
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
 }
 </style>

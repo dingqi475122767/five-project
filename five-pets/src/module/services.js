@@ -27,9 +27,8 @@ export default {
         //     Object.assign(state,payload)
         // },
         getServiceByPage: (state, data) => {
-            console.log(data);
-            
             state.service =data
+            console.log(data);
         },
         getShop:(state,payload)=>{
             state.shop = payload.data

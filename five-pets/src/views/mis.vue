@@ -259,11 +259,11 @@ export default {
       }
     } else {
       this.disabledUsers = true;
-      this.$store.dispatch("shopUsers/isLogin");
-      if (!this.isLogin) {
-        alert("请先登录");
-        this.$router.history.push("/login");
-      }
+      // this.$store.dispatch("shopUsers/isLogin");
+      // if (!this.isLogin) {
+      //   alert("请先登录");
+      //   this.$router.history.push("/login");
+      // }
     }
   },
   computed: {
