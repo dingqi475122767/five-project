@@ -1,15 +1,5 @@
-// import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync } from '../services/shopUsers'
-import {
-  regAsync,
-  loginAsync,
-  isShopUsersAsync,
-  getUsersByPageAsync,
-  updateShopUsersAsync,
-  isLoginAsync,
-  auditShopUsersAsync,
-  getAuditByPage
-} from '../services/shopUsers'
-import router from '../router'; //要用路径跳转就把东西写到要用的页面就可以了
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
+import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
   namespaced: true,
@@ -23,14 +13,17 @@ export default {
     totalNum: 0, //总数据
     totalPage: 0, //总页数
     data: [],
-    updateInfo: {}, //要修改的账号数据
-    isLogin: false, //登录状态
+    updateInfo: {},//要修改的账号数据
+    isLogin: false,//登录状态
     audit: {
       currentPage: 1, //当前页
       eachPage: 5, //每页显示条数
       totalNum: 0, //总数据
       totalPage: 0, //总页数
       data: [],
+    },
+    auditShop:{
+
     }
   },
   mutations: {
@@ -127,9 +120,7 @@ export default {
     },
 
     //查看登录状态
-    isLogin: async ({
-      commit
-    }) => {
+    isLogin: async ({ commit }) => {
       const state = await isLoginAsync()
       console.log(state)
     },
@@ -143,20 +134,9 @@ export default {
     },
 
     //获取待审核用户
-    getAuditByPageAsync: async ({
-      commit,
-      state
-    }) => {
-      const {
-        currentPage,
-        eachPage
-      } = state.audit
-      const {
-        data
-      } = await getAuditByPage({
-        currentPage,
-        eachPage
-      })
+    getAuditByPageAsync: async ({ commit, state }) => {
+      const { currentPage, eachPage } = state.audit
+      const { data } = await getAuditByPage({ currentPage, eachPage })
       commit("getAuditByPage", data)
     }
   }

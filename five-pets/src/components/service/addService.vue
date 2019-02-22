@@ -31,34 +31,53 @@
         >
           <el-option v-for="item in shop" :key="item._id" :label="item.shopName" :value="item._id"></el-option>
         </el-select>
-      </el-form-item>
-      <div class="time-container">
-        <div class="block">
-          <span class="demonstration" style="font-size:14px">排期</span>
-          <el-date-picker
-            style="margin-left:10px;width:118px;font-size:11px"
-            v-model="service.timeDay"
-            type="date"
-            placeholder="选择日期"
-            :picker-options="pickerOptions0"
-          ></el-date-picker>
-        </div>
-        <div class="block">
-          <span class="demonstration" style="font-size:14px">时间</span>
-          <el-time-select
-            style="margin-left:10px;width:115px;font-size:11px"
-            v-model="service.timePoint"
-            :picker-options="{
+        <div class="time-container">
+          <div class="block">
+            <span class="demonstration" style="font-size:14px">排期</span>
+            <el-date-picker
+              style="margin-left:10px;width:118px;font-size:11px"
+              v-model="service.timeDay"
+              type="date"
+              placeholder="选择日期"
+              :picker-options="pickerOptions0"
+            ></el-date-picker>
+          </div>
+          <div class="block">
+            <span class="demonstration" style="font-size:14px">时间</span>
+            <el-time-select
+              style="margin-left:10px;width:115px;font-size:11px"
+              v-model="service.timePoint"
+              :picker-options="{
                start: '08:30',
                step: '00:15',
                end: '18:30',
             }"
-            placeholder="选择时间"
-          ></el-time-select>
+              placeholder="选择时间"
+            ></el-time-select>
+          </div>
         </div>
-      </div>
+      </el-form-item>
+      <el-form-item label="服务图片">
+        <el-upload
+          class="avatar-uploader"
+          :action="domain"
+          :http-request="upqiniu"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+          :before-upload="beforeUpload"
+          :on-success="handleAvatarSuccess"
+          :on-error="handleError"
+          ref="upload"
+        >
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt class="avatar">
+        </el-dialog>
+      </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="addBtn('service')">确认</el-button>
+        <el-button type="primary" @click="addBtn('service')" :loading="loading">{{text}}</el-button>
         <el-button @click="cancel('service')">取消</el-button>
       </el-form-item>
     </el-form>
@@ -139,7 +158,17 @@ export default {
         disabledDate(time) {
           return time.getTime() < Date.now() - 8.64e7;
         }
-      }
+      },
+      text: "确认添加",
+      loading: false,
+      dialogImageUrl: "",
+      dialogVisible: false,
+      imageUrl: "",
+      token: {},
+      // 七牛云的上传地址，根据自己所在地区选择，我这里是华南区
+      domain: "https://upload-z2.qiniup.com",
+      // 这是七牛云空间的外链默认域名
+      qiniuaddr: "pm6civjct.bkt.clouddn.com"
     };
   },
   computed: {
@@ -147,6 +176,57 @@ export default {
   },
   methods: {
     ...mapActions(["addServiceAsync", "getShopsAsync"]),
+    upqiniu(req) {
+      this.loading = true;
+      this.text = "图片正在上传";
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      let filetype = "";
+      if (req.file.type === "image/png") {
+        filetype = "png";
+      } else {
+        filetype = "jpg";
+      }
+      // 重命名要上传的文件
+      const keyname =
+        "images" +
+        new Date() +
+        Math.floor(Math.random() * 100) +
+        "." +
+        filetype;
+      // 从后端获取上传凭证token
+      this.axios.get("/service/token").then(res => {
+        const formdata = new FormData();
+        formdata.append("file", req.file);
+        formdata.append("token", res.data);
+        formdata.append("key", keyname);
+        // 获取到凭证之后再将文件上传到七牛云空间
+        this.axios.post(this.domain, formdata, config).then(res => {
+          this.imageUrl = "http://" + this.qiniuaddr + "/" + res.data.key;
+          this.service.serviceImg = this.imageUrl;
+          this.loading = false;
+          this.text = "确认添加";
+        });
+      });
+    },
+    beforeUpload(file) {},
+    handleRemove(file, fileList) {},
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    //文件上传成功时的钩子
+    handleAvatarSuccess(res, file) {},
+    //文件上传失败时的钩子
+    handleError(res) {
+      //显示错误
+      // console.log(res)
+      this.$message({
+        message: res,
+        type: "warning"
+      });
+    },
     addBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -155,6 +235,7 @@ export default {
           let serviceName = this.service.serviceName;
           let servicePrice = this.service.servicePrice;
           let serviceTiming = this.service.serviceTiming;
+          let serviceImg = this.service.serviceImg;
           let timeDay = this.service.timeDay;
           let timePoint = this.service.timePoint;
           let isDel = false;
@@ -163,6 +244,7 @@ export default {
             serviceName,
             servicePrice,
             serviceTiming,
+            serviceImg,
             timeDay,
             timePoint,
             isDel
@@ -203,6 +285,7 @@ export default {
 .item {
   margin-bottom: 18px;
 }
+
 .clearfix {
   display: flex;
   justify-content: center;
@@ -217,8 +300,8 @@ export default {
 }
 
 .box-card {
-  width: 400px;
-  height: 450px;
+  width: 500px;
+  height: 620px;
 }
 .time {
   font-size: 11px;
@@ -228,5 +311,7 @@ export default {
 }
 .time-container {
   display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
 }
 </style>

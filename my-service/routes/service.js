@@ -7,6 +7,11 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 const qnconfig = require('../config.js')
+//添加服务图片
+router.get('/token', (req, res, next) => {
+  // console.log(qnconfig.uploadToken)
+  res.status(200).send(qnconfig.uploadToken)
+})
 
 //新增门店服务
 router.post('/addService',async function(req, res, next) {

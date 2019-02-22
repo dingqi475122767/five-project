@@ -28,7 +28,6 @@ export default {
         // },
         getServiceByPage: (state, data) => {
             state.service =data
-            console.log(data);
         },
         getShop:(state,payload)=>{
             state.shop = payload.data
@@ -66,17 +65,23 @@ export default {
         addServiceAsync: async ({ commit, dispatch}, payload) => {
             await addServiceAsync(payload)
         },
+        setCurPageTrans:async ({commit,dispatch},currentPage)=>{
+            commit("setCurPage",currentPage);
+            dispatch("getServiceByPageAsync");
+        },
+        setEachPageTrans:async ({commit,dispatch},eachPage)=>{
+            commit("setEachPage",eachPage);
+            dispatch("getServiceByPageAsync");
+        },
         getShopsAsync:async ({commit})=>{
             let data = await getAuditShopById( JSON.parse(localStorage.getItem("shopUsers"))[0]._id);
             commit("getShop",data)
         },
         updateServiceAsync: async ({ dispatch }, payload) => {
-            console.log(payload);
             await updateService(payload);
             dispatch("getServiceByPageAsync");
         },
         removeServiceAsync: async ({ dispatch }, _id) => {
-            console.log("你是猪");
             await removeService(_id);
             dispatch("getServiceByPageAsync");
           },
