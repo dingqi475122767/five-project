@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { reg, login, isShopUsers, getAllByPage, updateShopUsers } = require("../service/shopUsersService")
+const { reg, login, isShopUsers, getAllByPage, updateShopUsers, auditShopUsers,getAuditByPage } = require("../service/shopUsersService")
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -46,5 +46,15 @@ router.get('/getAllByPage', async function (req, res, next) {
 router.post('/updateShopUsers', async function (req, res, next) {
   res.send(await updateShopUsers(req.body))
 })
+
+//审核用户信息
+router.post('/auditShopUsers', async function (req, res, next) {
+  res.send(await auditShopUsers(req.body))
+})
+
+//获取待审核用户
+router.get('/getAuditByPage', async function (req, res, next) {
+  res.send(await getAuditByPage(req.query))
+});
 
 module.exports = router;

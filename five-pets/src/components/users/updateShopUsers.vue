@@ -59,7 +59,7 @@ export default {
     ...mapActions(["updateShopUsersAsync"]),
     handleUpdateShopUsers(val) {
       this.$refs[val].validate(valid => {
-        console.log(valid)
+        // console.log(valid)
         if (valid) {
           this.updateShopUsersAsync(this.updateInfo);
           this.$notify({

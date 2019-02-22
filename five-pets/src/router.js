@@ -83,6 +83,11 @@ export default new Router({
           component:()=>import('./components/users/auditList.vue')
         },
         {
+          path: 'auditShopList',
+          name: 'auditShopList',
+          component:()=>import('./components/users/auditShopList.vue')
+        },
+        {
           path: 'goodsList',
           name: 'goodsList',
           component: GoodsList
