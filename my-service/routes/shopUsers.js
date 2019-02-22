@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { reg, login, isShopUsers, getAllByPage, updateShopUsers, auditShopUsers,getAuditByPage } = require("../service/shopUsersService")
+const { reg, login, isShopUsers, getAllByPage, updateShopUsers, auditShopUsers, getAuditByPage, removeShopUsers } = require("../service/shopUsersService")
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -59,8 +59,15 @@ router.get('/isLogin', async function (req, res, next) {
 })
 
 //退出登录
-router.get("/exit", async function (req,res,next) {
+router.get("/exit", async function (req, res, next) {
   req.session.users = '';
   res.send(true)
 })
+
+
+// //删除服务
+router.post('/removeShopUsers', async function (req, res, next) {
+  res.send(await removeShopUsers(req.body))
+})
+
 module.exports = router;

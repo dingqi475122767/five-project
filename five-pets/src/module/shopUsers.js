@@ -1,4 +1,4 @@
-import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, exitAsync, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
+import { regAsync, loginAsync, isShopUsersAsync, getUsersByPageAsync, updateShopUsersAsync, isLoginAsync, removeShopUsers, auditShopUsersAsync, getAuditByPage } from '../services/shopUsers'
 import router from '../router';//要用路径跳转就把东西写到要用的页面就可以了
 
 export default {
@@ -52,7 +52,6 @@ export default {
     setIsLogin(state, payload) {
       state.isShopLogin = payload
     },
-
     //获取待审核用户
     getAuditByPage: (state, payload) => {
       Object.assign(state.audit, payload)
@@ -72,9 +71,16 @@ export default {
       await regAsync(payload)
     },
     //门店登陆
+<<<<<<< HEAD
+    loginAsync: async ({
+      commit,
+      state
+    }, payload) => { //payload是拿到用户的输入
+=======
     loginAsync: async ({ commit, state }, payload) => {//payload是拿到用户的输入
       console.log(payload)
       const { cb } = payload;
+>>>>>>> 4edb6404b7ba7672fbdc25b56d07f11eee26b45c
       const isLogin = await loginAsync(payload);
       if (isLogin.data) {
         const value = JSON.stringify(isLogin.data)
@@ -86,14 +92,22 @@ export default {
     },
 
     //验证是否门店账户是否重复
-    isShopUsersAsync: async ({ state, commit }, payload) => {
+    isShopUsersAsync: async ({
+      state,
+      commit
+    }, payload) => {
       let data = await isShopUsersAsync(payload);
-      commit("setIsRepet", data.data)//commit是一个方法
+      commit("setIsRepet", data.data) //commit是一个方法
     },
 
     //查询翻页信息
-    getUsersByPageAsync: async ({ commit, state }) => {
-      const { data } = await getUsersByPageAsync({
+    getUsersByPageAsync: async ({
+      commit,
+      state
+    }) => {
+      const {
+        data
+      } = await getUsersByPageAsync({
         currentPage: state.currentPage,
         eachPage: state.eachPage
       })
@@ -101,7 +115,9 @@ export default {
     },
 
     //修改用户信息
-    updateShopUsersAsync: async ({ dispatch }, payload) => {
+    updateShopUsersAsync: async ({
+      dispatch
+    }, payload) => {
       await updateShopUsersAsync(payload);
       dispatch("getUsersByPageAsync");
     },
@@ -112,7 +128,9 @@ export default {
     },
     // commit("setIsLogin")
     //审核用户信息
-    auditShopUsersAsync: async ({ dispatch }, payload) => {
+    auditShopUsersAsync: async ({
+      dispatch
+    }, payload) => {
       await auditShopUsersAsync(payload);
       dispatch("getAuditByPageAsync");
     },
@@ -123,7 +141,10 @@ export default {
       const { data } = await getAuditByPage({ currentPage, eachPage })
       commit("getAuditByPage", data)
     },
-
+    //删除门店用户
+    removeShopUsersAsync: async ({ commit,dispatch },payload) => {
+      await removeShopUsers(payload);
+      dispatch("getUsersByPageAsync");
+    },
   }
 }
-

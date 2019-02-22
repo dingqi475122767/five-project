@@ -34,3 +34,8 @@ module.exports.getAllByPage = async function({currentPage,eachPage}){
 module.exports.updateUsers = async ({_id,username,password})=>{
     return await usersModel.updateOne({_id},{username,password});
 }
+
+//删除平台用户信息
+module.exports.removeUsers = async function(data){
+    return await usersModel.remove(data)
+}

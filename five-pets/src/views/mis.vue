@@ -157,6 +157,13 @@ export default {
       }
     } else {
       this.disabledUsers = true;
+<<<<<<< HEAD
+      // this.$store.dispatch("shopUsers/isLogin");
+      // if (!this.isLogin) {
+      //   alert("请先登录");
+      //   this.$router.history.push("/login");
+      // }
+=======
       await this.$store.dispatch("users/isShopLogin");
       if (!this.isLogin) {
          this.$alert("已退出,进入系统需要重新登录", "提示", {
@@ -164,6 +171,7 @@ export default {
           });
         this.$router.history.push("/login");
       }
+>>>>>>> 4edb6404b7ba7672fbdc25b56d07f11eee26b45c
     }
   },
   computed: {

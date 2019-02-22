@@ -7,6 +7,11 @@
       <el-table-column label="时长(分钟)" prop="serviceTiming"></el-table-column>
       <el-table-column label="排期" prop="timeDay"></el-table-column>
       <el-table-column label="开始时间" prop="timePoint"></el-table-column>
+      <el-table-column label="服务照片" prop="serviceImg">
+        <template slot-scope="scope">
+          <img :src="scope.row.serviceImg" alt style="width: 80px;height: 60px">
+        </template>
+      </el-table-column>
       <el-table-column label="所属门店" prop="shopID.shopName"></el-table-column>
       <el-table-column prop="opts" label="操作">
         <template slot-scope="scope">
@@ -51,40 +56,33 @@ export default {
   },
   mounted() {
     this.getServiceByPageAsync();
-    console.log(this.service,1)
-  },
-  watch: {
-    currentPage() {
-      this.getServiceByPageAsync();
-    },
-    eachPage() {
-      this.getServiceByPageAsync();
-    }
   },
   computed: {
     ...mapState(["service"])
   },
   methods: {
-    ...mapActions(["getServiceByPageAsync","updateServiceAsync","removeServiceAsync"]),
-      ...mapMutations(["setCurPage", "setEachPage", "setServiceInfo"]),
+    ...mapActions(["getServiceByPageAsync","updateServiceAsync","removeServiceAsync", "setEachPageTrans",
+      "setCurPageTrans",]),
+      ...mapMutations(["setServiceInfo"]),
      updateService(data) {
-       console.log(data);
        this.setServiceInfo(data);
        this.$router.push("/mis/updateService");
       // this.$router.history.push("./updateService");
     },
     // 每页显示条数改变时
     handleSizeChange(val) {
-      this.setEachPage(val), this.setCurPage(1);
+     this.setEachPageTrans(val);
     },
     //当前页改变时
     handleCurrentChange(val) {
-      this.setCurPage(val);
+       this.setCurPageTrans(val);
     },
+    //删除时的提示框
     ifRemoveTips(val) {
       this.centerDialogVisible = true;
       this.id = val;
     },
+    //确认删除
     certainRemoveBtn(val) {
       this.removeServiceAsync(val);
       this.centerDialogVisible = false;

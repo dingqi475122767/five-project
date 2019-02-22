@@ -6,11 +6,20 @@
       <el-table-column prop="password" label="用户密码" width="220"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="handleClick(scope.row._id)" type="text" size="small">删除</el-button>
           <el-button @click="updateShopUsers(scope.row)" type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
+      <div style="text-align:center">
+        <span>确定要删除这条商品记录吗？</span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="certainRemoveBtn(id)">确 定</el-button>
+      </span>
+    </el-dialog>
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -31,6 +40,14 @@ const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
 
 export default {
   name: "userList",
+  data() {
+    return {
+      dialogTableVisible: false,
+      centerDialogVisible: false,
+      search: "",
+      id: ""
+    };
+  },
   mounted() {
     this.getUsersByPageAsync();
   },
@@ -43,10 +60,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getUsersByPageAsync"]),
+    ...mapActions(["getUsersByPageAsync", "removeShopUsersAsync"]),
     ...mapMutations(["setCurPage", "setEachPage", "setShopUsersInfo"]),
-    handleClick(row) {
-      console.log(row);
+    //删除键
+    handleClick(val) {
+      this.centerDialogVisible = true;
+      this.id = val;
+    },
+    //确认删除
+    certainRemoveBtn(val) {
+      this.removeShopUsersAsync(val);
+      this.centerDialogVisible = false;
+      this.$notify({
+        title: "成功",
+        message: "服务信息删除成功",
+        type: "success"
+      });
     },
     //修改
     updateShopUsers(val) {
