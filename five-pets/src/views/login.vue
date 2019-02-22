@@ -39,7 +39,6 @@ export default {
       // this.$router.history.push("/mis");
       const loginName = this.loginName;
       const loginPassword = this.loginPassword;
-      console.log(loginName, loginPassword);
       this.$store.dispatch("users/logAsync", {
         //第一个参数是type（传递的路径），第二个参数是用户输入的值
         username: loginName,

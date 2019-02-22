@@ -1,4 +1,4 @@
-import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync } from "../services/users";
+import { logAsync, addUsersAsync, isUsersAsync, getUsersByPageAsync, updateUsersAsync, isLoginAsync ,exitAsync} from "../services/users";
 import router from '../router';
 
 export default {
@@ -13,11 +13,11 @@ export default {
         totalNum: 0, //总数据
         totalPage: 0, //总页数
         data: [],
-        updateInfo: {}
+        updateInfo: {},
+        isLogin: false//登录状态
     },
     mutations: {
         set(state, payload) {
-            console.log("state", state, "payload", payload)
         },
         setIsRepet(state, payload) {
             state.cd = payload
@@ -39,6 +39,10 @@ export default {
         // 从sessionStorage中获取服务信息
         getUsersInfo: (state) => {
             state.updateInfo = JSON.parse(sessionStorage.usersInfo)
+        },
+        //请求得到的登录状态
+        setIsLogin(state, payload) {
+            state.isLogin = payload
         }
     },
     actions: {
@@ -75,9 +79,24 @@ export default {
 
         //修改用户信息
         updateUsersAsync: async ({ dispatch }, payload) => {
-            console.log(payload);
             await updateUsersAsync(payload);
             dispatch("getUsersByPageAsync");
         },
+
+        //查看登录状态
+        isLogin: async ({ commit }) => {
+            const { data } = await isLoginAsync();
+            if(data.username){
+                commit("setIsLogin",true)
+            }else{
+                commit("setIsLogin",false)
+            }
+        },
+
+        //退出登录状态
+        exit:async ({commit})=>{
+            const {data} = await exitAsync()
+            commit("setIsLogin",false)
+        }
     }
 }

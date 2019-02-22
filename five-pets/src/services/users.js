@@ -41,3 +41,13 @@ export function updateUsersAsync({_id,username,password} = {}){
       body:JSON.stringify({_id,username,password}),
     })
 }
+
+//验证是否登录
+export function isLoginAsync(){
+  return request("/users/isLogin");
+}
+
+//退出登录
+export function exitAsync(){
+  return request("/users/exit");
+}
