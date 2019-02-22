@@ -48,14 +48,14 @@ export default {
     actions: {
         //登陆平台
         logAsync: async ({ commit, state }, payload) => {
-            // console.log(payload)
+            const {cb} = payload;//回调函数
             const login = await logAsync(payload);
             if (login.data) {
                 const data = JSON.stringify(login.data)
                 localStorage.shopUsers = data
                 router.push('/mis')
             } else {
-                alert("账户或密码错误")
+                cb()
             }
         },
         //新增平台用户
@@ -114,5 +114,10 @@ export default {
             await removeUsers(payload);
             dispatch("getUsersByPageAsync");
         },
+        exit:async ({commit},payload)=>{
+            await exitAsync()
+            commit("setIsLogin",false)
+            payload.cb()//回调函数
+        }
     }
 }
