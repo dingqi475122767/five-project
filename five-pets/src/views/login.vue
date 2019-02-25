@@ -1,6 +1,6 @@
 <template>
   <div class="big">
-    <p>登陆爱宠邦管理系统</p>
+    <p>欢迎登录爱宠邦管理系统</p>
     <div style="margin: 20px;"></div>
     <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
       <el-form-item label="账号">
@@ -85,11 +85,12 @@ export default {
 <style scoped>
 .big {
   width: 400px;
-  margin: 0 auto;
+  margin: 100px auto;
   border: 1px solid #f4f4f4;
   text-align: center;
   padding-left: 20px;
   padding-right: 25px;
+  background: rgba(255, 255, 255, 0.8)
 }
 p {
   color: #333;

@@ -7,7 +7,7 @@
         text-color="#fff"
         active-text-color="#ffd04b"
       >
-        <el-submenu index="1" id="user" :disabled="disabledUsers">
+        <el-submenu index="1" id="user" v-show="disabledUsers">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span>用户管理</span>
@@ -30,7 +30,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="2" id="shop" :disabled="disabledOther">
+        <el-submenu index="2" id="shop" v-show="disabledOther">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>门店管理</span>
@@ -44,7 +44,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="3" id="goods" :disabled="disabledOther">
+        <el-submenu index="3" id="goods" v-show="disabledOther">
           <template slot="title">
             <i class="el-icon-goods"></i>
             <span>商品管理</span>
@@ -58,7 +58,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="4" id="service" :disabled="disabledOther">
+        <el-submenu index="4" id="service" v-show="disabledOther">
           <template slot="title">
             <i class="el-icon-setting"></i>
             <span>服务管理</span>
@@ -72,7 +72,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="5" id="pets" :disabled="disabledOther">
+        <el-submenu index="5" id="pets" v-show="disabledOther">
           <template slot="title">
             <i class="el-icon-picture"></i>
             <span>宠物管理</span>
@@ -86,7 +86,7 @@
             </router-link>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="6" id="orderMessage" :disabled="disabledOther">
+        <el-submenu index="6" id="orderMessage" v-show="disabledOther">
           <template slot="title">
             <i class="el-icon-document"></i>
             <span>订单管理</span>
@@ -102,17 +102,15 @@
 
     <el-container>
       <el-header style="display:flex;align-items:center">
-        <div style="width:85%;text-align:center;">
-          <h1 style="font-size:35px">爱宠帮宠物管理系统</h1>
-        </div>
+        <div style="width:85%;text-align:center;"></div>
         <div style="text-align: right; font-size: 12px;width:300px">
+          <span>欢迎使用，{{userName}}</span>
           <el-dropdown @command="exit">
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
+            <i class="icon" style="margin-left: 15px">&#xe717;</i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <span>欢迎使用，{{userName}}</span>
         </div>
       </el-header>
 
@@ -132,8 +130,8 @@ export default {
   data() {
     return {
       userName: "",
-      disabledUsers: false,
-      disabledOther: false
+      disabledUsers: true,
+      disabledOther: true,
     };
   },
   watch: {
@@ -147,21 +145,21 @@ export default {
     this.userName = JSON.parse(localStorage.shopUsers)[0].username;
     this.users = JSON.parse(localStorage.shopUsers)[0];
     if (this.users.state === "admin") {
-      this.disabledOther = true;
+      this.disabledOther = false;
       await this.$store.dispatch("users/isLogin");
       if (!this.isLogin) {
-         this.$alert("已退出,进入系统需要重新登录", "提示", {
-            confirmButtonText: "确定",
-          });
+        this.$alert("已退出,进入系统需要重新登录", "提示", {
+          confirmButtonText: "确定"
+        });
         this.$router.history.push("/login");
       }
     } else {
-      this.disabledUsers = true;
+      this.disabledUsers = f;
       await this.$store.dispatch("users/isShopLogin");
       if (!this.isLogin) {
-         this.$alert("已退出,进入系统需要重新登录", "提示", {
-            confirmButtonText: "确定",
-          });
+        this.$alert("已退出,进入系统需要重新登录", "提示", {
+          confirmButtonText: "确定"
+        });
         this.$router.history.push("/login");
       }
     }
@@ -174,7 +172,7 @@ export default {
       this.$store.dispatch("users/exit", {
         cb: () => {
           this.$alert("已退出", "提示", {
-            confirmButtonText: "确定",
+            confirmButtonText: "确定"
           });
         }
       });
@@ -184,6 +182,22 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "iconfont";
+  src: url("../assets/font/iconfont.eot");
+  src: url("../assets/font/iconfont.eot?#iefix") format("embedded-opentype"),
+    url("../assets/font/iconfont.woff") format("woff"),
+    url("../assets/font/iconfont.ttf") format("truetype"),
+    url("../assets/font/iconfont.svg#iconfont") format("svg");
+}
+.icon {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
 .el-container {
   margin: 0;
   padding: 0;
