@@ -76,6 +76,7 @@ export default {
     handleUpdatePets(pet) {
       this.$refs[pet].validate(valid => {
         if (valid) {
+          
           this.$confirm("此操作将永久修改该文件, 是否继续?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",

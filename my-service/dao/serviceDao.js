@@ -20,8 +20,8 @@ module.exports.getAllByPage = async function({currentPage,eachPage,shopID}){
 }
 
 //修改服务
-module.exports.updateService = async ({_id,shopID,serviceName,servicePrice,serviceTiming,timeDay,timePoint,isDel})=>{
-    return await serviceModel.updateOne({_id},{shopID,serviceName,servicePrice,serviceTiming,timeDay,timePoint,isDel});
+module.exports.updateService = async ({_id,shopID,serviceName,servicePrice,serviceTiming,serviceImg,timeDay,timePoint,isDel})=>{
+    return await serviceModel.updateOne({_id},{shopID,serviceName,servicePrice,serviceTiming,serviceImg,timeDay,timePoint,isDel});
 }
 
 // 删除服务，实际只是将服务的状态值isDel修改为true 

@@ -121,7 +121,7 @@ export default {
 <style scoped>
 .box {
   width: 400px;
-  margin: 0 auto;
+  margin: 100px auto;
   border: 1px solid #f4f4f4;
   text-align: center;
   padding-left: 20px;

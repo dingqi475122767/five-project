@@ -13,6 +13,7 @@ const serviceSchema = new mongoose.Schema({
     //服务时长
     serviceTiming:Number,
     //// serviceSchedule:Number,
+    serviceImg:String,
     //增加服务当天的日期
     timeDay:String,
     //记录增加服务时的时间点

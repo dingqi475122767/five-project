@@ -51,7 +51,6 @@ export default {
     setIsLogin(state, payload) {
       state.isShopLogin = payload
     },
-
     //获取待审核用户
     getAuditByPage: (state, payload) => {
       Object.assign(state.audit, payload)
@@ -84,14 +83,22 @@ export default {
     },
 
     //验证是否门店账户是否重复
-    isShopUsersAsync: async ({ state, commit }, payload) => {
+    isShopUsersAsync: async ({
+      state,
+      commit
+    }, payload) => {
       let data = await isShopUsersAsync(payload);
-      commit("setIsRepet", data.data)//commit是一个方法
+      commit("setIsRepet", data.data) //commit是一个方法
     },
 
     //查询翻页信息
-    getUsersByPageAsync: async ({ commit, state }) => {
-      const { data } = await getUsersByPageAsync({
+    getUsersByPageAsync: async ({
+      commit,
+      state
+    }) => {
+      const {
+        data
+      } = await getUsersByPageAsync({
         currentPage: state.currentPage,
         eachPage: state.eachPage
       })
@@ -99,7 +106,9 @@ export default {
     },
 
     //修改用户信息
-    updateShopUsersAsync: async ({ dispatch }, payload) => {
+    updateShopUsersAsync: async ({
+      dispatch
+    }, payload) => {
       await updateShopUsersAsync(payload);
       dispatch("getUsersByPageAsync");
     },
@@ -110,7 +119,9 @@ export default {
     },
     // commit("setIsLogin")
     //审核用户信息
-    auditShopUsersAsync: async ({ dispatch }, payload) => {
+    auditShopUsersAsync: async ({
+      dispatch
+    }, payload) => {
       await auditShopUsersAsync(payload);
       dispatch("getAuditByPageAsync");
     },
@@ -128,4 +139,3 @@ export default {
     },
   }
 }
-
