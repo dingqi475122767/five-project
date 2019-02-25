@@ -25,7 +25,6 @@ export default {
   },
   mutations: {
     set(state, payload) {
-      console.log(payload)
     },
     setIsRepet(state, payload) {
       state.cd = payload
@@ -73,7 +72,6 @@ export default {
     },
     //门店登陆
     loginAsync: async ({ commit, state }, payload) => {//payload是拿到用户的输入
-      console.log(payload)
       const { cb } = payload;
       const isLogin = await loginAsync(payload);
       if (isLogin.data) {

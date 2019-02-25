@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     upqiniu(req) {
-      console.log(req);
+      // console.log(req);
       this.loading = true;
       this.text = "图片上传中";
       const config = {
@@ -117,7 +117,7 @@ export default {
         filetype;
       // 从后端获取上传凭证token
       this.axios.get("/goods/token").then(res => {
-        console.log(res);
+        // console.log(res);
         const formdata = new FormData();
         formdata.append("file", req.file);
         formdata.append("token", res.data);
