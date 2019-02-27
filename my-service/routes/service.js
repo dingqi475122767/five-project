@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const {addService,getAllByPage,updateService,removeService}  = require('../service/serviceService');
+const {addService,getAllByPage,updateService,removeService,getAllByPageWX}  = require('../service/serviceService');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -21,6 +21,11 @@ router.post('/addService',async function(req, res, next) {
 // 分页查询服务
 router.post('/getAllByPage',async function(req,res,next){
   res.send(await getAllByPage(req.body))
+});
+
+// 分页查询服务
+router.post('/getAllByPageWX',async function(req,res,next){
+  res.send(await getAllByPageWX(req.body))
 });
 // 修改服务
 router.post('/updateService',async function(req,res,next){

@@ -19,6 +19,20 @@ module.exports.getAllByPage = async function({currentPage,eachPage,shopID}){
     return {currentPage,eachPage,totalNum,totalPage,data}
 }
 
+//分页查询所有状态值为false,绑定有shopID的服务
+module.exports.getAllByPageWX = async function({currentPage,eachPage}){
+    currentPage = currentPage - 0;
+    eachPage = eachPage - 0;
+    let totalNum = await serviceModel.find({isDel:false}).countDocuments();//查询总条数
+    let totalPage = Math.ceil(totalNum/eachPage);//获取总页数
+    let data = await serviceModel
+    .find({isDel:false})
+        .skip((currentPage - 1) * eachPage)
+        .limit(eachPage)
+        .populate("shopID")
+    return {currentPage,eachPage,totalNum,totalPage,data}
+}
+
 //修改服务
 module.exports.updateService = async ({_id,shopID,serviceName,servicePrice,serviceTiming,serviceImg,timeDay,timePoint,isDel})=>{
     return await serviceModel.updateOne({_id},{shopID,serviceName,servicePrice,serviceTiming,serviceImg,timeDay,timePoint,isDel});

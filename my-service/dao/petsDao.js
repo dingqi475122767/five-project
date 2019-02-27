@@ -21,6 +21,18 @@ module.exports.getPetsByPage = async function ({ shopID, currentPage, eachPage }
     return { currentPage, eachPage, data, total: all.length, totalPage };
 }
 
+//分页获取（微信小程序）
+module.exports.getPetsByPageWX = async function ({ currentPage, eachPage }) {
+    currentPage = currentPage - 0;
+    eachPage = eachPage - 0;
+    let all = await petsModel.find();
+    let totalPage = Math.ceil(all.length / eachPage);
+    let data = await petsModel.find()   //{shopID:{$in:shopId}}
+        .skip((currentPage - 1) * eachPage)
+        .limit(eachPage)
+        .populate('shopID')
+    return { currentPage, eachPage, data, total: all.length, totalPage };
+}
 
 
 module.exports.updatePets = async function ({_id,shopID,petsName,petsType,petsPrice,petsBirth,petsImg}) {

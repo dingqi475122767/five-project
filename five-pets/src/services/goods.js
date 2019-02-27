@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 // 分页查询商品数据
 export function getGoodsByPageAsync({currentPage=1,eachPage=5,shopUserID}){
-    return request(`/goods/getAllByPageWX?currentPage=${currentPage}&eachPage=${eachPage}&shopUserID=${shopUserID}`);
+    return request(`/goods/getAllByPage?currentPage=${currentPage}&eachPage=${eachPage}&shopUserID=${shopUserID}`);
 }
 
 // 添加商品

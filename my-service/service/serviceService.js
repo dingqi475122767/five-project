@@ -2,7 +2,8 @@ const {
     addService,
     getAllByPage,
     updateService,
-    removeService
+    removeService,
+    getAllByPageWX
 } = require('../dao/serviceDao');
 //新增服务
 module.exports.addService = async function (service) {
@@ -11,6 +12,10 @@ module.exports.addService = async function (service) {
 // 分页查询所有服务
 module.exports.getAllByPage = async function (service) {
     return await getAllByPage(service)
+}
+
+module.exports.getAllByPageWX = async function (service) {
+    return await getAllByPageWX(service)
 }
 //修改服务
 module.exports.updateService = async function (service) {
