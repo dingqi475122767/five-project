@@ -83,7 +83,6 @@ export default {
     ...mapActions(["updateShopUsersAsync"]),
     handleUpdateShopUsers(val) {
       this.$refs[val].validate(valid => {
-        // console.log(valid)
         if (valid) {
           this.updateShopUsersAsync(this.updateInfo);
           this.$notify({
@@ -95,7 +94,7 @@ export default {
         } else {
           this.$notify.error({
             title: "错误",
-            message: "门店用户信息修改失败，请确认修改项"
+            message: "门店用户信息修改失败，请确认修改"
           });
           return false;
         }
