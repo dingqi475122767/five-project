@@ -154,7 +154,7 @@ export default {
         this.$router.history.push("/login");
       }
     } else {
-      this.disabledUsers = f;
+      this.disabledUsers = false;
       await this.$store.dispatch("users/isShopLogin");
       if (!this.isLogin) {
         this.$alert("已退出,进入系统需要重新登录", "提示", {
