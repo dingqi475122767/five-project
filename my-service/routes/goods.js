@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {addGoods,getAllByPage,delGoods,updateGoods} = require("../service/goodsService");
+const {addGoods,getAllByPage,delGoods,updateGoods,getAllByPageWX} = require("../service/goodsService");
 
 const qnconfig = require('../config.js')
 // 处理请求，上传图片
@@ -16,6 +16,11 @@ router.post('/addGoods',async function(req,res,next){
 // 分页查询商品
 router.get('/getAllByPage',async function(req,res,next){
   res.send(await getAllByPage(req.query))
+})
+
+// 分页查询商品(微信)
+router.get('/getAllByPageWX',async function(req,res,next){
+  res.send(await getAllByPageWX(req.query))
 })
 
 // 删除商品
